@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useGameContract } from "@/hooks/useGameContract";
 import { useDirectClaim } from "@/hooks/useDirectClaim";
+import { useClaimValidation } from "@/hooks/useClaimValidation";
 import { formatEther } from "viem";
 
 interface GameOverProps {
@@ -26,9 +27,12 @@ export default function GameOver({ score, isWinner, onRestart }: GameOverProps) 
     hash,
   } = useDirectClaim();
 
+  const validation = useClaimValidation(score);
+
   const [isClaiming, setIsClaiming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [estimatedReward, setEstimatedReward] = useState<string>("0");
+  const [showGasInfo, setShowGasInfo] = useState(false);
 
   useEffect(() => {
     // Fetch estimated reward from API
@@ -116,10 +120,47 @@ export default function GameOver({ score, isWinner, onRestart }: GameOverProps) 
 
         {address ? (
           <div className="space-y-4">
-            {canClaim ? (
+            {/* Validation Warnings */}
+            {validation.warnings.length > 0 && (
+              <div className="p-3 bg-yellow-900/30 border border-yellow-500 rounded-lg space-y-1">
+                {validation.warnings.map((warning, i) => (
+                  <p key={i} className="text-yellow-400 text-sm">{warning}</p>
+                ))}
+              </div>
+            )}
+
+            {/* Validation Errors */}
+            {validation.errors.length > 0 && (
+              <div className="p-3 bg-red-900/30 border border-red-500 rounded-lg space-y-1">
+                {validation.errors.map((error, i) => (
+                  <p key={i} className="text-red-400 text-sm">{error}</p>
+                ))}
+              </div>
+            )}
+
+            {/* Gas Cost Info */}
+            <button
+              onClick={() => setShowGasInfo(!showGasInfo)}
+              className="w-full text-left p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg hover:bg-blue-900/30 transition-colors"
+            >
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-blue-300">⛽ Gas Cost Info</span>
+                <span className="text-xs text-gray-400">{showGasInfo ? "▼" : "▶"}</span>
+              </div>
+              {showGasInfo && (
+                <div className="mt-2 pt-2 border-t border-blue-500/20 space-y-1 text-xs text-gray-300">
+                  <p>• Estimated: {validation.estimatedGas}</p>
+                  <p>• Why? 5 storage writes + signature verification + token transfer</p>
+                  <p>• Contract Balance: {validation.contractBalance || "..."} JUMP</p>
+                  <p>• Verifier: {validation.verifierAddress ? `${validation.verifierAddress.slice(0, 6)}...${validation.verifierAddress.slice(-4)}` : "Not set"}</p>
+                </div>
+              )}
+            </button>
+
+            {canClaim && validation.canClaim ? (
               <button
                 onClick={handleClaimReward}
-                disabled={isClaiming || isPending || isConfirming}
+                disabled={isClaiming || isPending || isConfirming || !validation.canClaim}
                 className="w-full px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
               >
                 {isClaiming || isPending
@@ -130,6 +171,13 @@ export default function GameOver({ score, isWinner, onRestart }: GameOverProps) 
                   ? "Claimed! ✓"
                   : "Claim Reward"}
               </button>
+            ) : !validation.canClaim && canClaim ? (
+              <div className="text-center p-4 bg-gray-800 rounded-lg">
+                <p className="text-gray-400 mb-2">⚠️ Cannot Claim</p>
+                <p className="text-sm text-gray-500">
+                  Fix the errors above first
+                </p>
+              </div>
             ) : (
               <div className="text-center p-4 bg-gray-800 rounded-lg">
                 <p className="text-gray-400 mb-2">Cooldown Active</p>
