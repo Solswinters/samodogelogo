@@ -70,7 +70,9 @@ export function useMultiplayer(props: UseMultiplayerProps) {
 
     socketInstance.on("player-joined", (data: { playerId: string; player: Player }) => {
       setPlayers(prev => new Map(prev).set(data.playerId, data.player));
-      props.onPlayerJoined?.(data.playerId, data.player);
+      if (props.onPlayerJoined) {
+        props.onPlayerJoined(data.playerId, data.player);
+      }
       console.log("Player joined:", data.playerId);
     });
 
@@ -80,16 +82,22 @@ export function useMultiplayer(props: UseMultiplayerProps) {
         newMap.delete(playerId);
         return newMap;
       });
-      props.onPlayerLeft?.(playerId);
+      if (props.onPlayerLeft) {
+        props.onPlayerLeft(playerId);
+      }
       console.log("Player left:", playerId);
     });
 
     socketInstance.on("player-jumped", (playerId: string) => {
-      props.onPlayerJumped?.(playerId);
+      if (props.onPlayerJumped) {
+        props.onPlayerJumped(playerId);
+      }
     });
 
     socketInstance.on("position-updated", (data: { playerId: string; position: any }) => {
-      props.onPositionUpdated?.(data.playerId, data.position);
+      if (props.onPositionUpdated) {
+        props.onPositionUpdated(data.playerId, data.position);
+      }
     });
 
     socketInstance.on("score-updated", (data: { playerId: string; score: number }) => {
@@ -101,11 +109,15 @@ export function useMultiplayer(props: UseMultiplayerProps) {
         }
         return newMap;
       });
-      props.onScoreUpdated?.(data.playerId, data.score);
+      if (props.onScoreUpdated) {
+        props.onScoreUpdated(data.playerId, data.score);
+      }
     });
 
     socketInstance.on("obstacles-synced", (obstacles: Obstacle[]) => {
-      props.onObstaclesSynced?.(obstacles);
+      if (props.onObstaclesSynced) {
+        props.onObstaclesSynced(obstacles);
+      }
     });
 
     socketInstance.on("player-died", (playerId: string) => {
@@ -117,16 +129,22 @@ export function useMultiplayer(props: UseMultiplayerProps) {
         }
         return newMap;
       });
-      props.onPlayerDied?.(playerId);
+      if (props.onPlayerDied) {
+        props.onPlayerDied(playerId);
+      }
     });
 
     socketInstance.on("game-started", () => {
-      props.onGameStarted?();
+      if (props.onGameStarted) {
+        props.onGameStarted();
+      }
       console.log("Game started");
     });
 
     socketInstance.on("game-over", (data: { winnerId: string; scores: any[] }) => {
-      props.onGameOver?.(data);
+      if (props.onGameOver) {
+        props.onGameOver(data);
+      }
       console.log("Game over. Winner:", data.winnerId);
     });
 
@@ -210,4 +228,3 @@ export function useMultiplayer(props: UseMultiplayerProps) {
     notifyDeath,
   };
 }
-
