@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useGameContract } from "@/hooks/useGameContract";
+import { useDirectClaim } from "@/hooks/useDirectClaim";
 import { formatEther } from "viem";
 
 interface GameOverProps {
@@ -15,12 +16,15 @@ export default function GameOver({ score, isWinner, onRestart }: GameOverProps) 
     address,
     canClaim,
     timeUntilNextClaim,
-    claimReward,
-    isWritePending,
+  } = useGameContract();
+
+  const {
+    claimRewardDirect,
+    isPending,
     isConfirming,
     isConfirmed,
     hash,
-  } = useGameContract();
+  } = useDirectClaim();
 
   const [isClaiming, setIsClaiming] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -52,26 +56,8 @@ export default function GameOver({ score, isWinner, onRestart }: GameOverProps) 
     setError(null);
 
     try {
-      // Get signature from backend
-      const response = await fetch("/api/game/claim", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          address,
-          score,
-          isWinner,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to get signature");
-      }
-
-      const { nonce, signature } = await response.json();
-
-      // Call smart contract
-      await claimReward(score, isWinner, nonce, signature as `0x${string}`);
+      // Sign and claim directly with user's wallet (no backend needed!)
+      await claimRewardDirect(score, isWinner);
     } catch (err: any) {
       console.error("Claim error:", err);
       setError(err.message || "Failed to claim reward");
@@ -133,10 +119,10 @@ export default function GameOver({ score, isWinner, onRestart }: GameOverProps) 
             {canClaim ? (
               <button
                 onClick={handleClaimReward}
-                disabled={isClaiming || isWritePending || isConfirming}
+                disabled={isClaiming || isPending || isConfirming}
                 className="w-full px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
               >
-                {isClaiming || isWritePending
+                {isClaiming || isPending
                   ? "Preparing..."
                   : isConfirming
                   ? "Confirming..."
