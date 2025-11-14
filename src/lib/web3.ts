@@ -14,7 +14,7 @@ if (!projectId) {
 const metadata = {
   name: 'Jump Game',
   description: 'Onchain Jump Obstacle Game with Token Rewards',
-  url: 'https://jumpgame.example.com', // Update with your domain
+  url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
   icons: ['https://avatars.githubusercontent.com/u/179229932'],
 };
 

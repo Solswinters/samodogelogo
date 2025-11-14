@@ -48,11 +48,15 @@ export async function POST(request: NextRequest) {
 
     // Get private key from environment
     const privateKey = process.env.VERIFIER_PRIVATE_KEY;
-    if (!privateKey) {
-      console.error("VERIFIER_PRIVATE_KEY not set");
+    if (!privateKey || privateKey === '') {
+      console.error("VERIFIER_PRIVATE_KEY not set - Backend signature verification disabled");
       return NextResponse.json(
-        { error: "Server configuration error" },
-        { status: 500 }
+        { 
+          error: "Backend signature verification is not configured. " +
+                 "Set VERIFIER_PRIVATE_KEY in your .env.local file to enable reward claims, " +
+                 "or use direct contract interaction from your wallet." 
+        },
+        { status: 503 }
       );
     }
 
