@@ -11,7 +11,7 @@
 - **Max Supply**: 100,000,000 JUMP
 
 ### GameRewards Contract
-- **Address**: _To be deployed_
+- **Address**: `0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828`
 - **Network**: Same as GameToken
 
 ## Environment Variables Setup

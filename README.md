@@ -4,6 +4,13 @@ A multiplayer jump obstacle game built on Base blockchain where players earn ERC
 
 ![Jump Game Banner](./samodoge.png)
 
+## 📝 Deployed Contracts
+
+- **GameToken**: [`0xa294FfD0E35ba61BCD8bd0a4D7Eda5bCb83BC24F`](https://basescan.org/address/0xa294FfD0E35ba61BCD8bd0a4D7Eda5bCb83BC24F)
+- **GameRewards**: [`0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828`](https://basescan.org/address/0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828)
+- **Network**: Base (Mainnet/Sepolia)
+- **Token Symbol**: JUMP
+
 ## 🎮 Features
 
 - **Single & Multiplayer Modes**: Play solo or compete with up to 4 players in real-time
@@ -69,18 +76,18 @@ cd ..
 
 Create `.env.local` in the root directory:
 ```env
-# Reown/WalletConnect Project ID
+# Reown/WalletConnect Project ID (get from https://cloud.reown.com)
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
 
-# Contract addresses (will be filled after deployment)
-NEXT_PUBLIC_GAME_TOKEN_ADDRESS=0x...
-NEXT_PUBLIC_GAME_REWARDS_ADDRESS=0x...
+# Deployed Contract Addresses on Base
+NEXT_PUBLIC_GAME_TOKEN_ADDRESS=0xa294FfD0E35ba61BCD8bd0a4D7Eda5bCb83BC24F
+NEXT_PUBLIC_GAME_REWARDS_ADDRESS=0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828
 
 # Socket.io server URL (optional, defaults to localhost:3000)
 NEXT_PUBLIC_SOCKET_URL=http://localhost:3000
 
-# Backend verifier private key (for signing rewards)
-VERIFIER_PRIVATE_KEY=0x...
+# Backend verifier private key (for signing rewards - KEEP SECRET!)
+VERIFIER_PRIVATE_KEY=0x...your_private_key
 ```
 
 Create `.env` in the `contracts/` directory:
@@ -91,6 +98,14 @@ VERIFIER_PRIVATE_KEY=your_backend_verifier_private_key
 ```
 
 ### Deploy Smart Contracts
+
+> **Note**: Contracts are already deployed! Use the addresses above. Skip this section unless you want to deploy your own instance.
+
+**Already Deployed Contracts:**
+- GameToken: `0xa294FfD0E35ba61BCD8bd0a4D7Eda5bCb83BC24F`
+- GameRewards: `0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828`
+
+**To deploy your own contracts:**
 
 1. **Compile contracts**
 ```bash
