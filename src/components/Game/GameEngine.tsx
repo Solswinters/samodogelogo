@@ -15,6 +15,8 @@ import {
   getGameSpeed,
 } from "@/lib/game-logic";
 import { useMultiplayer } from "@/hooks/useMultiplayer";
+import GameHUD from "./GameHUD";
+import Leaderboard from "../Leaderboard";
 
 interface GameEngineProps {
   isMultiplayer: boolean;
@@ -304,47 +306,67 @@ export default function GameEngine({ isMultiplayer, onGameOver, playerId }: Game
   }, [localPlayer, obstacles, remotePlayers, gameTime, isMultiplayer]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <canvas
-        ref={canvasRef}
-        width={GAME_CONFIG.CANVAS_WIDTH}
-        height={GAME_CONFIG.CANVAS_HEIGHT}
-        className="border-2 border-gray-700 rounded-lg cursor-pointer"
-        onClick={handleJump}
-      />
-      
-      {gameState === "waiting" && (
-        <div className="text-center">
-          {isMultiplayer ? (
-            multiplayer.isConnected ? (
-              multiplayer.isHost ? (
-                <button
-                  onClick={() => multiplayer.startGame()}
-                  className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg"
-                >
-                  Start Game (Host)
-                </button>
-              ) : (
-                <p className="text-gray-400">Waiting for host to start...</p>
-              )
-            ) : (
-              <p className="text-gray-400">Connecting to multiplayer...</p>
-            )
-          ) : (
-            <button
-              onClick={startGame}
-              className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg"
-            >
-              Start Game
-            </button>
+    <>
+      {gameState === "playing" && (
+        <>
+          <GameHUD
+            score={localPlayer.score}
+            gameTime={gameTime}
+            obstaclesCleared={obstaclesCleared}
+            isMultiplayer={isMultiplayer}
+            roomId={multiplayer.roomId}
+          />
+          {isMultiplayer && (
+            <Leaderboard
+              players={new Map([[multiplayer.playerId || "local", localPlayer], ...remotePlayers])}
+              currentPlayerId={multiplayer.playerId}
+            />
           )}
-        </div>
+        </>
       )}
 
-      <p className="text-gray-400 text-sm">
-        Press SPACE or click to jump
-      </p>
-    </div>
+      <div className="flex flex-col items-center gap-4">
+        <canvas
+          ref={canvasRef}
+          width={GAME_CONFIG.CANVAS_WIDTH}
+          height={GAME_CONFIG.CANVAS_HEIGHT}
+          className="border-2 border-gray-700 rounded-lg cursor-pointer"
+          onClick={handleJump}
+        />
+        
+        {gameState === "waiting" && (
+          <div className="text-center">
+            {isMultiplayer ? (
+              multiplayer.isConnected ? (
+                multiplayer.isHost ? (
+                  <button
+                    onClick={() => multiplayer.startGame()}
+                    className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg"
+                  >
+                    Start Game (Host)
+                  </button>
+                ) : (
+                  <p className="text-gray-400">Waiting for host to start...</p>
+                )
+              ) : (
+                <p className="text-gray-400">Connecting to multiplayer...</p>
+              )
+            ) : (
+              <button
+                onClick={startGame}
+                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg"
+              >
+                Start Game
+              </button>
+            )}
+          </div>
+        )}
+
+        <p className="text-gray-400 text-sm">
+          Press SPACE or click to jump
+        </p>
+      </div>
+    </>
   );
 }
 
