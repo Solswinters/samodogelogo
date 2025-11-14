@@ -1,45 +1,7 @@
 "use client";
 
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from "wagmi";
-
-// Simple contract ABI - just what we need
-const SIMPLE_REWARDS_ABI = [
-  {
-    inputs: [{ internalType: "uint256", name: "score", type: "uint256" }],
-    name: "claimReward",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "score", type: "uint256" }],
-    name: "calculateReward",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "lastClaimTime",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "cooldownPeriod",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "player", type: "address" }],
-    name: "getTimeUntilNextClaim",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-] as const;
+import { SIMPLE_GAME_REWARDS_ABI } from "@/lib/contracts";
 
 /**
  * Hook for the simplified claim system
@@ -55,7 +17,7 @@ export function useSimpleClaim(contractAddress: `0x${string}`) {
   // Get last claim time
   const { data: lastClaimTime } = useReadContract({
     address: contractAddress,
-    abi: SIMPLE_REWARDS_ABI,
+    abi: SIMPLE_GAME_REWARDS_ABI,
     functionName: "lastClaimTime",
     args: address ? [address] : undefined,
   });
@@ -63,14 +25,14 @@ export function useSimpleClaim(contractAddress: `0x${string}`) {
   // Get cooldown period
   const { data: cooldownPeriod } = useReadContract({
     address: contractAddress,
-    abi: SIMPLE_REWARDS_ABI,
+    abi: SIMPLE_GAME_REWARDS_ABI,
     functionName: "cooldownPeriod",
   });
 
   // Get time until next claim
   const { data: timeUntilNextClaim } = useReadContract({
     address: contractAddress,
-    abi: SIMPLE_REWARDS_ABI,
+    abi: SIMPLE_GAME_REWARDS_ABI,
     functionName: "getTimeUntilNextClaim",
     args: address ? [address] : undefined,
   });
@@ -79,7 +41,7 @@ export function useSimpleClaim(contractAddress: `0x${string}`) {
   const getEstimatedReward = (score: number) => {
     return useReadContract({
       address: contractAddress,
-      abi: SIMPLE_REWARDS_ABI,
+      abi: SIMPLE_GAME_REWARDS_ABI,
       functionName: "calculateReward",
       args: [BigInt(score)],
     });
@@ -101,7 +63,7 @@ export function useSimpleClaim(contractAddress: `0x${string}`) {
     try {
       const txHash = await writeContractAsync({
         address: contractAddress,
-        abi: SIMPLE_REWARDS_ABI,
+        abi: SIMPLE_GAME_REWARDS_ABI,
         functionName: "claimReward",
         args: [BigInt(score)],
       });
