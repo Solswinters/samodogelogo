@@ -7,7 +7,8 @@ A multiplayer jump obstacle game built on Base blockchain where players earn ERC
 ## 📝 Deployed Contracts
 
 - **GameToken**: [`0xa294FfD0E35ba61BCD8bd0a4D7Eda5bCb83BC24F`](https://basescan.org/address/0xa294FfD0E35ba61BCD8bd0a4D7Eda5bCb83BC24F)
-- **GameRewards**: [`0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828`](https://basescan.org/address/0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828)
+- **SimpleGameRewards** (Active): [`0xB88374195e134dea28aaE8FB4Bb6229D0cb9EB58`](https://basescan.org/address/0xB88374195e134dea28aaE8FB4Bb6229D0cb9EB58)
+- **GameRewards** (Original): [`0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828`](https://basescan.org/address/0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828)
 - **Network**: Base (Mainnet/Sepolia)
 - **Token Symbol**: JUMP
 
@@ -16,9 +17,10 @@ A multiplayer jump obstacle game built on Base blockchain where players earn ERC
 - **Single & Multiplayer Modes**: Play solo or compete with up to 4 players in real-time
 - **Increasing Difficulty**: Game speed and obstacle frequency increase every 10 seconds
 - **Onchain Rewards**: Earn JUMP tokens directly to your wallet based on your score
-- **Winner Bonuses**: Multiplayer winners receive a 1.5x reward multiplier
-- **Direct Wallet Claims**: Sign reward claims with your own wallet - no backend private key needed!
-- **Cooldown Protection**: 1-hour cooldown between reward claims
+- **Permissionless Claims**: Connect wallet, play, claim - no setup required! ⚡
+- **No Signature Verification**: Truly decentralized - just send the transaction
+- **Lower Gas Costs**: ~50% cheaper per claim (~$0.01-0.02 on Base)
+- **Cooldown Protection**: 1-hour cooldown between reward claims prevents spam
 - **Real-time Synchronization**: WebSocket-based multiplayer with smooth player movement
 
 ## 🏗️ Architecture
@@ -81,18 +83,14 @@ NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
 
 # Deployed Contract Addresses on Base
 NEXT_PUBLIC_GAME_TOKEN_ADDRESS=0xa294FfD0E35ba61BCD8bd0a4D7Eda5bCb83BC24F
-NEXT_PUBLIC_GAME_REWARDS_ADDRESS=0x070D2758aFD45504490A7aFD76c6cF1a5B2C5828
+NEXT_PUBLIC_GAME_REWARDS_ADDRESS=0xB88374195e134dea28aaE8FB4Bb6229D0cb9EB58
 
 # Socket.io server URL (optional, defaults to localhost:3000)
 NEXT_PUBLIC_SOCKET_URL=http://localhost:3000
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-
-# Backend verifier private key (OPTIONAL - only needed for backend signature verification)
-# If you deployed from Remix or want to handle claims differently, leave this empty
-VERIFIER_PRIVATE_KEY=
 ```
 
-> **Note**: The `VERIFIER_PRIVATE_KEY` is only required if you want to use backend-verified reward claims. If you deployed your contracts from Remix or prefer direct contract interaction, you can leave this empty.
+> **Note**: Using **SimpleGameRewards** contract - no verifier or backend signature needed! Just connect your wallet and claim rewards directly.
 
 Create `.env` in the `contracts/` directory:
 ```env
@@ -101,18 +99,24 @@ BASESCAN_API_KEY=your_basescan_api_key
 VERIFIER_PRIVATE_KEY=your_backend_verifier_private_key
 ```
 
-### ⚡ Setting Up Reward Claims (IMPORTANT!)
+### ⚡ Quick Start (5 minutes!)
 
-The game now supports **Direct Wallet Claims** - players sign with their own wallet, no backend private key needed!
+**The app is ready to use with deployed contracts!**
 
-**Quick Setup:**
-1. Set your wallet as the verifier in the `GameRewards` contract
-2. Fund the `GameRewards` contract with JUMP tokens
-3. Play and claim rewards!
+1. **Fund the SimpleGameRewards contract** with JUMP tokens:
+   ```solidity
+   // In Remix, on GameToken contract:
+   transfer("0xB88374195e134dea28aaE8FB4Bb6229D0cb9EB58", 10000000000000000000000) // 10k JUMP
+   ```
 
-📖 **See [VERIFIER_SETUP.md](./VERIFIER_SETUP.md) for detailed instructions**
+2. **Start playing!**
+   - Connect your wallet
+   - Play the game
+   - Claim rewards directly - no setup needed!
 
-### Deploy Smart Contracts
+📖 **See [SIMPLE_DEPLOYMENT.md](./SIMPLE_DEPLOYMENT.md) for more details**
+
+### Deploy Smart Contracts (Optional)
 
 > **Note**: Contracts are already deployed! Use the addresses above. Skip this section unless you want to deploy your own instance.
 
