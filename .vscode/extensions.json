@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-playwright.playwright",
+    "orta.vscode-jest",
+    "prisma.prisma",
+    "wallabyjs.quokka-vscode",
+    "usernamehw.errorlens",
+    "christian-kohler.path-intellisense",
+    "formulahendry.auto-rename-tag",
+    "dsznajder.es7-react-js-snippets"
+  ]
+}
+
