@@ -1,10 +1,10 @@
-import { Player } from '@/lib/game-logic'
+import type { Player } from '@/modules/game/domain/engine'
 
 let playerIdCounter = 0
 
 export const createMockPlayer = (overrides?: Partial<Player>): Player => {
   playerIdCounter++
-  
+
   return {
     id: `player-${playerIdCounter}`,
     x: 100,
@@ -20,7 +20,7 @@ export const createMockPlayer = (overrides?: Partial<Player>): Player => {
 }
 
 export const createMockPlayers = (count: number): Player[] => {
-  return Array.from({ length: count }, (_, i) => 
+  return Array.from({ length: count }, (_, i) =>
     createMockPlayer({
       id: `player-${i + 1}`,
       color: ['#3B82F6', '#EF4444', '#10B981', '#F59E0B'][i % 4],
@@ -31,4 +31,3 @@ export const createMockPlayers = (count: number): Player[] => {
 export const resetPlayerIdCounter = () => {
   playerIdCounter = 0
 }
-

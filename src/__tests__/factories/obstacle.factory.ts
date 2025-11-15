@@ -1,10 +1,10 @@
-import { Obstacle } from '@/lib/game-logic'
+import type { Obstacle } from '@/modules/game/domain/engine'
 
 let obstacleIdCounter = 0
 
 export const createMockObstacle = (overrides?: Partial<Obstacle>): Obstacle => {
   obstacleIdCounter++
-  
+
   return {
     id: `obstacle-${obstacleIdCounter}`,
     x: 800,
@@ -16,10 +16,10 @@ export const createMockObstacle = (overrides?: Partial<Obstacle>): Obstacle => {
 }
 
 export const createMockObstacles = (count: number, spacing: number = 200): Obstacle[] => {
-  return Array.from({ length: count }, (_, i) => 
+  return Array.from({ length: count }, (_, i) =>
     createMockObstacle({
       id: `obstacle-${i + 1}`,
-      x: 800 + (i * spacing),
+      x: 800 + i * spacing,
       height: 40 + Math.random() * 40,
     })
   )
@@ -28,4 +28,3 @@ export const createMockObstacles = (count: number, spacing: number = 200): Obsta
 export const resetObstacleIdCounter = () => {
   obstacleIdCounter = 0
 }
-

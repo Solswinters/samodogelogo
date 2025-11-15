@@ -1,4 +1,4 @@
-import { Player, Obstacle } from '@/lib/game-logic'
+import type { Player, Obstacle } from '@/modules/game/domain/engine'
 
 export const mockPlayer: Player = {
   id: 'test-player',
@@ -28,4 +28,3 @@ export const mockGameState = {
   difficulty: 1,
   isMultiplayer: false,
 }
-
