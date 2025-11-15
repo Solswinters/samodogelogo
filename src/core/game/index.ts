@@ -1,8 +1,3 @@
-// Game core business logic exports
-export * from './types'
-export * from './config'
-export * from './engine'
-export * from './physics'
-export * from './collision'
-export * from './scoring'
-
+// Backward compatibility - re-export from new location
+// New imports should use @/modules/game/domain/engine
+export * from "@/modules/game/domain/engine";

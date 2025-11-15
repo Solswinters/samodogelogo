@@ -1,4 +1,3 @@
-// Network/multiplayer core logic exports
-export * from './socket'
-export * from './room-manager'
-
+// Backward compatibility - re-export from new location
+// New imports should use @/modules/multiplayer/domain/network
+export * from "@/modules/multiplayer/domain/network";
