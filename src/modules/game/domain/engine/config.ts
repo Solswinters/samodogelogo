@@ -1,0 +1,30 @@
+export const GAME_CONFIG = {
+  CANVAS_WIDTH: 800,
+  CANVAS_HEIGHT: 400,
+  PLAYER_WIDTH: 40,
+  PLAYER_HEIGHT: 60,
+  PLAYER_START_X: 100,
+  GROUND_Y: 320,
+  GRAVITY: 0.8,
+  JUMP_FORCE: -15,
+  INITIAL_GAME_SPEED: 5,
+  MAX_GAME_SPEED: 15,
+  OBSTACLE_WIDTH: 30,
+  OBSTACLE_MIN_HEIGHT: 40,
+  OBSTACLE_MAX_HEIGHT: 80,
+  OBSTACLE_SPAWN_DISTANCE: 400,
+  DIFFICULTY_INCREASE_INTERVAL: 10000, // 10 seconds
+  DIFFICULTY_MULTIPLIER: 0.3,
+} as const
+
+export const PLAYER_COLORS = [
+  '#3B82F6', // blue
+  '#EF4444', // red
+  '#10B981', // green
+  '#F59E0B', // yellow
+  '#8B5CF6', // purple
+  '#EC4899', // pink
+  '#14B8A6', // teal
+  '#F97316', // orange
+] as const
+
