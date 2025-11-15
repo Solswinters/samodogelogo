@@ -1,0 +1,12 @@
+# Coverage configuration for jest
+# This file is referenced by jest.config.js
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+
