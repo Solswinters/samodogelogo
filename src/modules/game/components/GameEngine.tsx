@@ -1,10 +1,11 @@
-"use client";
+'use client'
 
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback } from 'react'
+import type {
+  Player,
+  Obstacle} from '@/modules/game/domain/engine';
 import {
   GAME_CONFIG,
-  Player,
-  Obstacle,
   createPlayer,
   createObstacle,
   checkCollision,
@@ -13,320 +14,343 @@ import {
   calculateScore,
   calculateDifficulty,
   getGameSpeed,
-} from "@/lib/game-logic";
-import { useMultiplayer } from "@/hooks/useMultiplayer";
-import GameHUD from "./GameHUD";
-import Leaderboard from "../Leaderboard";
+} from '@/modules/game/domain/engine'
+import { useMultiplayer } from '@/modules/multiplayer/hooks/useMultiplayer'
+import GameHUD from './GameHUD'
+import Leaderboard from '../../multiplayer/components/Leaderboard'
 
 interface GameEngineProps {
-  isMultiplayer: boolean;
-  onGameOver: (score: number, isWinner: boolean) => void;
-  playerId?: string;
+  isMultiplayer: boolean
+  onGameOver: (score: number, isWinner: boolean) => void
+  playerId?: string
 }
 
-export default function GameEngine({ isMultiplayer, onGameOver, playerId }: GameEngineProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [gameState, setGameState] = useState<"waiting" | "playing" | "ended">("waiting");
-  const [localPlayer, setLocalPlayer] = useState<Player>(createPlayer("local", 0));
-  const [obstacles, setObstacles] = useState<Obstacle[]>([]);
-  const [gameTime, setGameTime] = useState(0);
-  const [obstaclesCleared, setObstaclesCleared] = useState(0);
-  const [remotePlayers, setRemotePlayers] = useState<Map<string, Player>>(new Map());
-  const [winnerId, setWinnerId] = useState<string | null>(null);
+export default function GameEngine({
+  isMultiplayer,
+  onGameOver,
+  playerId: _playerId,
+}: GameEngineProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [gameState, setGameState] = useState<'waiting' | 'playing' | 'ended'>('waiting')
+  const [localPlayer, setLocalPlayer] = useState<Player>(createPlayer('local', 0))
+  const [obstacles, setObstacles] = useState<Obstacle[]>([])
+  const [gameTime, setGameTime] = useState(0)
+  const [obstaclesCleared, setObstaclesCleared] = useState(0)
+  const [remotePlayers, setRemotePlayers] = useState<Map<string, Player>>(new Map())
+  const [_winnerId, setWinnerId] = useState<string | null>(null)
 
-  const gameLoopRef = useRef<number>();
-  const lastObstacleX = useRef(GAME_CONFIG.CANVAS_WIDTH);
-  const lastUpdateTime = useRef(Date.now());
-  const localPlayerRef = useRef<Player>(localPlayer);
-  const obstaclesRef = useRef<Obstacle[]>(obstacles);
-  const gameTimeRef = useRef<number>(gameTime);
-  const obstaclesClearedRef = useRef<number>(obstaclesCleared);
+  const gameLoopRef = useRef<number>()
+  const lastObstacleX = useRef(GAME_CONFIG.CANVAS_WIDTH)
+  const lastUpdateTime = useRef(Date.now())
+  const localPlayerRef = useRef<Player>(localPlayer)
+  const obstaclesRef = useRef<Obstacle[]>(obstacles)
+  const gameTimeRef = useRef<number>(gameTime)
+  const obstaclesClearedRef = useRef<number>(obstaclesCleared)
 
   // Keep refs in sync with state
   useEffect(() => {
-    localPlayerRef.current = localPlayer;
-  }, [localPlayer]);
+    localPlayerRef.current = localPlayer
+  }, [localPlayer])
 
   useEffect(() => {
-    obstaclesRef.current = obstacles;
-  }, [obstacles]);
+    obstaclesRef.current = obstacles
+  }, [obstacles])
 
   useEffect(() => {
-    gameTimeRef.current = gameTime;
-  }, [gameTime]);
+    gameTimeRef.current = gameTime
+  }, [gameTime])
 
   useEffect(() => {
-    obstaclesClearedRef.current = obstaclesCleared;
-  }, [obstaclesCleared]);
+    obstaclesClearedRef.current = obstaclesCleared
+  }, [obstaclesCleared])
 
   const multiplayer = useMultiplayer({
     onPlayerJoined: (id, player) => {
-      setRemotePlayers(prev => new Map(prev).set(id, player));
+      setRemotePlayers(prev => new Map(prev).set(id, player))
     },
-    onPlayerLeft: (id) => {
+    onPlayerLeft: id => {
       setRemotePlayers(prev => {
-        const newMap = new Map(prev);
-        newMap.delete(id);
-        return newMap;
-      });
+        const newMap = new Map(prev)
+        newMap.delete(id)
+        return newMap
+      })
     },
-    onPlayerJumped: (id) => {
+    onPlayerJumped: id => {
       setRemotePlayers(prev => {
-        const newMap = new Map(prev);
-        const player = newMap.get(id);
+        const newMap = new Map(prev)
+        const player = newMap.get(id)
         if (player) {
-          newMap.set(id, jump(player));
+          newMap.set(id, jump(player))
         }
-        return newMap;
-      });
+        return newMap
+      })
     },
     onPositionUpdated: (id, position) => {
       setRemotePlayers(prev => {
-        const newMap = new Map(prev);
-        const player = newMap.get(id);
+        const newMap = new Map(prev)
+        const player = newMap.get(id)
         if (player) {
-          player.y = position.y;
-          player.velocityY = position.velocityY;
-          player.isGrounded = position.isGrounded;
+          newMap.set(id, {
+            ...player,
+            y: position.y,
+            velocityY: position.velocityY,
+            isGrounded: position.isGrounded,
+          })
         }
-        return newMap;
-      });
+        return newMap
+      })
     },
-    onObstaclesSynced: (syncedObstacles) => {
+    onObstaclesSynced: syncedObstacles => {
       if (!multiplayer.isHost) {
-        setObstacles(syncedObstacles);
+        setObstacles(syncedObstacles)
       }
     },
     onGameStarted: () => {
-      startGame();
+      startGame()
     },
-    onGameOver: (data) => {
-      setWinnerId(data.winnerId);
-      endGame(data.winnerId === multiplayer.playerId);
+    onGameOver: data => {
+      setWinnerId(data.winnerId)
+      endGame(data.winnerId === multiplayer.playerId)
     },
-  });
+  })
 
   const startGame = useCallback(() => {
-    setGameState("playing");
-    setLocalPlayer(createPlayer(multiplayer.playerId || "local", 0));
-    setObstacles([]);
-    setGameTime(0);
-    setObstaclesCleared(0);
-    lastObstacleX.current = GAME_CONFIG.CANVAS_WIDTH;
-    lastUpdateTime.current = Date.now();
-  }, [multiplayer.playerId]);
+    setGameState('playing')
+    setLocalPlayer(createPlayer(multiplayer.playerId ?? 'local', 0))
+    setObstacles([])
+    setGameTime(0)
+    setObstaclesCleared(0)
+    lastObstacleX.current = GAME_CONFIG.CANVAS_WIDTH
+    lastUpdateTime.current = Date.now()
+  }, [multiplayer.playerId])
 
-  const endGame = useCallback((isWinner: boolean) => {
-    setGameState("ended");
-    const finalScore = calculateScore(gameTimeRef.current, obstaclesClearedRef.current);
-    onGameOver(finalScore, isWinner);
-  }, [onGameOver]);
+  const endGame = useCallback(
+    (isWinner: boolean) => {
+      setGameState('ended')
+      const finalScore = calculateScore(gameTimeRef.current, obstaclesClearedRef.current)
+      onGameOver(finalScore, isWinner)
+    },
+    [onGameOver]
+  )
 
   const handleJump = useCallback(() => {
-    if (gameState !== "playing" || !localPlayer.isAlive) return;
+    if (gameState !== 'playing' || !localPlayer.isAlive) {return}
 
     setLocalPlayer(prev => {
-      const jumped = jump(prev);
+      const jumped = jump(prev)
       if (jumped !== prev && isMultiplayer) {
-        multiplayer.sendJump();
+        multiplayer.sendJump()
       }
-      return jumped;
-    });
-  }, [gameState, localPlayer.isAlive, isMultiplayer, multiplayer]);
+      return jumped
+    })
+  }, [gameState, localPlayer.isAlive, isMultiplayer, multiplayer])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.code === "Space" || e.key === " ") {
-        e.preventDefault();
-        handleJump();
+      if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault()
+        handleJump()
       }
-    };
+    }
 
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [handleJump]);
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [handleJump])
 
   useEffect(() => {
-    if (!isMultiplayer || !multiplayer.isConnected) return;
-    
-    if (gameState === "waiting") {
-      multiplayer.joinRoom();
+    if (!isMultiplayer || !multiplayer.isConnected) {return}
+
+    if (gameState === 'waiting') {
+      multiplayer.joinRoom()
     }
 
     return () => {
-      if (gameState === "ended") {
-        multiplayer.leaveRoom();
+      if (gameState === 'ended') {
+        multiplayer.leaveRoom()
       }
-    };
-  }, [isMultiplayer]);
+    }
+  }, [isMultiplayer, multiplayer, gameState])
 
   useEffect(() => {
-    if (gameState !== "playing") return;
+    if (gameState !== 'playing') {return}
 
     const gameLoop = () => {
-      const now = Date.now();
-      const deltaTime = now - lastUpdateTime.current;
-      lastUpdateTime.current = now;
+      const now = Date.now()
+      const deltaTime = now - lastUpdateTime.current
+      lastUpdateTime.current = now
 
-      setGameTime(prev => prev + deltaTime);
+      setGameTime(prev => prev + deltaTime)
 
       // Update player physics and check collisions
       setLocalPlayer(prev => {
-        if (!prev.isAlive) return prev;
-        
-        const updated = updatePlayerPhysics(prev);
-        
+        if (!prev.isAlive) {return prev}
+
+        const updated = updatePlayerPhysics(prev)
+
         // Check collisions
         for (const obstacle of obstaclesRef.current) {
           if (checkCollision(updated, obstacle)) {
-            const deadPlayer = { ...updated, isAlive: false };
-            
+            const deadPlayer = { ...updated, isAlive: false }
+
             if (isMultiplayer) {
-              multiplayer.notifyDeath();
+              multiplayer.notifyDeath()
             } else {
               // Trigger game over callback
-              setTimeout(() => endGame(false), 100);
+              setTimeout(() => endGame(false), 100)
             }
-            
-            return deadPlayer;
+
+            return deadPlayer
           }
         }
-        
+
         // Update score
-        const newScore = calculateScore(gameTimeRef.current, obstaclesClearedRef.current);
-        const playerWithScore = { ...updated, score: newScore };
-        
+        const newScore = calculateScore(gameTimeRef.current, obstaclesClearedRef.current)
+        const playerWithScore = { ...updated, score: newScore }
+
         if (isMultiplayer) {
           multiplayer.updatePosition({
             y: playerWithScore.y,
             velocityY: playerWithScore.velocityY,
             isGrounded: playerWithScore.isGrounded,
-          });
-          multiplayer.updateScore(newScore);
+          })
+          multiplayer.updateScore(newScore)
         }
-        
-        return playerWithScore;
-      });
+
+        return playerWithScore
+      })
 
       // Update remote players
       if (isMultiplayer) {
         setRemotePlayers(prev => {
-          const newMap = new Map<string, Player>();
+          const newMap = new Map<string, Player>()
           prev.forEach((player, id) => {
-            newMap.set(id, updatePlayerPhysics(player));
-          });
-          return newMap;
-        });
+            newMap.set(id, updatePlayerPhysics(player))
+          })
+          return newMap
+        })
       }
 
       // Update obstacles (host only in multiplayer, or single player)
       if (!isMultiplayer || multiplayer.isHost) {
         setObstacles(prev => {
-          const difficulty = calculateDifficulty(gameTimeRef.current);
-          const speed = getGameSpeed(GAME_CONFIG.INITIAL_GAME_SPEED, difficulty - 1);
+          const difficulty = calculateDifficulty(gameTimeRef.current)
+          const speed = getGameSpeed(GAME_CONFIG.INITIAL_GAME_SPEED, difficulty - 1)
 
           // Move obstacles and track cleared ones
-          let newObstacles = prev.map(obs => ({ ...obs, x: obs.x - speed }));
-          
+          let newObstacles = prev.map(obs => ({ ...obs, x: obs.x - speed }))
+
           // Count cleared obstacles (passed the player)
-          const clearedCount = prev.filter(obs => 
-            obs.x + obs.width > localPlayerRef.current.x && 
-            obs.x + obs.width - speed <= localPlayerRef.current.x
-          ).length;
-          
+          const clearedCount = prev.filter(
+            obs =>
+              obs.x + obs.width > localPlayerRef.current.x &&
+              obs.x + obs.width - speed <= localPlayerRef.current.x
+          ).length
+
           if (clearedCount > 0) {
-            setObstaclesCleared(prevCleared => prevCleared + clearedCount);
+            setObstaclesCleared(prevCleared => prevCleared + clearedCount)
           }
-          
+
           // Remove off-screen obstacles
-          newObstacles = newObstacles.filter(obs => obs.x + obs.width > 0);
+          newObstacles = newObstacles.filter(obs => obs.x + obs.width > 0)
 
           // Spawn new obstacles
-          const lastObstacle = newObstacles[newObstacles.length - 1];
-          const shouldSpawn = !lastObstacle || 
-            (GAME_CONFIG.CANVAS_WIDTH - lastObstacle.x) > GAME_CONFIG.OBSTACLE_SPAWN_DISTANCE / difficulty;
+          const lastObstacle = newObstacles[newObstacles.length - 1]
+          const shouldSpawn =
+            !lastObstacle ||
+            GAME_CONFIG.CANVAS_WIDTH - lastObstacle.x >
+              GAME_CONFIG.OBSTACLE_SPAWN_DISTANCE / difficulty
 
           if (shouldSpawn) {
-            newObstacles.push(createObstacle(GAME_CONFIG.CANVAS_WIDTH));
+            newObstacles.push(createObstacle(GAME_CONFIG.CANVAS_WIDTH))
           }
 
           // Sync obstacles in multiplayer
           if (isMultiplayer && newObstacles !== prev) {
-            multiplayer.syncObstacles(newObstacles);
+            multiplayer.syncObstacles(newObstacles)
           }
 
-          return newObstacles;
-        });
+          return newObstacles
+        })
       }
 
-      gameLoopRef.current = requestAnimationFrame(gameLoop);
-    };
+      gameLoopRef.current = requestAnimationFrame(gameLoop)
+    }
 
-    gameLoopRef.current = requestAnimationFrame(gameLoop);
+    gameLoopRef.current = requestAnimationFrame(gameLoop)
 
     return () => {
       if (gameLoopRef.current) {
-        cancelAnimationFrame(gameLoopRef.current);
+        cancelAnimationFrame(gameLoopRef.current)
       }
-    };
-  }, [gameState, isMultiplayer, multiplayer, endGame]);
+    }
+  }, [gameState, isMultiplayer, multiplayer, endGame])
 
   // Collision detection and score updates are now handled in the game loop above
 
   // Render
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const canvas = canvasRef.current
+    if (!canvas) {return}
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const ctx = canvas.getContext('2d')
+    if (!ctx) {return}
 
     const render = () => {
       // Clear canvas
-      ctx.fillStyle = "#0a0a0a";
-      ctx.fillRect(0, 0, GAME_CONFIG.CANVAS_WIDTH, GAME_CONFIG.CANVAS_HEIGHT);
+      ctx.fillStyle = '#0a0a0a'
+      ctx.fillRect(0, 0, GAME_CONFIG.CANVAS_WIDTH, GAME_CONFIG.CANVAS_HEIGHT)
 
       // Draw ground
-      ctx.fillStyle = "#333";
-      ctx.fillRect(0, GAME_CONFIG.GROUND_Y + GAME_CONFIG.PLAYER_HEIGHT, GAME_CONFIG.CANVAS_WIDTH, 10);
+      ctx.fillStyle = '#333'
+      ctx.fillRect(
+        0,
+        GAME_CONFIG.GROUND_Y + GAME_CONFIG.PLAYER_HEIGHT,
+        GAME_CONFIG.CANVAS_WIDTH,
+        10
+      )
 
       // Draw obstacles
-      ctx.fillStyle = "#ff4444";
+      ctx.fillStyle = '#ff4444'
       obstacles.forEach(obs => {
-        ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-      });
+        ctx.fillRect(obs.x, obs.y, obs.width, obs.height)
+      })
 
       // Draw local player
       if (localPlayer.isAlive) {
-        ctx.fillStyle = localPlayer.color;
-        ctx.fillRect(localPlayer.x, localPlayer.y, GAME_CONFIG.PLAYER_WIDTH, GAME_CONFIG.PLAYER_HEIGHT);
+        ctx.fillStyle = localPlayer.color
+        ctx.fillRect(
+          localPlayer.x,
+          localPlayer.y,
+          GAME_CONFIG.PLAYER_WIDTH,
+          GAME_CONFIG.PLAYER_HEIGHT
+        )
       }
 
       // Draw remote players
       if (isMultiplayer) {
         remotePlayers.forEach(player => {
           if (player.isAlive) {
-            ctx.fillStyle = player.color;
-            ctx.fillRect(player.x, player.y, GAME_CONFIG.PLAYER_WIDTH, GAME_CONFIG.PLAYER_HEIGHT);
+            ctx.fillStyle = player.color
+            ctx.fillRect(player.x, player.y, GAME_CONFIG.PLAYER_WIDTH, GAME_CONFIG.PLAYER_HEIGHT)
           }
-        });
+        })
       }
 
       // Draw score
-      ctx.fillStyle = "#fff";
-      ctx.font = "20px Arial";
-      ctx.fillText(`Score: ${localPlayer.score}`, 20, 30);
-      ctx.fillText(`Time: ${Math.floor(gameTime / 1000)}s`, 20, 60);
+      ctx.fillStyle = '#fff'
+      ctx.font = '20px Arial'
+      ctx.fillText(`Score: ${localPlayer.score}`, 20, 30)
+      ctx.fillText(`Time: ${Math.floor(gameTime / 1000)}s`, 20, 60)
 
-      requestAnimationFrame(render);
-    };
+      requestAnimationFrame(render)
+    }
 
-    render();
-  }, [localPlayer, obstacles, remotePlayers, gameTime, isMultiplayer]);
+    render()
+  }, [localPlayer, obstacles, remotePlayers, gameTime, isMultiplayer])
 
   return (
     <>
-      {gameState === "playing" && (
+      {gameState === 'playing' && (
         <>
           <GameHUD
             score={localPlayer.score}
@@ -337,7 +361,7 @@ export default function GameEngine({ isMultiplayer, onGameOver, playerId }: Game
           />
           {isMultiplayer && (
             <Leaderboard
-              players={new Map([[multiplayer.playerId || "local", localPlayer], ...remotePlayers])}
+              players={new Map([[multiplayer.playerId ?? 'local', localPlayer], ...remotePlayers])}
               currentPlayerId={multiplayer.playerId}
             />
           )}
@@ -352,8 +376,8 @@ export default function GameEngine({ isMultiplayer, onGameOver, playerId }: Game
           className="border-2 border-gray-700 rounded-lg cursor-pointer"
           onClick={handleJump}
         />
-        
-        {gameState === "waiting" && (
+
+        {gameState === 'waiting' && (
           <div className="text-center">
             {isMultiplayer ? (
               multiplayer.isConnected ? (
@@ -381,11 +405,8 @@ export default function GameEngine({ isMultiplayer, onGameOver, playerId }: Game
           </div>
         )}
 
-        <p className="text-gray-400 text-sm">
-          Press SPACE or click to jump
-        </p>
+        <p className="text-gray-400 text-sm">Press SPACE or click to jump</p>
       </div>
     </>
-  );
+  )
 }
-
