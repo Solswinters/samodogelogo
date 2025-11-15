@@ -1,45 +1,49 @@
 import { z } from 'zod'
-import { EthereumAddressSchema } from './wallet'
+import { addressValidator, scoreValidator } from './game'
 
-// Claim request validation
+// API request schemas
 export const ClaimRequestSchema = z.object({
-  address: EthereumAddressSchema,
-  score: z.number().int().min(0).max(1000000),
+  address: addressValidator,
+  score: scoreValidator,
   isWinner: z.boolean(),
 })
 
-// Estimate request validation
-export const EstimateRequestSchema = z.object({
-  score: z.number().int().min(0).max(1000000),
-  isWinner: z.boolean(),
-})
-
-// Pagination validation
-export const PaginationSchema = z.object({
-  page: z.number().int().min(0).default(0),
-  pageSize: z.number().int().min(1).max(100).default(10),
-})
-
-// Sort order validation
-export const SortOrderSchema = z.enum(['asc', 'desc']).default('desc')
-
-// Leaderboard query validation
 export const LeaderboardQuerySchema = z.object({
-  page: z.number().int().min(0).default(0),
-  pageSize: z.number().int().min(1).max(100).default(10),
-  sortBy: z.enum(['score', 'gamesPlayed', 'winRate', 'totalRewards']).default('score'),
-  order: SortOrderSchema,
+  page: z.number().int().min(1).default(1),
+  pageSize: z.number().int().min(1).max(100).default(20),
+  period: z.enum(['daily', 'weekly', 'monthly', 'all-time']).default('all-time'),
 })
 
-// Health check response validation
-export const HealthCheckSchema = z.object({
-  status: z.enum(['healthy', 'unhealthy', 'degraded']),
-  uptime: z.number().min(0),
-  timestamp: z.string(),
-  services: z.object({
-    database: z.enum(['up', 'down']).optional(),
-    blockchain: z.enum(['up', 'down']).optional(),
-    socket: z.enum(['up', 'down']).optional(),
+export const StatsQuerySchema = z.object({
+  address: addressValidator.optional(),
+  period: z.enum(['24h', '7d', '30d', 'all']).default('all'),
+})
+
+export const VerifyScoreSchema = z.object({
+  address: addressValidator,
+  score: scoreValidator,
+  gameData: z.object({
+    duration: z.number().min(0),
+    obstacles: z.number().int().min(0),
+    timestamp: z.number().int(),
   }),
 })
 
+// Pagination schema
+export const PaginationSchema = z.object({
+  page: z.number().int().min(1).default(1),
+  pageSize: z.number().int().min(1).max(100).default(20),
+})
+
+// Sort schema
+export const SortSchema = z.object({
+  field: z.string(),
+  order: z.enum(['asc', 'desc']).default('desc'),
+})
+
+// Filter schema
+export const FilterSchema = z.object({
+  field: z.string(),
+  operator: z.enum(['eq', 'ne', 'gt', 'gte', 'lt', 'lte', 'in', 'nin', 'contains']),
+  value: z.union([z.string(), z.number(), z.boolean(), z.array(z.unknown())]),
+})
