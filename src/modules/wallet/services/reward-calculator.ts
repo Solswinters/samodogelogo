@@ -2,85 +2,104 @@
  * Reward calculation service
  */
 
-import { GAME_CONSTANTS } from '@/constants/game'
+import { calculateRewardFromScore } from '@/modules/game/utils/score-calculator'
+import { logger } from '@/utils/logger'
 
-export interface RewardCalculation {
+interface RewardBreakdown {
   baseReward: bigint
   scoreBonus: bigint
-  winnerBonus: bigint
+  winnerMultiplier: number
   totalReward: bigint
+  formattedTotal: string
 }
 
-export function calculateReward(score: number, isWinner: boolean): RewardCalculation {
-  const baseReward = BigInt(GAME_CONSTANTS.BASE_REWARD) * BigInt(10 ** 18)
-  const scoreBonus = (BigInt(score) * BigInt(10 ** 18)) / BigInt(GAME_CONSTANTS.SCORE_BONUS_DIVISOR)
+class RewardCalculator {
+  private readonly BASE_REWARD = 10n // 10 tokens
+  private readonly TOKEN_DECIMALS = 18n
+  private readonly SCORE_BONUS_DIVISOR = 100n
+  private readonly WINNER_MULTIPLIER = 1.5
 
-  const subtotal = baseReward + scoreBonus
-  const winnerBonus = isWinner
-    ? (subtotal * BigInt(Math.floor(GAME_CONSTANTS.WINNER_MULTIPLIER * 100 - 100))) / BigInt(100)
-    : BigInt(0)
+  calculateReward(score: number, isWinner: boolean): bigint {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+      return calculateRewardFromScore(score, isWinner)
+    } catch (error) {
+      logger.error('Failed to calculate reward', error)
+      return 0n
+    }
+  }
 
-  const totalReward = subtotal + winnerBonus
+  getRewardBreakdown(score: number, isWinner: boolean): RewardBreakdown {
+    const baseReward = this.BASE_REWARD * 10n ** this.TOKEN_DECIMALS
+    const scoreBonus = (BigInt(score) * 10n ** this.TOKEN_DECIMALS) / this.SCORE_BONUS_DIVISOR
 
-  return {
-    baseReward,
-    scoreBonus,
-    winnerBonus,
-    totalReward,
+    let totalReward = baseReward + scoreBonus
+
+    if (isWinner) {
+      const multiplierBigInt = BigInt(Math.floor(this.WINNER_MULTIPLIER * 10000))
+      totalReward = (totalReward * multiplierBigInt) / 10000n
+    }
+
+    return {
+      baseReward,
+      scoreBonus,
+      winnerMultiplier: isWinner ? this.WINNER_MULTIPLIER : 1,
+      totalReward,
+      formattedTotal: this.formatReward(totalReward),
+    }
+  }
+
+  formatReward(amount: bigint): string {
+    const divisor = 10n ** this.TOKEN_DECIMALS
+    const integerPart = amount / divisor
+    const fractionalPart = amount % divisor
+
+    const fractionalStr = fractionalPart.toString().padStart(Number(this.TOKEN_DECIMALS), '0')
+    const truncatedFractional = fractionalStr.substring(0, 4)
+
+    return `${integerPart}.${truncatedFractional}`
+  }
+
+  estimateGasCost(_reward: bigint): bigint {
+    // Rough estimate: 50,000 gas * 20 gwei = 0.001 ETH
+    const estimatedGas = 50000n
+    const gasPrice = 20n * 10n ** 9n // 20 gwei in wei
+    return estimatedGas * gasPrice
+  }
+
+  getNetReward(reward: bigint, gasCost: bigint): bigint {
+    if (reward <= gasCost) {
+      return 0n
+    }
+    return reward - gasCost
+  }
+
+  isRewardProfitable(reward: bigint, gasCost: bigint): boolean {
+    return reward > gasCost * 2n // Reward should be at least 2x the gas cost to be worthwhile
+  }
+
+  getMinimumScoreForProfit(gasCost: bigint, isWinner: boolean = false): number {
+    // Calculate minimum score needed to make claiming worthwhile
+    const minReward = gasCost * 2n
+    const baseReward = this.BASE_REWARD * 10n ** this.TOKEN_DECIMALS
+
+    let requiredTotal = minReward
+    if (isWinner) {
+      const multiplierBigInt = BigInt(Math.floor(this.WINNER_MULTIPLIER * 10000))
+      requiredTotal = (requiredTotal * 10000n) / multiplierBigInt
+    }
+
+    if (requiredTotal <= baseReward) {
+      return 0 // Base reward alone is sufficient
+    }
+
+    const requiredScoreBonus = requiredTotal - baseReward
+    const minScore = Number(
+      (requiredScoreBonus * this.SCORE_BONUS_DIVISOR) / 10n ** this.TOKEN_DECIMALS
+    )
+
+    return Math.ceil(minScore)
   }
 }
 
-export function formatRewardAmount(amount: bigint, decimals: number = 18): string {
-  const divisor = BigInt(10 ** decimals)
-  const integerPart = amount / divisor
-  const fractionalPart = amount % divisor
-
-  if (fractionalPart === BigInt(0)) {
-    return integerPart.toString()
-  }
-
-  const fractionalStr = fractionalPart.toString().padStart(decimals, '0')
-  const trimmed = fractionalStr.replace(/0+$/, '').slice(0, 4)
-
-  return `${integerPart}.${trimmed}`
-}
-
-export function estimateReward(score: number, isWinner: boolean): string {
-  const calculation = calculateReward(score, isWinner)
-  return formatRewardAmount(calculation.totalReward)
-}
-
-export function canClaimReward(
-  lastClaimTime: number,
-  cooldownPeriod: number = GAME_CONSTANTS.COOLDOWN_PERIOD
-): boolean {
-  const currentTime = Math.floor(Date.now() / 1000)
-  return currentTime - lastClaimTime >= cooldownPeriod
-}
-
-export function getTimeUntilNextClaim(
-  lastClaimTime: number,
-  cooldownPeriod: number = GAME_CONSTANTS.COOLDOWN_PERIOD
-): number {
-  const currentTime = Math.floor(Date.now() / 1000)
-  const nextClaimTime = lastClaimTime + cooldownPeriod
-  return Math.max(0, nextClaimTime - currentTime)
-}
-
-export function formatCooldownTime(seconds: number): string {
-  if (seconds <= 0) {
-    return 'Now'
-  }
-
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  const secs = seconds % 60
-
-  if (hours > 0) {
-    return `${hours}h ${minutes}m`
-  }
-  if (minutes > 0) {
-    return `${minutes}m ${secs}s`
-  }
-  return `${secs}s`
-}
+export const rewardCalculator = new RewardCalculator()
