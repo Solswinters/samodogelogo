@@ -2,9 +2,36 @@
  * Game-related type definitions
  */
 
+import type { PlayerColor } from '@/constants/game'
+
 export type GameMode = 'single' | 'multi'
 export type GameState = 'waiting' | 'playing' | 'paused' | 'ended'
-export type PlayerColor = string
+
+export interface Player {
+  id: string
+  x: number
+  y: number
+  velocityY: number
+  isJumping: boolean
+  isAlive: boolean
+  score: number
+  color: PlayerColor
+}
+
+export interface Obstacle {
+  id: string
+  x: number
+  y: number
+  width: number
+  height: number
+  speed: number
+}
+
+export interface PlayerScore {
+  playerId: string
+  score: number
+  timestamp: number
+}
 
 export interface GameSettings {
   soundEnabled: boolean
@@ -15,6 +42,17 @@ export interface GameSettings {
 }
 
 export interface GameSession {
+  id: string
+  players: string[] // Player IDs
+  hostId: string
+  startTime: number
+  endTime: number | null
+  scores: PlayerScore[]
+  status: GameState
+  difficulty: number
+}
+
+export interface GameSessionLegacy {
   id: string
   mode: GameMode
   startTime: number
