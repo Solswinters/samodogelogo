@@ -1,13 +1,14 @@
 /**
- * API response types
+ * API-related type definitions
  */
 
-export interface ApiResponse<T> {
+import type { Address } from 'viem'
+
+export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
-  error?: string
-  message?: string
-  timestamp?: string
+  error?: ApiError
+  timestamp?: number
 }
 
 export interface ApiError {
@@ -25,46 +26,111 @@ export interface PaginatedResponse<T> {
 }
 
 export interface HealthCheckResponse {
-  status: 'healthy' | 'unhealthy'
-  timestamp: string
-  uptime: number
-  environment: string
+  status: 'ok' | 'error' | 'degraded'
+  timestamp: number
+  version?: string
+  uptime?: number
+  message?: string
 }
 
 export interface StatsResponse {
   totalPlayers: number
+  activeGames: number
   totalGamesPlayed: number
-  totalRewardsClaimed: number
+  totalRewardsClaimed: string
   averageScore: number
-  highestScore: number
-}
-
-export interface LeaderboardResponse {
-  rankings: LeaderboardEntry[]
-  userRank?: number
-  totalPlayers: number
-}
-
-export interface LeaderboardEntry {
-  rank: number
-  address: string
-  score: number
-  gamesPlayed: number
-  totalClaimed: number
+  highScore: number
+  timestamp: number
 }
 
 export interface PlayerStatsResponse {
-  address: string
-  totalClaimed: number
+  playerAddress: Address
+  totalClaimed: string
   gamesPlayed: number
   highestScore: number
-  lastPlayedAt?: string
+  averageScore: number
+  timeUntilNextClaim: number
   rank?: number
 }
 
-export interface ClaimResponse {
+export interface LeaderboardEntry {
+  playerAddress: Address
+  score: number
+  timestamp: number
+  rank: number
+  isWinner: boolean
+}
+
+export interface LeaderboardResponse {
+  leaderboard: LeaderboardEntry[]
+  totalPlayers: number
+  playerRank?: number
+  playerHighestScore?: number
+  updatedAt: number
+}
+
+export interface ClaimRewardRequest {
+  playerAddress: Address
+  score: number
+  isWinner: boolean
+  nonce: number
+  signature: `0x${string}`
+}
+
+export interface ClaimRewardResponse {
+  transactionHash: `0x${string}`
+  rewardAmount: string
+  newTotalClaimed: string
+  nextClaimAvailable: number
+}
+
+export interface SubmitScoreRequest {
+  playerAddress: Address
+  score: number
+  timestamp: number
+  sessionId?: string
+}
+
+export interface SubmitScoreResponse {
   success: boolean
-  txHash?: string
-  amount?: string
-  message?: string
+  message: string
+  newHighScore?: boolean
+  rank?: number
+}
+
+export interface GameSessionRequest {
+  playerAddress: Address
+  mode: 'single' | 'multi'
+}
+
+export interface GameSessionResponse {
+  sessionId: string
+  startTime: number
+  expiresAt: number
+}
+
+export interface ApiConfig {
+  baseUrl: string
+  timeout: number
+  retries: number
+  headers: Record<string, string>
+}
+
+export interface RateLimitInfo {
+  limit: number
+  remaining: number
+  reset: number
+}
+
+export interface WebSocketMessage<T = unknown> {
+  type: string
+  payload: T
+  timestamp: number
+  id?: string
+}
+
+export interface ApiCache<T> {
+  data: T
+  timestamp: number
+  expiresAt: number
 }
