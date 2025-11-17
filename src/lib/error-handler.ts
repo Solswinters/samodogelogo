@@ -77,8 +77,54 @@ export class ErrorHandler {
     }
     return 'UNKNOWN_ERROR'
   }
+
+  /**
+   * Execute function with automatic retry on failure
+   */
+  static async withRetry<T>(
+    fn: () => Promise<T>,
+    retries = 3,
+    delay = 1000,
+    context?: ErrorContext
+  ): Promise<T> {
+    let lastError: unknown
+
+    for (let i = 0; i < retries; i++) {
+      try {
+        return await fn()
+      } catch (error) {
+        lastError = error
+        this.handle(error, { ...context, metadata: { ...context?.metadata, attempt: i + 1 } })
+
+        if (i < retries - 1) {
+          await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)))
+        }
+      }
+    }
+
+    throw lastError
+  }
+
+  /**
+   * Create error boundary wrapper for functions
+   */
+  static boundary<T extends unknown[], R>(
+    fn: (...args: T) => R,
+    fallback?: R,
+    context?: ErrorContext
+  ): (...args: T) => R | undefined {
+    return (...args: T) => {
+      try {
+        return fn(...args)
+      } catch (error) {
+        this.handle(error, context)
+        return fallback
+      }
+    }
+  }
 }
 
 export const handleError = ErrorHandler.handle.bind(ErrorHandler)
 export const handleAsyncError = ErrorHandler.handleAsync.bind(ErrorHandler)
 export const handleSyncError = ErrorHandler.handleSync.bind(ErrorHandler)
+export const withRetry = ErrorHandler.withRetry.bind(ErrorHandler)
