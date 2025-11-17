@@ -1,3 +1,8 @@
-// Game-related hooks
-// Future game hooks will be added here
+/**
+ * Game hooks exports
+ */
 
+export * from './useGameLoop'
+export * from './useKeyboard'
+export * from './useGameState'
+export * from './useScore'
