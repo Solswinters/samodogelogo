@@ -1,5 +1,8 @@
-// Game components
-export { default as GameEngine } from './GameEngine'
-export { default as GameHUD } from './GameHUD'
-export { default as GameOver } from './GameOver'
+/**
+ * Game components exports
+ */
 
+export * from './GameEngine'
+export * from './GameHUD'
+export * from './GameOver'
+export * from './MenuScreen'
