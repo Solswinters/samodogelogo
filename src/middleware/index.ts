@@ -1,9 +1,11 @@
-// API middleware exports
-export * from './validation'
-export * from './response'
-export * from './rateLimit'
+/**
+ * Middleware exports
+ */
+
 export * from './auth'
-export * from './cors'
-export * from './logging'
-export * from './cache'
 export * from './errorHandler'
+export * from './validation'
+export * from './metrics'
+export * from './cors'
+export * from './response'
+export * from './apiVersioning'
