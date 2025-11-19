@@ -112,11 +112,8 @@ export {
 // Types
 export type * from './types'
 
-// Utils
+// Utils - Consolidated exports from utils/index.ts
 export * from './utils'
-export * from './utils/validation'
-export * from './utils/encryption'
-export * from './utils/sorting'
 
 // Constants
 export * from './constants'
