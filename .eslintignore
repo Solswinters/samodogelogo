@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+
+# Build outputs
+.next
+out
+dist
+build
+
+# Cache
+.turbo
+.cache
+
+# Generated files
+*.min.js
+
+# Config files
+next.config.js
+postcss.config.js
+
+# Test coverage
+coverage
+
