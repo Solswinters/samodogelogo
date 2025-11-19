@@ -1,28 +1,46 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import WalletConnect from '@/modules/wallet/components/WalletConnect'
 import GameEngine from '@/modules/game/components/GameEngine'
 import GameOver from '@/modules/game/components/GameOver'
 import { useGameContract } from '@/modules/wallet/hooks/useGameContract'
+import { useGameStore } from '@/stores/game-store'
+import { useIsMobile } from '@/shared/hooks'
+import { useUIStore } from '@/stores/ui-store'
 
 export default function Home() {
-  const [gameMode, setGameMode] = useState<'menu' | 'single' | 'multi'>('menu')
-  const [gameState, setGameState] = useState<'playing' | 'ended'>('playing')
-  const [finalScore, setFinalScore] = useState(0)
-  const [isWinner, setIsWinner] = useState(false)
+  const gameMode = useGameStore(state => state.mode)
+  const gameState = useGameStore(state => state.state)
+  const finalScore = useGameStore(state => state.finalScore)
+  const isWinner = useGameStore(state => state.isWinner)
+  const isMultiplayer = useGameStore(state => state.isMultiplayer)
+
+  const setMode = useGameStore(state => state.setMode)
+  const setFinalScore = useGameStore(state => state.setFinalScore)
+  const resetGame = useGameStore(state => state.resetGame)
+  const setMultiplayer = useGameStore(state => state.setMultiplayer)
+
+  const setMobile = useUIStore(state => state.setMobile)
+  const isMobile = useIsMobile()
+
+  useEffect(() => {
+    setMobile(isMobile)
+  }, [isMobile, setMobile])
 
   const { address, tokenBalance, playerStats } = useGameContract()
 
   const handleGameOver = (score: number, winner: boolean) => {
-    setFinalScore(score)
-    setIsWinner(winner)
-    setGameState('ended')
+    setFinalScore(score, winner)
   }
 
   const handleRestart = () => {
-    setGameState('playing')
-    setGameMode('menu')
+    resetGame()
+  }
+
+  const handleModeSelect = (mode: 'single' | 'multi') => {
+    setMultiplayer(mode === 'multi')
+    setMode(mode)
   }
 
   return (
@@ -95,7 +113,7 @@ export default function Home() {
             {/* Game Mode Selection */}
             <div className="grid md:grid-cols-2 gap-6 mb-12">
               <button
-                onClick={() => setGameMode('single')}
+                onClick={() => handleModeSelect('single')}
                 className="bg-gradient-to-br from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 p-8 rounded-xl border-2 border-blue-500 transition-all transform hover:scale-105"
               >
                 <div className="text-6xl mb-4">🎮</div>
@@ -106,7 +124,7 @@ export default function Home() {
               </button>
 
               <button
-                onClick={() => setGameMode('multi')}
+                onClick={() => handleModeSelect('multi')}
                 className="bg-gradient-to-br from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 p-8 rounded-xl border-2 border-purple-500 transition-all transform hover:scale-105"
               >
                 <div className="text-6xl mb-4">👥</div>
@@ -159,13 +177,13 @@ export default function Home() {
         ) : (
           <div className="flex flex-col items-center">
             <GameEngine
-              isMultiplayer={gameMode === 'multi'}
+              isMultiplayer={isMultiplayer}
               onGameOver={handleGameOver}
               playerId={address}
             />
 
             <button
-              onClick={() => setGameMode('menu')}
+              onClick={() => setMode('menu')}
               className="mt-6 px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
             >
               ← Back to Menu
