@@ -10,6 +10,11 @@ export * from './hooks'
 
 // Utils
 export * from './utils'
+export * from './array'
+export * from './string'
+export * from './object'
+export * from './date'
+export * from './math'
 
 // Services
 export { logger, LogLevel } from './logger'
@@ -32,3 +37,12 @@ export * from './validation'
 export * from './constants'
 export * from './http'
 export { default as config, getConfig } from './config'
+export { performanceMonitor, measureAsync, measureSync } from './performance'
+export * from './types'
+
+// React utilities
+export { SuspenseBoundary } from './react/Suspense'
+export { ClientOnly } from './react/ClientOnly'
+
+// Test utilities
+export * from './test-utils'
