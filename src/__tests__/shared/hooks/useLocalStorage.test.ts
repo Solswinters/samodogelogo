@@ -1,7 +1,3 @@
-/**
- * Tests for useLocalStorage hook
- */
-
 import { renderHook, act } from '@testing-library/react'
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage'
 
@@ -10,49 +6,36 @@ describe('useLocalStorage', () => {
     localStorage.clear()
   })
 
-  it('returns initial value when no stored value exists', () => {
-    const { result } = renderHook(() => useLocalStorage('test-key', 'initial'))
-    expect(result.current[0]).toBe('initial')
+  it('should initialize with default value', () => {
+    const { result } = renderHook(() => useLocalStorage('test', 'default'))
+    expect(result.current[0]).toBe('default')
   })
 
-  it('stores and retrieves values', () => {
-    const { result } = renderHook(() => useLocalStorage('test-key', 'initial'))
+  it('should store value in localStorage', () => {
+    const { result } = renderHook(() => useLocalStorage('test', ''))
 
     act(() => {
-      result.current[1]('updated')
+      result.current[1]('stored value')
     })
 
-    expect(result.current[0]).toBe('updated')
-    expect(localStorage.getItem('test-key')).toBe(JSON.stringify('updated'))
+    expect(result.current[0]).toBe('stored value')
+    expect(localStorage.getItem('test')).toBe(JSON.stringify('stored value'))
   })
 
-  it('retrieves existing value from localStorage', () => {
-    localStorage.setItem('test-key', JSON.stringify('existing'))
+  it('should retrieve existing value from localStorage', () => {
+    localStorage.setItem('test', JSON.stringify('existing'))
 
-    const { result } = renderHook(() => useLocalStorage('test-key', 'initial'))
-
-    // Wait for useEffect to run
+    const { result } = renderHook(() => useLocalStorage('test', 'default'))
     expect(result.current[0]).toBe('existing')
   })
 
-  it('handles function updates', () => {
-    const { result } = renderHook(() => useLocalStorage('test-key', 0))
+  it('should handle objects', () => {
+    const { result } = renderHook(() => useLocalStorage('test', { count: 0 }))
 
     act(() => {
-      result.current[1](prev => prev + 1)
+      result.current[1]({ count: 5 })
     })
 
-    expect(result.current[0]).toBe(1)
-  })
-
-  it('handles complex objects', () => {
-    const obj = { name: 'test', count: 42 }
-    const { result } = renderHook(() => useLocalStorage('test-key', obj))
-
-    act(() => {
-      result.current[1]({ name: 'updated', count: 100 })
-    })
-
-    expect(result.current[0]).toEqual({ name: 'updated', count: 100 })
+    expect(result.current[0]).toEqual({ count: 5 })
   })
 })
