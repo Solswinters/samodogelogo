@@ -2,7 +2,13 @@
  * Game components exports
  */
 
-export * from './GameEngine'
-export * from './GameHUD'
-export * from './GameOver'
-export * from './MenuScreen'
+// HUD components
+export { GameHUD } from './HUD/GameHUD'
+export { HealthBar } from './HUD/HealthBar'
+export { EnergyBar } from './HUD/EnergyBar'
+export { Minimap } from './HUD/Minimap'
+export { PowerUpSlot } from './HUD/PowerUpSlot'
+
+// Menu components
+export { PauseMenu } from './Menus/PauseMenu'
+export { GameOverScreen } from './Menus/GameOverScreen'
