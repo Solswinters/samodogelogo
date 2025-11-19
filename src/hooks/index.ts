@@ -1,4 +1,6 @@
-// Barrel exports for hooks from modules
-export * from '@/modules/wallet/hooks'
-export * from '@/modules/multiplayer/hooks'
-export * from '@/modules/game/hooks'
+/**
+ * Barrel export for all custom hooks
+ */
+
+export * from './useMediaQuery'
+export * from './usePreventScroll'
