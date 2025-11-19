@@ -1,25 +1,19 @@
 /**
- * Hook for fetching token balance
+ * Hook for token balance queries
  */
 
-import { useState, useEffect } from 'react'
+import { useAccount, useReadContract, useWatchContractEvent } from 'wagmi'
 import { type Address } from 'viem'
-import { useReadContract } from 'wagmi'
-import { getContractABI } from '@/config/contracts'
+import { GameTokenABI } from '../abi/GameToken'
+import { useEffect } from 'react'
 
-export interface UseTokenBalanceResult {
-  balance: bigint | null
-  formattedBalance: string | null
-  isLoading: boolean
-  error: Error | null
-  refetch: () => Promise<unknown>
+export interface UseTokenBalanceParams {
+  tokenAddress: Address
+  enabled?: boolean
 }
 
-export function useTokenBalance(
-  tokenAddress: Address | undefined,
-  ownerAddress: Address | undefined
-): UseTokenBalanceResult {
-  const [formattedBalance, setFormattedBalance] = useState<string | null>(null)
+export function useTokenBalance({ tokenAddress, enabled = true }: UseTokenBalanceParams) {
+  const { address } = useAccount()
 
   const {
     data: balance,
@@ -28,27 +22,35 @@ export function useTokenBalance(
     refetch,
   } = useReadContract({
     address: tokenAddress,
-    abi: getContractABI('gameToken'),
+    abi: GameTokenABI,
     functionName: 'balanceOf',
-    args: ownerAddress ? [ownerAddress] : undefined,
+    args: address ? [address] : undefined,
     query: {
-      enabled: Boolean(tokenAddress && ownerAddress),
+      enabled: enabled && !!address,
     },
   })
 
-  useEffect(() => {
-    if (balance !== undefined) {
-      // Format balance (assuming 18 decimals)
-      const formatted = (Number(balance) / 1e18).toFixed(2)
-      setFormattedBalance(formatted)
-    }
-  }, [balance])
+  // Watch for transfer events to refetch balance
+  useWatchContractEvent({
+    address: tokenAddress,
+    abi: GameTokenABI,
+    eventName: 'Transfer',
+    onLogs: logs => {
+      const relevantTransfer = logs.some(log => {
+        const { from, to } = log.args
+        return from === address || to === address
+      })
+
+      if (relevantTransfer) {
+        void refetch()
+      }
+    },
+  })
 
   return {
-    balance: (balance as bigint | null) ?? null,
-    formattedBalance,
+    balance: balance as bigint | undefined,
     isLoading,
-    error: error as Error | null,
+    error,
     refetch,
   }
 }
