@@ -1,80 +1,61 @@
-'use client'
-
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { cn } from '@/shared/utils/cn'
 
-interface SwitchProps {
-  checked: boolean
-  onChange: (checked: boolean) => void
+export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label?: string
-  disabled?: boolean
-  size?: 'sm' | 'md' | 'lg'
-  className?: string
+  description?: string
 }
 
-const sizeClasses = {
-  sm: {
-    track: 'w-8 h-4',
-    thumb: 'w-3 h-3',
-    translate: 'translate-x-4',
-  },
-  md: {
-    track: 'w-11 h-6',
-    thumb: 'w-5 h-5',
-    translate: 'translate-x-5',
-  },
-  lg: {
-    track: 'w-14 h-7',
-    thumb: 'w-6 h-6',
-    translate: 'translate-x-7',
-  },
-}
-
-export const Switch: React.FC<SwitchProps> = ({
-  checked,
-  onChange,
-  label,
-  disabled = false,
-  size = 'md',
-  className,
-}) => {
-  const sizes = sizeClasses[size]
-
-  return (
-    <label
-      className={cn(
-        'flex items-center gap-3 cursor-pointer',
-        disabled && 'opacity-50 cursor-not-allowed',
-        className
-      )}
-    >
-      <div className="relative inline-flex items-center">
-        <input
-          type="checkbox"
-          className="sr-only"
-          checked={checked}
-          onChange={e => onChange(e.target.checked)}
-          disabled={disabled}
-        />
-        <div
-          className={cn(
-            'rounded-full transition-colors',
-            sizes.track,
-            checked ? 'bg-blue-600' : 'bg-gray-600'
-          )}
-        >
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
+  ({ label, description, className, disabled, checked, onChange, ...props }, ref) => {
+    return (
+      <label
+        className={cn(
+          'inline-flex items-center gap-3',
+          disabled && 'cursor-not-allowed opacity-50',
+          !disabled && 'cursor-pointer',
+          className
+        )}
+      >
+        <div className="relative">
+          <input
+            ref={ref}
+            type="checkbox"
+            className="peer sr-only"
+            disabled={disabled}
+            checked={checked}
+            onChange={onChange}
+            {...props}
+          />
           <div
             className={cn(
-              'absolute top-0.5 left-0.5 rounded-full bg-white transition-transform',
-              sizes.thumb,
-              checked && sizes.translate
+              'block h-6 w-11 rounded-full transition-colors',
+              'peer-checked:bg-blue-600',
+              'peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500 peer-focus-visible:ring-offset-2',
+              !disabled && !checked && 'bg-gray-300 dark:bg-gray-600',
+              disabled && 'cursor-not-allowed'
+            )}
+          />
+          <div
+            className={cn(
+              'absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform',
+              'peer-checked:translate-x-5'
             )}
           />
         </div>
-      </div>
-      {label && <span className="text-sm text-gray-300">{label}</span>}
-    </label>
-  )
-}
+        {(label || description) && (
+          <div className="flex flex-col">
+            {label && (
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-50">{label}</span>
+            )}
+            {description && (
+              <span className="text-xs text-gray-500 dark:text-gray-400">{description}</span>
+            )}
+          </div>
+        )}
+      </label>
+    )
+  }
+)
 
-export default Switch
+Switch.displayName = 'Switch'
