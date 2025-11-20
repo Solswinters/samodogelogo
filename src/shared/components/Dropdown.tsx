@@ -1,86 +1,145 @@
-'use client'
-
-import React, { useRef, useState } from 'react'
+import React, { useState, useRef, useEffect, createContext, useContext } from 'react'
 import { cn } from '@/shared/utils/cn'
-import { useClickOutside } from '@/shared/hooks'
+import { useClickOutside } from '@/hooks/useClickOutside'
 
-interface DropdownOption {
-  value: string
-  label: string
-  disabled?: boolean
+interface DropdownContextValue {
+  isOpen: boolean
+  setIsOpen: (open: boolean) => void
 }
 
-interface DropdownProps {
-  options: DropdownOption[]
-  value?: string
-  onChange: (value: string) => void
-  placeholder?: string
-  disabled?: boolean
-  className?: string
+const DropdownContext = createContext<DropdownContextValue | undefined>(undefined)
+
+const useDropdownContext = () => {
+  const context = useContext(DropdownContext)
+  if (!context) {
+    throw new Error('Dropdown components must be used within a Dropdown component')
+  }
+  return context
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({
-  options,
-  value,
-  onChange,
-  placeholder = 'Select option',
-  disabled = false,
-  className,
-}) => {
+export interface DropdownProps {
+  children: React.ReactNode
+}
+
+export const Dropdown: React.FC<DropdownProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   useClickOutside(dropdownRef, () => setIsOpen(false))
 
-  const selectedOption = options.find(opt => opt.value === value)
+  return (
+    <DropdownContext.Provider value={{ isOpen, setIsOpen }}>
+      <div ref={dropdownRef} className="relative inline-block text-left">
+        {children}
+      </div>
+    </DropdownContext.Provider>
+  )
+}
 
-  const handleSelect = (optionValue: string) => {
-    onChange(optionValue)
-    setIsOpen(false)
+export interface DropdownTriggerProps {
+  children: React.ReactNode
+  className?: string
+}
+
+export const DropdownTrigger: React.FC<DropdownTriggerProps> = ({ children, className }) => {
+  const { isOpen, setIsOpen } = useDropdownContext()
+
+  return (
+    <button
+      type="button"
+      onClick={() => setIsOpen(!isOpen)}
+      className={cn('inline-flex items-center', className)}
+      aria-expanded={isOpen}
+      aria-haspopup="true"
+    >
+      {children}
+    </button>
+  )
+}
+
+export interface DropdownContentProps {
+  children: React.ReactNode
+  className?: string
+  align?: 'start' | 'center' | 'end'
+}
+
+export const DropdownContent: React.FC<DropdownContentProps> = ({
+  children,
+  className,
+  align = 'start',
+}) => {
+  const { isOpen } = useDropdownContext()
+
+  if (!isOpen) return null
+
+  const alignmentClasses = {
+    start: 'left-0',
+    center: 'left-1/2 -translate-x-1/2',
+    end: 'right-0',
   }
 
   return (
-    <div ref={dropdownRef} className={cn('relative w-full', className)}>
-      <button
-        type="button"
-        onClick={() => !disabled && setIsOpen(!isOpen)}
-        disabled={disabled}
-        className={cn(
-          'w-full rounded-lg border bg-gray-700 px-4 py-2 text-left text-white',
-          'focus:outline-none focus:ring-2 focus:ring-blue-500',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-          'flex items-center justify-between',
-          'border-gray-600'
-        )}
-      >
-        <span>{selectedOption?.label || placeholder}</span>
-        <span className={cn('transition-transform', isOpen && 'rotate-180')}>▼</span>
-      </button>
-
-      {isOpen && (
-        <div className="absolute z-10 mt-1 w-full rounded-lg border border-gray-600 bg-gray-700 shadow-lg">
-          <div className="max-h-60 overflow-auto py-1">
-            {options.map(option => (
-              <button
-                key={option.value}
-                onClick={() => !option.disabled && handleSelect(option.value)}
-                disabled={option.disabled}
-                className={cn(
-                  'w-full px-4 py-2 text-left text-sm transition-colors',
-                  option.value === value
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-300 hover:bg-gray-600',
-                  option.disabled && 'opacity-50 cursor-not-allowed'
-                )}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
+    <div
+      className={cn(
+        'absolute z-50 mt-2 min-w-[12rem] rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800',
+        'focus:outline-none',
+        alignmentClasses[align],
+        className
       )}
+      role="menu"
+    >
+      {children}
     </div>
   )
 }
 
-export default Dropdown
+export interface DropdownItemProps {
+  children: React.ReactNode
+  onClick?: () => void
+  className?: string
+  disabled?: boolean
+}
+
+export const DropdownItem: React.FC<DropdownItemProps> = ({
+  children,
+  onClick,
+  className,
+  disabled = false,
+}) => {
+  const { setIsOpen } = useDropdownContext()
+
+  const handleClick = () => {
+    if (!disabled) {
+      onClick?.()
+      setIsOpen(false)
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      disabled={disabled}
+      className={cn(
+        'block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700',
+        'first:rounded-t-md last:rounded-b-md',
+        'transition-colors',
+        disabled && 'cursor-not-allowed opacity-50',
+        className
+      )}
+      role="menuitem"
+    >
+      {children}
+    </button>
+  )
+}
+
+export interface DropdownSeparatorProps {
+  className?: string
+}
+
+export const DropdownSeparator: React.FC<DropdownSeparatorProps> = ({ className }) => {
+  return (
+    <div className={cn('my-1 h-px bg-gray-200 dark:bg-gray-700', className)} role="separator" />
+  )
+}
