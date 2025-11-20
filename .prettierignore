@@ -1,29 +1,15 @@
-# Dependencies
-node_modules
-.pnp
-.pnp.js
+# Prettier ignore patterns
 
-# Build outputs
+node_modules
 .next
 out
 dist
 build
-
-# Cache
+coverage
 .turbo
-.cache
-
-# Logs
-*.log
-
-# OS
-.DS_Store
-
-# IDE
-.vscode
-.idea
-
-# Generated files
+.vercel
+.env*
+public/sw.js
 *.min.js
 *.min.css
 package-lock.json
