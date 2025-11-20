@@ -1,0 +1,3 @@
+# ShellCheck configuration
+disable=SC2164 # Use cd || exit in case cd fails
+disable=SC2162 # Read without -r mangles backslashes
