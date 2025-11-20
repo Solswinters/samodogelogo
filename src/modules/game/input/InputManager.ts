@@ -1,136 +1,86 @@
 /**
- * Input handling system for keyboard and touch
+ * Input Manager for keyboard and mouse input
  */
 
-export type InputAction = 'jump' | 'pause' | 'restart' | 'menu'
-
-export interface InputState {
-  jump: boolean
-  pause: boolean
-  restart: boolean
-  menu: boolean
-}
+export type InputKey = string
 
 export class InputManager {
-  private state: InputState = {
-    jump: false,
-    pause: false,
-    restart: false,
-    menu: false,
+  private keys: Map<InputKey, boolean> = new Map()
+  private previousKeys: Map<InputKey, boolean> = new Map()
+  private mousePosition = { x: 0, y: 0 }
+  private mouseButtons: Map<number, boolean> = new Map()
+  private previousMouseButtons: Map<number, boolean> = new Map()
+
+  constructor() {
+    this.init()
   }
 
-  private keyMap: Record<string, InputAction> = {
-    Space: 'jump',
-    ArrowUp: 'jump',
-    KeyW: 'jump',
-    Escape: 'pause',
-    KeyP: 'pause',
-    KeyR: 'restart',
-    KeyM: 'menu',
-  }
-
-  private callbacks: Map<InputAction, Set<() => void>> = new Map()
-  private isInitialized = false
-
-  initialize(): void {
-    if (this.isInitialized) {
-      return
-    }
-
+  private init(): void {
     window.addEventListener('keydown', this.handleKeyDown)
     window.addEventListener('keyup', this.handleKeyUp)
-    window.addEventListener('touchstart', this.handleTouchStart)
-    window.addEventListener('touchend', this.handleTouchEnd)
+    window.addEventListener('mousemove', this.handleMouseMove)
     window.addEventListener('mousedown', this.handleMouseDown)
     window.addEventListener('mouseup', this.handleMouseUp)
-
-    this.isInitialized = true
   }
 
   private handleKeyDown = (e: KeyboardEvent): void => {
-    const action = this.keyMap[e.code]
-    if (action) {
-      e.preventDefault()
-      if (!this.state[action]) {
-        this.state[action] = true
-        this.triggerCallbacks(action)
-      }
-    }
+    this.keys.set(e.code, true)
   }
 
   private handleKeyUp = (e: KeyboardEvent): void => {
-    const action = this.keyMap[e.code]
-    if (action) {
-      e.preventDefault()
-      this.state[action] = false
-    }
+    this.keys.set(e.code, false)
   }
 
-  private handleTouchStart = (e: TouchEvent): void => {
-    e.preventDefault()
-    if (!this.state.jump) {
-      this.state.jump = true
-      this.triggerCallbacks('jump')
-    }
-  }
-
-  private handleTouchEnd = (): void => {
-    this.state.jump = false
+  private handleMouseMove = (e: MouseEvent): void => {
+    this.mousePosition.x = e.clientX
+    this.mousePosition.y = e.clientY
   }
 
   private handleMouseDown = (e: MouseEvent): void => {
-    if (e.button === 0 && !this.state.jump) {
-      this.state.jump = true
-      this.triggerCallbacks('jump')
-    }
+    this.mouseButtons.set(e.button, true)
   }
 
-  private handleMouseUp = (): void => {
-    this.state.jump = false
+  private handleMouseUp = (e: MouseEvent): void => {
+    this.mouseButtons.set(e.button, false)
   }
 
-  private triggerCallbacks(action: InputAction): void {
-    const callbacks = this.callbacks.get(action)
-    if (callbacks) {
-      callbacks.forEach(cb => cb())
-    }
+  isKeyDown(key: InputKey): boolean {
+    return this.keys.get(key) ?? false
   }
 
-  on(action: InputAction, callback: () => void): () => void {
-    if (!this.callbacks.has(action)) {
-      this.callbacks.set(action, new Set())
-    }
-    this.callbacks.get(action)?.add(callback)
-
-    // Return unsubscribe function
-    return () => {
-      this.callbacks.get(action)?.delete(callback)
-    }
+  isKeyPressed(key: InputKey): boolean {
+    return (this.keys.get(key) ?? false) && !(this.previousKeys.get(key) ?? false)
   }
 
-  getState(): InputState {
-    return { ...this.state }
+  isKeyReleased(key: InputKey): boolean {
+    return !(this.keys.get(key) ?? false) && (this.previousKeys.get(key) ?? false)
   }
 
-  isPressed(action: InputAction): boolean {
-    return this.state[action]
+  isMouseButtonDown(button: number): boolean {
+    return this.mouseButtons.get(button) ?? false
   }
 
-  cleanup(): void {
-    if (!this.isInitialized) {
-      return
-    }
+  isMouseButtonPressed(button: number): boolean {
+    return (
+      (this.mouseButtons.get(button) ?? false) && !(this.previousMouseButtons.get(button) ?? false)
+    )
+  }
 
+  getMousePosition(): { x: number; y: number } {
+    return { ...this.mousePosition }
+  }
+
+  update(): void {
+    // Copy current state to previous
+    this.previousKeys = new Map(this.keys)
+    this.previousMouseButtons = new Map(this.mouseButtons)
+  }
+
+  destroy(): void {
     window.removeEventListener('keydown', this.handleKeyDown)
     window.removeEventListener('keyup', this.handleKeyUp)
-    window.removeEventListener('touchstart', this.handleTouchStart)
-    window.removeEventListener('touchend', this.handleTouchEnd)
+    window.removeEventListener('mousemove', this.handleMouseMove)
     window.removeEventListener('mousedown', this.handleMouseDown)
     window.removeEventListener('mouseup', this.handleMouseUp)
-
-    this.callbacks.clear()
-    this.isInitialized = false
   }
 }
-
-export const inputManager = new InputManager()
