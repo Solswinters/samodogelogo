@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+.turbo
+coverage
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__
+e2e
+*.md
+.storybook
