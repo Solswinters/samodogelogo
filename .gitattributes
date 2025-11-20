@@ -1,35 +1,32 @@
-# Auto detect text files and normalize line endings to LF
+# Auto detect text files and perform LF normalization
 * text=auto eol=lf
 
-# Force binary files to be left untouched
+# Source code
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.json text
+*.css text
+*.scss text
+*.md text
+*.mdx text
+
+# Binary files
 *.png binary
 *.jpg binary
 *.jpeg binary
 *.gif binary
 *.ico binary
-*.mov binary
-*.mp4 binary
-*.mp3 binary
-*.flv binary
-*.fla binary
-*.swf binary
-*.gz binary
-*.zip binary
-*.7z binary
-*.ttf binary
-*.eot binary
 *.woff binary
 *.woff2 binary
-*.otf binary
-*.pyc binary
-*.pdf binary
-*.ez binary
-*.bz2 binary
-*.swp binary
+*.ttf binary
+*.eot binary
 
-# Linguist overrides
-*.ts linguist-detectable=true
-*.tsx linguist-detectable=true
-*.js linguist-detectable=true
-*.jsx linguist-detectable=true
-*.css linguist-detectable=true
+# Archive files
+*.zip binary
+*.tar binary
+*.gz binary
+
+# Docs
+*.pdf binary

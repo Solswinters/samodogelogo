@@ -1,0 +1,7 @@
+# Map author names and emails for consistent git history
+# Format: Proper Name <proper@email.com> <commit@email.com>
+
+# Example:
+# John Doe <john@example.com> <john.doe@old-email.com>
+# Jane Smith <jane@example.com> <jsmith@work-email.com>
+
