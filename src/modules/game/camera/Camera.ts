@@ -1,82 +1,88 @@
 /**
- * Camera system for viewport control
+ * Camera system for viewport management
  */
 
 export interface CameraConfig {
-  x: number
-  y: number
   width: number
   height: number
   followSpeed: number
+  deadZone: {
+    x: number
+    y: number
+  }
 }
 
 export class Camera {
-  private x: number = 0
-  private y: number = 0
-  private targetX: number = 0
-  private targetY: number = 0
-  private width: number
-  private height: number
-  private followSpeed: number
+  x = 0
+  y = 0
+  private config: CameraConfig
+  private targetX = 0
+  private targetY = 0
 
-  constructor(config: CameraConfig) {
-    this.x = config.x
-    this.y = config.y
-    this.width = config.width
-    this.height = config.height
-    this.followSpeed = config.followSpeed
+  constructor(config: Partial<CameraConfig> = {}) {
+    this.config = {
+      width: 800,
+      height: 600,
+      followSpeed: 0.1,
+      deadZone: {
+        x: 100,
+        y: 50,
+      },
+      ...config,
+    }
   }
 
-  setTarget(x: number, y: number): void {
-    this.targetX = x
-    this.targetY = y
+  follow(targetX: number, targetY: number): void {
+    this.targetX = targetX - this.config.width / 2
+    this.targetY = targetY - this.config.height / 2
   }
 
-  update(deltaTime: number): void {
+  update(): void {
     const dx = this.targetX - this.x
     const dy = this.targetY - this.y
 
-    this.x += dx * this.followSpeed * (deltaTime / 16.67)
-    this.y += dy * this.followSpeed * (deltaTime / 16.67)
-  }
-
-  getX(): number {
-    return this.x
-  }
-
-  getY(): number {
-    return this.y
-  }
-
-  getViewport(): { x: number; y: number; width: number; height: number } {
-    return {
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height,
+    // Apply dead zone
+    if (Math.abs(dx) > this.config.deadZone.x) {
+      this.x += dx * this.config.followSpeed
+    }
+    if (Math.abs(dy) > this.config.deadZone.y) {
+      this.y += dy * this.config.followSpeed
     }
   }
 
-  worldToScreen(worldX: number, worldY: number): { x: number; y: number } {
+  apply(ctx: CanvasRenderingContext2D): void {
+    ctx.translate(-this.x, -this.y)
+  }
+
+  restore(ctx: CanvasRenderingContext2D): void {
+    ctx.translate(this.x, this.y)
+  }
+
+  worldToScreen(x: number, y: number): { x: number; y: number } {
     return {
-      x: worldX - this.x,
-      y: worldY - this.y,
+      x: x - this.x,
+      y: y - this.y,
     }
   }
 
-  screenToWorld(screenX: number, screenY: number): { x: number; y: number } {
+  screenToWorld(x: number, y: number): { x: number; y: number } {
     return {
-      x: screenX + this.x,
-      y: screenY + this.y,
+      x: x + this.x,
+      y: y + this.y,
     }
   }
 
-  isInView(x: number, y: number, width: number, height: number): boolean {
+  isVisible(x: number, y: number, width: number, height: number): boolean {
     return (
-      x + width > this.x &&
-      x < this.x + this.width &&
-      y + height > this.y &&
-      y < this.y + this.height
+      x + width >= this.x &&
+      x <= this.x + this.config.width &&
+      y + height >= this.y &&
+      y <= this.y + this.config.height
     )
+  }
+
+  shake(intensity: number, duration: number): void {
+    // Camera shake implementation
+    // This would typically be handled by the ScreenShake effect
   }
 }
