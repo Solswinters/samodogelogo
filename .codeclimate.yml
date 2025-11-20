@@ -1,0 +1,54 @@
+version: "2"
+
+checks:
+  argument-count:
+    config:
+      threshold: 4
+  complex-logic:
+    config:
+      threshold: 4
+  file-lines:
+    config:
+      threshold: 500
+  method-complexity:
+    config:
+      threshold: 10
+  method-count:
+    config:
+      threshold: 20
+  method-lines:
+    config:
+      threshold: 50
+  nested-control-flow:
+    config:
+      threshold: 4
+  return-statements:
+    config:
+      threshold: 4
+
+plugins:
+  eslint:
+    enabled: true
+    config:
+      config: .eslintrc.json
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
+        - typescript
+
+exclude_patterns:
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+  - "**/*.stories.tsx"
+  - "**/node_modules/"
+  - "**/dist/"
+  - "**/build/"
+  - "**/.next/"
+  - "**/out/"
+  - "**/coverage/"
+  - "**/public/"
+
