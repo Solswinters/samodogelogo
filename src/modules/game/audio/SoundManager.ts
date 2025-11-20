@@ -1,97 +1,80 @@
 /**
- * Audio management system
+ * Sound Manager for audio playback
  */
 
-export type SoundEffect = 'jump' | 'land' | 'collision' | 'powerup' | 'score' | 'game-over'
-export type Music = 'menu' | 'gameplay' | 'victory'
-
-export class SoundManager {
-  private sounds: Map<SoundEffect, HTMLAudioElement> = new Map()
-  private music: Map<Music, HTMLAudioElement> = new Map()
-  private currentMusic: HTMLAudioElement | null = null
-  private soundEnabled: boolean = true
-  private musicEnabled: boolean = true
-  private soundVolume: number = 0.7
-  private musicVolume: number = 0.5
-
-  initialize(): void {
-    // Sound effects would be loaded here
-    // For now, using Web Audio API placeholders
-  }
-
-  playSound(effect: SoundEffect): void {
-    if (!this.soundEnabled) {
-      return
-    }
-
-    const sound = this.sounds.get(effect)
-    if (sound) {
-      sound.currentTime = 0
-      sound.volume = this.soundVolume
-      sound.play().catch(() => {
-        // Ignore autoplay errors
-      })
-    }
-  }
-
-  playMusic(track: Music, loop: boolean = true): void {
-    if (!this.musicEnabled) {
-      return
-    }
-
-    if (this.currentMusic) {
-      this.currentMusic.pause()
-      this.currentMusic.currentTime = 0
-    }
-
-    const music = this.music.get(track)
-    if (music) {
-      music.loop = loop
-      music.volume = this.musicVolume
-      music.play().catch(() => {
-        // Ignore autoplay errors
-      })
-      this.currentMusic = music
-    }
-  }
-
-  stopMusic(): void {
-    if (this.currentMusic) {
-      this.currentMusic.pause()
-      this.currentMusic.currentTime = 0
-      this.currentMusic = null
-    }
-  }
-
-  setSoundEnabled(enabled: boolean): void {
-    this.soundEnabled = enabled
-  }
-
-  setMusicEnabled(enabled: boolean): void {
-    this.musicEnabled = enabled
-    if (!enabled && this.currentMusic) {
-      this.currentMusic.pause()
-    } else if (enabled && this.currentMusic) {
-      this.currentMusic.play().catch(() => {})
-    }
-  }
-
-  setSoundVolume(volume: number): void {
-    this.soundVolume = Math.max(0, Math.min(1, volume))
-  }
-
-  setMusicVolume(volume: number): void {
-    this.musicVolume = Math.max(0, Math.min(1, volume))
-    if (this.currentMusic) {
-      this.currentMusic.volume = this.musicVolume
-    }
-  }
-
-  cleanup(): void {
-    this.stopMusic()
-    this.sounds.clear()
-    this.music.clear()
-  }
+export interface SoundConfig {
+  volume: number
+  loop: boolean
+  rate: number
 }
 
-export const soundManager = new SoundManager()
+export class SoundManager {
+  private sounds: Map<string, HTMLAudioElement> = new Map()
+  private masterVolume = 1
+  private muted = false
+
+  preload(id: string, src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const audio = new Audio()
+      audio.src = src
+      audio.addEventListener('canplaythrough', () => {
+        this.sounds.set(id, audio)
+        resolve()
+      })
+      audio.addEventListener('error', reject)
+      audio.load()
+    })
+  }
+
+  play(id: string, options: Partial<SoundConfig> = {}): HTMLAudioElement | undefined {
+    const sound = this.sounds.get(id)
+    if (!sound || this.muted) return
+
+    const clone = sound.cloneNode() as HTMLAudioElement
+    clone.volume = (options.volume ?? 1) * this.masterVolume
+    clone.loop = options.loop ?? false
+    clone.playbackRate = options.rate ?? 1
+
+    void clone.play()
+    return clone
+  }
+
+  stop(id: string): void {
+    const sound = this.sounds.get(id)
+    if (!sound) return
+
+    sound.pause()
+    sound.currentTime = 0
+  }
+
+  setVolume(id: string, volume: number): void {
+    const sound = this.sounds.get(id)
+    if (!sound) return
+
+    sound.volume = volume * this.masterVolume
+  }
+
+  setMasterVolume(volume: number): void {
+    this.masterVolume = Math.max(0, Math.min(1, volume))
+  }
+
+  mute(): void {
+    this.muted = true
+  }
+
+  unmute(): void {
+    this.muted = false
+  }
+
+  isMuted(): boolean {
+    return this.muted
+  }
+
+  clear(): void {
+    this.sounds.forEach((sound) => {
+      sound.pause()
+      sound.src = ''
+    })
+    this.sounds.clear()
+  }
+}
