@@ -1,465 +1,426 @@
 /**
- * Animation utilities for game development
- * Provides easing functions, tweening, and animation helpers
+ * Animation utilities for game graphics
+ * Provides easing functions and animation helpers
  */
 
 export type EasingFunction = (t: number) => number
 
-export interface AnimationConfig {
-  duration: number
-  easing: EasingFunction
-  onUpdate?: (value: number) => void
-  onComplete?: () => void
-}
-
-export interface TweenConfig {
-  from: number
-  to: number
-  duration: number
-  easing?: EasingFunction
-  delay?: number
-  repeat?: number
-  yoyo?: boolean
-  onUpdate?: (value: number) => void
-  onComplete?: () => void
-}
-
 export class GameAnimationUtils {
   /**
-   * Linear easing (no acceleration)
+   * Linear easing (no easing)
    */
   static linear(t: number): number {
     return t
   }
 
   /**
-   * Quadratic ease-in
+   * Ease in (quadratic)
    */
   static easeInQuad(t: number): number {
     return t * t
   }
 
   /**
-   * Quadratic ease-out
+   * Ease out (quadratic)
    */
   static easeOutQuad(t: number): number {
     return t * (2 - t)
   }
 
   /**
-   * Quadratic ease-in-out
+   * Ease in-out (quadratic)
    */
   static easeInOutQuad(t: number): number {
     return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
   }
 
   /**
-   * Cubic ease-in
+   * Ease in (cubic)
    */
   static easeInCubic(t: number): number {
     return t * t * t
   }
 
   /**
-   * Cubic ease-out
+   * Ease out (cubic)
    */
   static easeOutCubic(t: number): number {
     return --t * t * t + 1
   }
 
   /**
-   * Cubic ease-in-out
+   * Ease in-out (cubic)
    */
   static easeInOutCubic(t: number): number {
     return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
   }
 
   /**
-   * Quartic ease-in
+   * Ease in (quartic)
    */
   static easeInQuart(t: number): number {
     return t * t * t * t
   }
 
   /**
-   * Quartic ease-out
+   * Ease out (quartic)
    */
   static easeOutQuart(t: number): number {
     return 1 - --t * t * t * t
   }
 
   /**
-   * Quartic ease-in-out
+   * Ease in-out (quartic)
    */
   static easeInOutQuart(t: number): number {
     return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t
   }
 
   /**
-   * Quintic ease-in
+   * Ease in (quintic)
    */
   static easeInQuint(t: number): number {
     return t * t * t * t * t
   }
 
   /**
-   * Quintic ease-out
+   * Ease out (quintic)
    */
   static easeOutQuint(t: number): number {
     return 1 + --t * t * t * t * t
   }
 
   /**
-   * Quintic ease-in-out
+   * Ease in-out (quintic)
    */
   static easeInOutQuint(t: number): number {
     return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t
   }
 
   /**
-   * Sinusoidal ease-in
+   * Ease in (sine)
    */
   static easeInSine(t: number): number {
     return 1 - Math.cos((t * Math.PI) / 2)
   }
 
   /**
-   * Sinusoidal ease-out
+   * Ease out (sine)
    */
   static easeOutSine(t: number): number {
     return Math.sin((t * Math.PI) / 2)
   }
 
   /**
-   * Sinusoidal ease-in-out
+   * Ease in-out (sine)
    */
   static easeInOutSine(t: number): number {
     return -(Math.cos(Math.PI * t) - 1) / 2
   }
 
   /**
-   * Exponential ease-in
+   * Ease in (exponential)
    */
   static easeInExpo(t: number): number {
-    return t === 0 ? 0 : Math.pow(2, 10 * (t - 1))
+    return t === 0 ? 0 : Math.pow(2, 10 * t - 10)
   }
 
   /**
-   * Exponential ease-out
+   * Ease out (exponential)
    */
   static easeOutExpo(t: number): number {
     return t === 1 ? 1 : 1 - Math.pow(2, -10 * t)
   }
 
   /**
-   * Exponential ease-in-out
+   * Ease in-out (exponential)
    */
   static easeInOutExpo(t: number): number {
-    if (t === 0) return 0
-    if (t === 1) return 1
-    if (t < 0.5) return Math.pow(2, 20 * t - 10) / 2
-    return (2 - Math.pow(2, -20 * t + 10)) / 2
+    return t === 0
+      ? 0
+      : t === 1
+        ? 1
+        : t < 0.5
+          ? Math.pow(2, 20 * t - 10) / 2
+          : (2 - Math.pow(2, -20 * t + 10)) / 2
   }
 
   /**
-   * Circular ease-in
+   * Ease in (circular)
    */
   static easeInCirc(t: number): number {
-    return 1 - Math.sqrt(1 - t * t)
+    return 1 - Math.sqrt(1 - Math.pow(t, 2))
   }
 
   /**
-   * Circular ease-out
+   * Ease out (circular)
    */
   static easeOutCirc(t: number): number {
-    return Math.sqrt(1 - --t * t)
+    return Math.sqrt(1 - Math.pow(t - 1, 2))
   }
 
   /**
-   * Circular ease-in-out
+   * Ease in-out (circular)
    */
   static easeInOutCirc(t: number): number {
     return t < 0.5
-      ? (1 - Math.sqrt(1 - 4 * t * t)) / 2
-      : (Math.sqrt(1 - (-2 * t + 2) * (-2 * t + 2)) + 1) / 2
+      ? (1 - Math.sqrt(1 - Math.pow(2 * t, 2))) / 2
+      : (Math.sqrt(1 - Math.pow(-2 * t + 2, 2)) + 1) / 2
   }
 
   /**
-   * Back ease-in
+   * Ease in (back)
    */
   static easeInBack(t: number): number {
-    const c = 1.70158
-    return (c + 1) * t * t * t - c * t * t
+    const c1 = 1.70158
+    const c3 = c1 + 1
+    return c3 * t * t * t - c1 * t * t
   }
 
   /**
-   * Back ease-out
+   * Ease out (back)
    */
   static easeOutBack(t: number): number {
-    const c = 1.70158
-    return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2)
+    const c1 = 1.70158
+    const c3 = c1 + 1
+    return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2)
   }
 
   /**
-   * Back ease-in-out
+   * Ease in-out (back)
    */
   static easeInOutBack(t: number): number {
-    const c = 1.70158 * 1.525
+    const c1 = 1.70158
+    const c2 = c1 * 1.525
     return t < 0.5
-      ? (Math.pow(2 * t, 2) * ((c + 1) * 2 * t - c)) / 2
-      : (Math.pow(2 * t - 2, 2) * ((c + 1) * (t * 2 - 2) + c) + 2) / 2
+      ? (Math.pow(2 * t, 2) * ((c2 + 1) * 2 * t - c2)) / 2
+      : (Math.pow(2 * t - 2, 2) * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2
   }
 
   /**
-   * Elastic ease-in
+   * Ease in (elastic)
    */
   static easeInElastic(t: number): number {
-    if (t === 0) return 0
-    if (t === 1) return 1
-    return -Math.pow(2, 10 * (t - 1)) * Math.sin((t - 1.1) * 5 * Math.PI)
+    const c4 = (2 * Math.PI) / 3
+    return t === 0 ? 0 : t === 1 ? 1 : -Math.pow(2, 10 * t - 10) * Math.sin((t * 10 - 10.75) * c4)
   }
 
   /**
-   * Elastic ease-out
+   * Ease out (elastic)
    */
   static easeOutElastic(t: number): number {
-    if (t === 0) return 0
-    if (t === 1) return 1
-    return Math.pow(2, -10 * t) * Math.sin((t - 0.1) * 5 * Math.PI) + 1
+    const c4 = (2 * Math.PI) / 3
+    return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1
   }
 
   /**
-   * Elastic ease-in-out
+   * Ease in-out (elastic)
    */
   static easeInOutElastic(t: number): number {
-    if (t === 0) return 0
-    if (t === 1) return 1
-    const c = (2 * Math.PI) / 4.5
-    return t < 0.5
-      ? -(Math.pow(2, 20 * t - 10) * Math.sin((20 * t - 11.125) * c)) / 2
-      : (Math.pow(2, -20 * t + 10) * Math.sin((20 * t - 11.125) * c)) / 2 + 1
+    const c5 = (2 * Math.PI) / 4.5
+    return t === 0
+      ? 0
+      : t === 1
+        ? 1
+        : t < 0.5
+          ? -(Math.pow(2, 20 * t - 10) * Math.sin((20 * t - 11.125) * c5)) / 2
+          : (Math.pow(2, -20 * t + 10) * Math.sin((20 * t - 11.125) * c5)) / 2 + 1
   }
 
   /**
-   * Bounce ease-in
+   * Ease in (bounce)
    */
   static easeInBounce(t: number): number {
     return 1 - this.easeOutBounce(1 - t)
   }
 
   /**
-   * Bounce ease-out
+   * Ease out (bounce)
    */
   static easeOutBounce(t: number): number {
-    if (t < 1 / 2.75) {
-      return 7.5625 * t * t
-    } else if (t < 2 / 2.75) {
-      return 7.5625 * (t -= 1.5 / 2.75) * t + 0.75
-    } else if (t < 2.5 / 2.75) {
-      return 7.5625 * (t -= 2.25 / 2.75) * t + 0.9375
+    const n1 = 7.5625
+    const d1 = 2.75
+
+    if (t < 1 / d1) {
+      return n1 * t * t
+    } else if (t < 2 / d1) {
+      return n1 * (t -= 1.5 / d1) * t + 0.75
+    } else if (t < 2.5 / d1) {
+      return n1 * (t -= 2.25 / d1) * t + 0.9375
     } else {
-      return 7.5625 * (t -= 2.625 / 2.75) * t + 0.984375
+      return n1 * (t -= 2.625 / d1) * t + 0.984375
     }
   }
 
   /**
-   * Bounce ease-in-out
+   * Ease in-out (bounce)
    */
   static easeInOutBounce(t: number): number {
-    return t < 0.5 ? this.easeInBounce(t * 2) / 2 : this.easeOutBounce(t * 2 - 1) / 2 + 0.5
+    return t < 0.5
+      ? (1 - this.easeOutBounce(1 - 2 * t)) / 2
+      : (1 + this.easeOutBounce(2 * t - 1)) / 2
   }
 
   /**
-   * Create a tween animation
+   * Animate value from start to end
    */
-  static createTween(config: TweenConfig): {
-    update: (deltaTime: number) => boolean
-    reset: () => void
-  } {
-    const {
-      from,
-      to,
-      duration,
-      easing = this.linear,
-      delay = 0,
-      repeat = 0,
-      yoyo = false,
-      onUpdate,
-      onComplete,
-    } = config
+  static animate(
+    from: number,
+    to: number,
+    duration: number,
+    easing: EasingFunction = this.linear,
+    onUpdate: (value: number) => void,
+    onComplete?: () => void
+  ): () => void {
+    const startTime = performance.now()
+    let cancelled = false
 
-    let elapsed = -delay
-    let currentRepeat = 0
-    let isReversed = false
+    const update = (currentTime: number) => {
+      if (cancelled) return
 
-    const update = (deltaTime: number): boolean => {
-      elapsed += deltaTime
-
-      if (elapsed < 0) return true
-
+      const elapsed = currentTime - startTime
       const progress = Math.min(elapsed / duration, 1)
       const easedProgress = easing(progress)
+      const currentValue = from + (to - from) * easedProgress
 
-      let value: number
-      if (isReversed) {
-        value = from + (to - from) * (1 - easedProgress)
+      onUpdate(currentValue)
+
+      if (progress < 1) {
+        requestAnimationFrame(update)
       } else {
-        value = from + (to - from) * easedProgress
+        onComplete?.()
       }
-
-      if (onUpdate) {
-        onUpdate(value)
-      }
-
-      if (progress >= 1) {
-        if (yoyo && !isReversed) {
-          isReversed = true
-          elapsed = 0
-          return true
-        }
-
-        if (repeat === -1 || currentRepeat < repeat) {
-          currentRepeat++
-          elapsed = 0
-          isReversed = false
-          return true
-        }
-
-        if (onComplete) {
-          onComplete()
-        }
-
-        return false
-      }
-
-      return true
     }
 
-    const reset = () => {
-      elapsed = -delay
-      currentRepeat = 0
-      isReversed = false
+    requestAnimationFrame(update)
+
+    // Return cancel function
+    return () => {
+      cancelled = true
     }
-
-    return { update, reset }
-  }
-
-  /**
-   * Interpolate between two values
-   */
-  static lerp(from: number, to: number, t: number): number {
-    return from + (to - from) * t
-  }
-
-  /**
-   * Smooth step interpolation
-   */
-  static smoothStep(from: number, to: number, t: number): number {
-    const x = Math.max(0, Math.min(1, t))
-    const smooth = x * x * (3 - 2 * x)
-    return this.lerp(from, to, smooth)
-  }
-
-  /**
-   * Smoother step interpolation (Ken Perlin)
-   */
-  static smootherStep(from: number, to: number, t: number): number {
-    const x = Math.max(0, Math.min(1, t))
-    const smooth = x * x * x * (x * (x * 6 - 15) + 10)
-    return this.lerp(from, to, smooth)
-  }
-
-  /**
-   * Cubic Hermite spline interpolation
-   */
-  static hermite(p0: number, p1: number, p2: number, p3: number, t: number): number {
-    const t2 = t * t
-    const t3 = t2 * t
-
-    return (
-      0.5 *
-      (2 * p1 +
-        (-p0 + p2) * t +
-        (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 +
-        (-p0 + 3 * p1 - 3 * p2 + p3) * t3)
-    )
-  }
-
-  /**
-   * Catmull-Rom spline interpolation
-   */
-  static catmullRom(p0: number, p1: number, p2: number, p3: number, t: number): number {
-    const t2 = t * t
-    const t3 = t2 * t
-
-    return (
-      0.5 *
-      (2 * p1 +
-        (-p0 + p2) * t +
-        (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 +
-        (-p0 + 3 * p1 - 3 * p2 + p3) * t3)
-    )
-  }
-
-  /**
-   * Bezier curve interpolation (quadratic)
-   */
-  static bezierQuad(p0: number, p1: number, p2: number, t: number): number {
-    const u = 1 - t
-    return u * u * p0 + 2 * u * t * p1 + t * t * p2
-  }
-
-  /**
-   * Bezier curve interpolation (cubic)
-   */
-  static bezierCubic(p0: number, p1: number, p2: number, p3: number, t: number): number {
-    const u = 1 - t
-    const uu = u * u
-    const uuu = uu * u
-    const tt = t * t
-    const ttt = tt * t
-
-    return uuu * p0 + 3 * uu * t * p1 + 3 * u * tt * p2 + ttt * p3
   }
 
   /**
    * Spring animation
    */
   static spring(
-    current: number,
-    target: number,
-    velocity: number,
-    stiffness: number = 0.15,
-    damping: number = 0.8
-  ): {
-    value: number
-    velocity: number
-  } {
-    const force = (target - current) * stiffness
-    velocity = (velocity + force) * damping
-    const value = current + velocity
+    from: number,
+    to: number,
+    velocity: number = 0,
+    stiffness: number = 100,
+    damping: number = 10,
+    onUpdate: (value: number, velocity: number) => void,
+    onComplete?: () => void
+  ): () => void {
+    let currentValue = from
+    let currentVelocity = velocity
+    let cancelled = false
+    let lastTime = performance.now()
 
-    return { value, velocity }
+    const update = (currentTime: number) => {
+      if (cancelled) return
+
+      const deltaTime = (currentTime - lastTime) / 1000 // Convert to seconds
+      lastTime = currentTime
+
+      const force = (to - currentValue) * stiffness
+      const dampingForce = currentVelocity * damping
+      const acceleration = force - dampingForce
+
+      currentVelocity += acceleration * deltaTime
+      currentValue += currentVelocity * deltaTime
+
+      onUpdate(currentValue, currentVelocity)
+
+      // Check if animation should stop (settled)
+      const isSettled = Math.abs(currentVelocity) < 0.01 && Math.abs(to - currentValue) < 0.01
+
+      if (!isSettled) {
+        requestAnimationFrame(update)
+      } else {
+        onUpdate(to, 0)
+        onComplete?.()
+      }
+    }
+
+    requestAnimationFrame(update)
+
+    // Return cancel function
+    return () => {
+      cancelled = true
+    }
   }
 
   /**
-   * Shake animation (random offset)
+   * Sequence multiple animations
    */
-  static shake(intensity: number, decay: number = 0.95): number {
-    return (Math.random() * 2 - 1) * intensity * decay
+  static sequence(animations: Array<() => Promise<void>>): Promise<void> {
+    return animations.reduce((promise, animation) => promise.then(animation), Promise.resolve())
   }
 
   /**
-   * Pulse animation (sine wave)
+   * Run animations in parallel
    */
-  static pulse(time: number, frequency: number = 1, amplitude: number = 1): number {
-    return Math.sin(time * frequency * Math.PI * 2) * amplitude
+  static parallel(animations: Array<() => Promise<void>>): Promise<void[]> {
+    return Promise.all(animations.map((animation) => animation()))
   }
 
   /**
-   * Wobble animation
+   * Delay execution
    */
-  static wobble(time: number, frequency: number = 1, amplitude: number = 1): number {
-    return Math.sin(time * frequency * Math.PI) * Math.exp(-time * 0.5) * amplitude
+  static delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms))
+  }
+
+  /**
+   * Create keyframe animation
+   */
+  static keyframes(
+    keyframes: Array<{ time: number; value: number }>,
+    duration: number,
+    easing: EasingFunction = this.linear,
+    onUpdate: (value: number) => void,
+    onComplete?: () => void
+  ): () => void {
+    const startTime = performance.now()
+    let cancelled = false
+
+    const update = (currentTime: number) => {
+      if (cancelled) return
+
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const easedProgress = easing(progress)
+
+      // Find surrounding keyframes
+      let prevFrame = keyframes[0]
+      let nextFrame = keyframes[keyframes.length - 1]
+
+      for (let i = 0; i < keyframes.length - 1; i++) {
+        if (easedProgress >= keyframes[i].time && easedProgress <= keyframes[i + 1].time) {
+          prevFrame = keyframes[i]
+          nextFrame = keyframes[i + 1]
+          break
+        }
+      }
+
+      // Interpolate between keyframes
+      const frameProgress = (easedProgress - prevFrame.time) / (nextFrame.time - prevFrame.time)
+      const currentValue = prevFrame.value + (nextFrame.value - prevFrame.value) * frameProgress
+
+      onUpdate(currentValue)
+
+      if (progress < 1) {
+        requestAnimationFrame(update)
+      } else {
+        onComplete?.()
+      }
+    }
+
+    requestAnimationFrame(update)
+
+    return () => {
+      cancelled = true
+    }
   }
 }
