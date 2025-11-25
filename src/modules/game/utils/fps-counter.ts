@@ -84,4 +84,9 @@ export class FPSCounter {
 }
 
 // Singleton instance
+/**
+ * fpsCounter utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of fpsCounter.
+ */
 export const fpsCounter = new FPSCounter()

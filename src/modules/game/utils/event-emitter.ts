@@ -29,7 +29,7 @@ export class EventEmitter {
   emit(event: string, ...args: unknown[]): void {
     const callbacks = this.events.get(event)
     if (callbacks) {
-      callbacks.forEach(callback => {
+      callbacks.forEach((callback) => {
         try {
           callback(...args)
         } catch (error) {
@@ -57,9 +57,19 @@ export class EventEmitter {
 }
 
 // Global game event emitter
+/**
+ * gameEvents utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of gameEvents.
+ */
 export const gameEvents = new EventEmitter()
 
 // Common game events
+/**
+ * GAME_EVENTS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GAME_EVENTS.
+ */
 export const GAME_EVENTS = {
   PLAYER_JUMP: 'player:jump',
   PLAYER_COLLISION: 'player:collision',
