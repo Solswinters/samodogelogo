@@ -8,6 +8,11 @@ interface MultiplayerProviderProps {
   children: React.ReactNode
 }
 
+/**
+ * MultiplayerProvider utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of MultiplayerProvider.
+ */
 export const MultiplayerProvider: React.FC<MultiplayerProviderProps> = ({ children }) => {
   const reset = useMultiplayerStore(state => state.reset)
 

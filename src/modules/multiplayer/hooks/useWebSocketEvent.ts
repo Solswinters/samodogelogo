@@ -6,6 +6,11 @@ import { useEffect } from 'react'
 import { useWebSocket } from './useWebSocket'
 import type { WebSocketEventType, WebSocketEvent, EventHandler } from '../services/WebSocketService'
 
+/**
+ * useWebSocketEvent utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useWebSocketEvent.
+ */
 export function useWebSocketEvent<T = unknown>(
   type: WebSocketEventType,
   handler: EventHandler<T>,
