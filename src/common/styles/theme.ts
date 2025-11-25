@@ -2,6 +2,11 @@
  * Theme constants with CSS variables
  */
 
+/**
+ * THEME utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of THEME.
+ */
 export const THEME = {
   colors: {
     primary: '#4CAF50',

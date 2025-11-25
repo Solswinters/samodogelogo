@@ -15,6 +15,11 @@ export interface LeaderboardViewProps {
   onClose: () => void
 }
 
+/**
+ * LeaderboardView utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of LeaderboardView.
+ */
 export function LeaderboardView({ players, currentUserAddress, onClose }: LeaderboardViewProps) {
   const [timeframe, setTimeframe] = useState<'daily' | 'weekly' | 'allTime'>('allTime')
 
@@ -41,7 +46,7 @@ export function LeaderboardView({ players, currentUserAddress, onClose }: Leader
           <Tabs
             tabs={tabs}
             activeTab={timeframe}
-            onChange={id => setTimeframe(id as 'daily' | 'weekly' | 'allTime')}
+            onChange={(id) => setTimeframe(id as 'daily' | 'weekly' | 'allTime')}
           />
         </div>
 
@@ -52,7 +57,7 @@ export function LeaderboardView({ players, currentUserAddress, onClose }: Leader
                 No scores yet. Be the first to play!
               </div>
             ) : (
-              players.map(player => (
+              players.map((player) => (
                 <LeaderboardEntry
                   key={player.address}
                   player={player}
