@@ -9,6 +9,11 @@ export interface MatchmakingPlayer {
   waitTime: number
 }
 
+/**
+ * calculateMatchQuality utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateMatchQuality.
+ */
 export function calculateMatchQuality(players: MatchmakingPlayer[]): number {
   if (players.length < 2) return 0
 
@@ -21,6 +26,11 @@ export function calculateMatchQuality(players: MatchmakingPlayer[]): number {
   return Math.max(0, 1 - variance / maxVariance)
 }
 
+/**
+ * findBestMatch utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of findBestMatch.
+ */
 export function findBestMatch(
   player: MatchmakingPlayer,
   candidates: MatchmakingPlayer[],
@@ -43,6 +53,11 @@ export function findBestMatch(
   )
 }
 
+/**
+ * expandSearchCriteria utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of expandSearchCriteria.
+ */
 export function expandSearchCriteria(
   maxRatingDiff: number,
   waitTime: number,
@@ -53,6 +68,11 @@ export function expandSearchCriteria(
   return Math.min(maxRatingDiff, baseRatingDiff + expansions * expansionRate)
 }
 
+/**
+ * shouldAcceptMatch utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of shouldAcceptMatch.
+ */
 export function shouldAcceptMatch(
   quality: number,
   waitTime: number,
@@ -64,6 +84,11 @@ export function shouldAcceptMatch(
   return false
 }
 
+/**
+ * prioritizePlayers utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of prioritizePlayers.
+ */
 export function prioritizePlayers(players: MatchmakingPlayer[]): MatchmakingPlayer[] {
   return [...players].sort((a, b) => {
     // Priority: wait time descending, then rating ascending
@@ -74,6 +99,11 @@ export function prioritizePlayers(players: MatchmakingPlayer[]): MatchmakingPlay
   })
 }
 
+/**
+ * createBalancedTeams utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of createBalancedTeams.
+ */
 export function createBalancedTeams(
   players: MatchmakingPlayer[],
   teamSize: number
@@ -89,6 +119,11 @@ export function createBalancedTeams(
   return teams
 }
 
+/**
+ * estimateWaitTime utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of estimateWaitTime.
+ */
 export function estimateWaitTime(
   playersInQueue: number,
   avgMatchTime: number,

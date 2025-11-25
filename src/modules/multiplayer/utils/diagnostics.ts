@@ -108,6 +108,11 @@ export class Diagnostics {
   }
 }
 
+/**
+ * formatDiagnostics utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatDiagnostics.
+ */
 export function formatDiagnostics(info: DiagnosticInfo): string {
   return `
 Connection:

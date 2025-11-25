@@ -2,6 +2,11 @@
  * Formatting utilities for multiplayer
  */
 
+/**
+ * formatDuration utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatDuration.
+ */
 export function formatDuration(seconds: number): string {
   const hours = Math.floor(seconds / 3600)
   const minutes = Math.floor((seconds % 3600) / 60)
@@ -13,10 +18,20 @@ export function formatDuration(seconds: number): string {
   return `${minutes}:${String(secs).padStart(2, '0')}`
 }
 
+/**
+ * formatPlayerCount utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatPlayerCount.
+ */
 export function formatPlayerCount(current: number, max: number): string {
   return `${current}/${max}`
 }
 
+/**
+ * formatTimestamp utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatTimestamp.
+ */
 export function formatTimestamp(timestamp: number): string {
   const date = new Date(timestamp)
   const hours = date.getHours()
@@ -24,6 +39,11 @@ export function formatTimestamp(timestamp: number): string {
   return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`
 }
 
+/**
+ * formatRelativeTime utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatRelativeTime.
+ */
 export function formatRelativeTime(timestamp: number): string {
   const now = Date.now()
   const diff = now - timestamp
@@ -39,16 +59,31 @@ export function formatRelativeTime(timestamp: number): string {
   return 'just now'
 }
 
+/**
+ * formatScore utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatScore.
+ */
 export function formatScore(score: number): string {
   return score.toLocaleString()
 }
 
+/**
+ * formatRank utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatRank.
+ */
 export function formatRank(rank: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']
   const v = rank % 100
   return rank + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
 }
 
+/**
+ * formatRoomCode utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatRoomCode.
+ */
 export function formatRoomCode(code: string): string {
   return code
     .toUpperCase()
@@ -56,6 +91,11 @@ export function formatRoomCode(code: string): string {
     .trim()
 }
 
+/**
+ * truncateUsername utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of truncateUsername.
+ */
 export function truncateUsername(username: string, maxLength = 20): string {
   if (username.length <= maxLength) return username
   return username.substring(0, maxLength - 3) + '...'

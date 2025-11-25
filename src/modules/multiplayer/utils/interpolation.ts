@@ -7,10 +7,20 @@ export interface Position {
   y: number
 }
 
+/**
+ * lerp utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of lerp.
+ */
 export function lerp(start: number, end: number, t: number): number {
   return start + (end - start) * t
 }
 
+/**
+ * lerpPosition utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of lerpPosition.
+ */
 export function lerpPosition(start: Position, end: Position, t: number): Position {
   return {
     x: lerp(start.x, end.x, t),
@@ -18,26 +28,56 @@ export function lerpPosition(start: Position, end: Position, t: number): Positio
   }
 }
 
+/**
+ * smoothStep utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of smoothStep.
+ */
 export function smoothStep(t: number): number {
   return t * t * (3 - 2 * t)
 }
 
+/**
+ * smootherStep utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of smootherStep.
+ */
 export function smootherStep(t: number): number {
   return t * t * t * (t * (t * 6 - 15) + 10)
 }
 
+/**
+ * easeInQuad utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of easeInQuad.
+ */
 export function easeInQuad(t: number): number {
   return t * t
 }
 
+/**
+ * easeOutQuad utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of easeOutQuad.
+ */
 export function easeOutQuad(t: number): number {
   return t * (2 - t)
 }
 
+/**
+ * easeInOutQuad utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of easeInOutQuad.
+ */
 export function easeInOutQuad(t: number): number {
   return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
 }
 
+/**
+ * calculateInterpolationFactor utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateInterpolationFactor.
+ */
 export function calculateInterpolationFactor(
   currentTime: number,
   startTime: number,
