@@ -22,7 +22,7 @@ export class TimeoutManager {
       }, timeoutMs)
 
       fn()
-        .then(result => {
+        .then((result) => {
           clearTimeout(timeout)
           resolve(result)
         })
@@ -82,13 +82,18 @@ export class TimeoutManager {
 }
 
 // Singleton instance
+/**
+ * timeoutManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of timeoutManager.
+ */
 export const timeoutManager = new TimeoutManager()
 
 /**
  * Promise-based delay utility
  */
 export function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms))
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 /**

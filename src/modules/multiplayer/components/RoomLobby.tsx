@@ -29,8 +29,8 @@ export function RoomLobby({ playerId, onLeave, onStart }: RoomLobbyProps) {
   }
 
   const isHost = currentRoom.hostId === playerId
-  const currentPlayer = currentRoom.players.find(p => p.id === playerId)
-  const allPlayersReady = currentRoom.players.every(p => p.isReady || p.isHost)
+  const currentPlayer = currentRoom.players.find((p) => p.id === playerId)
+  const allPlayersReady = currentRoom.players.every((p) => p.isReady || p.isHost)
   const canStart = isHost && currentRoom.players.length >= 2 && allPlayersReady
 
   const handleReadyToggle = (isReady: boolean) => {
@@ -84,7 +84,7 @@ export function RoomLobby({ playerId, onLeave, onStart }: RoomLobbyProps) {
           Players ({currentRoom.players.length}/{currentRoom.maxPlayers})
         </h3>
         <div className="space-y-3">
-          {currentRoom.players.map(player => (
+          {currentRoom.players.map((player) => (
             <div
               key={player.id}
               className="flex items-center justify-between rounded-lg bg-gray-700/50 p-3"

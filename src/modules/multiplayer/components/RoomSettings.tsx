@@ -26,6 +26,11 @@ interface RoomSettingsProps {
   onCancel: () => void
 }
 
+/**
+ * RoomSettings utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of RoomSettings.
+ */
 export function RoomSettings({ initialSettings, onSave, onCancel }: RoomSettingsProps) {
   const [name, setName] = useState(initialSettings?.name || '')
   const [maxPlayers, setMaxPlayers] = useState(initialSettings?.maxPlayers || 4)
