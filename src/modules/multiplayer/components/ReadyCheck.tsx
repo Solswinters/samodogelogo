@@ -20,6 +20,11 @@ interface ReadyCheckProps {
   onDecline: () => void
 }
 
+/**
+ * ReadyCheck utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ReadyCheck.
+ */
 export function ReadyCheck({ players, duration = 30000, onAccept, onDecline }: ReadyCheckProps) {
   const [timeLeft, setTimeLeft] = useState(duration)
 

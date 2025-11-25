@@ -40,12 +40,27 @@ class RequestIDManager {
   }
 }
 
+/**
+ * requestIdManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of requestIdManager.
+ */
 export const requestIdManager = new RequestIDManager()
 
+/**
+ * generateRequestId utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of generateRequestId.
+ */
 export function generateRequestId(): string {
   return requestIdManager.generate()
 }
 
+/**
+ * getCurrentRequestId utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getCurrentRequestId.
+ */
 export function getCurrentRequestId(): string | null {
   return requestIdManager.getCurrent()
 }
