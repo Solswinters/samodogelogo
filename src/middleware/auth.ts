@@ -14,6 +14,11 @@ export interface AuthContext {
 }
 
 // Verify signature helper
+/**
+ * verifySignature utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of verifySignature.
+ */
 export async function verifySignature(
   message: string,
   signature: string,
@@ -28,6 +33,11 @@ export async function verifySignature(
 }
 
 // Extract authentication from request headers
+/**
+ * extractAuthHeaders utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of extractAuthHeaders.
+ */
 export function extractAuthHeaders(request: NextRequest): {
   address?: string
   signature?: string
@@ -45,6 +55,11 @@ export function extractAuthHeaders(request: NextRequest): {
 }
 
 // Authentication middleware - requires wallet signature
+/**
+ * requireAuth utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of requireAuth.
+ */
 export function requireAuth() {
   return async (
     request: NextRequest,
@@ -92,6 +107,11 @@ export function requireAuth() {
 }
 
 // Optional authentication - doesn't fail if not present
+/**
+ * optionalAuth utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of optionalAuth.
+ */
 export function optionalAuth() {
   return async (
     request: NextRequest,
@@ -126,15 +146,20 @@ export function optionalAuth() {
 }
 
 // Admin authentication - checks against whitelist
+/**
+ * requireAdmin utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of requireAdmin.
+ */
 export function requireAdmin(adminAddresses: string[]) {
-  const normalizedAdmins = adminAddresses.map(addr => addr.toLowerCase())
+  const normalizedAdmins = adminAddresses.map((addr) => addr.toLowerCase())
 
   return async (
     request: NextRequest,
     handler: (context: AuthContext) => Promise<Response>
   ): Promise<Response> => {
     // First check authentication
-    const authResult = await requireAuth()(request, async context => {
+    const authResult = await requireAuth()(request, async (context) => {
       // Check if address is in admin list
       if (!normalizedAdmins.includes(context.address.toLowerCase())) {
         return forbiddenResponse('Admin access required')
@@ -149,6 +174,11 @@ export function requireAdmin(adminAddresses: string[]) {
 }
 
 // API key authentication
+/**
+ * requireApiKey utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of requireApiKey.
+ */
 export function requireApiKey(validKeys: string[]) {
   return async (request: NextRequest, handler: () => Promise<Response>): Promise<Response> => {
     const apiKey = request.headers.get('x-api-key')

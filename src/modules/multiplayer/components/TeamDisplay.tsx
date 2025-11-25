@@ -13,6 +13,11 @@ interface TeamDisplayProps {
   isMyTeam?: boolean
 }
 
+/**
+ * TeamDisplay utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of TeamDisplay.
+ */
 export function TeamDisplay({ team, isMyTeam = false }: TeamDisplayProps) {
   return (
     <Card className="p-4">
@@ -30,7 +35,7 @@ export function TeamDisplay({ team, isMyTeam = false }: TeamDisplayProps) {
       </div>
 
       <div className="space-y-2">
-        {team.players.map(player => (
+        {team.players.map((player) => (
           <div
             key={player.id}
             className="flex items-center justify-between rounded-lg bg-gray-700/50 p-2"
