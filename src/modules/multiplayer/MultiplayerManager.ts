@@ -689,6 +689,11 @@ export class MultiplayerManager {
 // Export singleton instance
 let multiplayerManagerInstance: MultiplayerManager | null = null
 
+/**
+ * getMultiplayerManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getMultiplayerManager.
+ */
 export function getMultiplayerManager(config?: MultiplayerConfig): MultiplayerManager {
   if (!multiplayerManagerInstance && config) {
     multiplayerManagerInstance = new MultiplayerManager(config)
@@ -701,6 +706,11 @@ export function getMultiplayerManager(config?: MultiplayerConfig): MultiplayerMa
   return multiplayerManagerInstance
 }
 
+/**
+ * resetMultiplayerManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of resetMultiplayerManager.
+ */
 export function resetMultiplayerManager(): void {
   if (multiplayerManagerInstance) {
     multiplayerManagerInstance.destroy()
