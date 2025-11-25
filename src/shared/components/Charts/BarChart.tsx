@@ -18,6 +18,11 @@ export interface BarChartProps {
   horizontal?: boolean
 }
 
+/**
+ * BarChart utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of BarChart.
+ */
 export function BarChart({
   data,
   width = 400,
@@ -28,7 +33,7 @@ export function BarChart({
   if (data.length === 0) return null
 
   const padding = 40
-  const maxValue = Math.max(...data.map(d => d.value))
+  const maxValue = Math.max(...data.map((d) => d.value))
 
   if (horizontal) {
     const barHeight = (height - padding * 2) / data.length
