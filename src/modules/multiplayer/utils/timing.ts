@@ -57,15 +57,30 @@ export class ServerTime {
   }
 }
 
+/**
+ * calculateServerTick utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateServerTick.
+ */
 export function calculateServerTick(timestamp: number, tickRate: number): number {
   return Math.floor(timestamp / (1000 / tickRate))
 }
 
+/**
+ * calculateTickProgress utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateTickProgress.
+ */
 export function calculateTickProgress(timestamp: number, tickRate: number): number {
   const tickDuration = 1000 / tickRate
   return (timestamp % tickDuration) / tickDuration
 }
 
+/**
+ * waitForNextTick utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of waitForNextTick.
+ */
 export function waitForNextTick(tickRate: number): Promise<void> {
   const tickDuration = 1000 / tickRate
   const now = Date.now()
