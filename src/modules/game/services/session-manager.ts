@@ -93,7 +93,7 @@ class SessionManager {
 
     const totalScore = sessions.reduce((sum, s) => sum + s.score, 0)
     const totalDuration = sessions.reduce((sum, s) => sum + s.duration, 0)
-    const bestScore = Math.max(...sessions.map(s => s.score))
+    const bestScore = Math.max(...sessions.map((s) => s.score))
 
     return {
       totalSessions: sessions.length,
@@ -104,4 +104,9 @@ class SessionManager {
   }
 }
 
+/**
+ * sessionManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of sessionManager.
+ */
 export const sessionManager = new SessionManager()

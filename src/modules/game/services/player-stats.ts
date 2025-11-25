@@ -199,7 +199,7 @@ class PlayerStatsService {
    */
   getPlayerRank(playerId: string, metric: keyof PlayerStats = 'highScore'): number | null {
     const sorted = this.getAllStats(metric)
-    const index = sorted.findIndex(s => s.playerId === playerId)
+    const index = sorted.findIndex((s) => s.playerId === playerId)
     return index >= 0 ? index + 1 : null
   }
 
@@ -285,7 +285,7 @@ class PlayerStatsService {
       averageGamesPerPlayer: Math.round(
         allStats.reduce((sum, s) => sum + s.gamesPlayed, 0) / allStats.length
       ),
-      topScore: Math.max(...allStats.map(s => s.highScore)),
+      topScore: Math.max(...allStats.map((s) => s.highScore)),
       totalObstaclesCleared: allStats.reduce((sum, s) => sum + s.obstaclesCleared, 0),
     }
   }
@@ -317,7 +317,7 @@ class PlayerStatsService {
       { condition: stats.obstaclesCleared >= 1000, message: '1000 obstacles cleared!' },
     ]
 
-    milestoneChecks.forEach(check => {
+    milestoneChecks.forEach((check) => {
       if (check.condition) {
         milestones.push(check.message)
       }

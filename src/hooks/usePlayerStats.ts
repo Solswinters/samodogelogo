@@ -23,6 +23,11 @@ interface PlayerStatsState {
   error: Error | null
 }
 
+/**
+ * usePlayerStats utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of usePlayerStats.
+ */
 export function usePlayerStats(address: Address | undefined, refresh: boolean = false) {
   const [state, setState] = useState<PlayerStatsState>({
     stats: null,
@@ -35,12 +40,12 @@ export function usePlayerStats(address: Address | undefined, refresh: boolean = 
 
   useEffect(() => {
     if (!address || !publicClient) {
-      setState(prev => ({ ...prev, stats: null }))
+      setState((prev) => ({ ...prev, stats: null }))
       return
     }
 
     const fetchStats = async () => {
-      setState(prev => ({ ...prev, loading: true, error: null }))
+      setState((prev) => ({ ...prev, loading: true, error: null }))
 
       try {
         const rewardsAddress = getContractAddress(chainId, 'gameRewards')
@@ -87,7 +92,7 @@ export function usePlayerStats(address: Address | undefined, refresh: boolean = 
         })
       } catch (error) {
         logger.error('Failed to fetch player stats', error)
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           loading: false,
           error: error instanceof Error ? error : new Error('Unknown error'),
