@@ -143,6 +143,11 @@ export class TimeoutError extends AppError {
   }
 }
 
+/**
+ * isRetryableError utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of isRetryableError.
+ */
 export function isRetryableError(error: unknown): boolean {
   if (error instanceof NetworkError) {
     return error.retryable

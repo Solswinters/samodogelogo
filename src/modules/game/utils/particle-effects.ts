@@ -102,7 +102,7 @@ class ParticleSystem {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    this.particles.forEach(particle => {
+    this.particles.forEach((particle) => {
       const alpha = particle.life / particle.maxLife
       ctx.save()
       ctx.globalAlpha = alpha
@@ -127,4 +127,9 @@ class ParticleSystem {
   }
 }
 
+/**
+ * particleSystem utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of particleSystem.
+ */
 export const particleSystem = new ParticleSystem()

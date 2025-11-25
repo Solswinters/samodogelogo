@@ -219,7 +219,27 @@ export class ErrorHandler {
   }
 }
 
+/**
+ * handleError utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of handleError.
+ */
 export const handleError = ErrorHandler.handle.bind(ErrorHandler)
+/**
+ * handleAsyncError utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of handleAsyncError.
+ */
 export const handleAsyncError = ErrorHandler.handleAsync.bind(ErrorHandler)
+/**
+ * handleSyncError utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of handleSyncError.
+ */
 export const handleSyncError = ErrorHandler.handleSync.bind(ErrorHandler)
+/**
+ * withRetry utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of withRetry.
+ */
 export const withRetry = ErrorHandler.withRetry.bind(ErrorHandler)
