@@ -1,6 +1,11 @@
 import { Player, Obstacle } from './types'
 import { GAME_CONFIG, PLAYER_COLORS } from './config'
 
+/**
+ * createPlayer utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of createPlayer.
+ */
 export function createPlayer(id: string, colorIndex: number): Player {
   return {
     id,
@@ -15,6 +20,11 @@ export function createPlayer(id: string, colorIndex: number): Player {
   }
 }
 
+/**
+ * createObstacle utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of createObstacle.
+ */
 export function createObstacle(x: number): Obstacle {
   const height =
     Math.random() * (GAME_CONFIG.OBSTACLE_MAX_HEIGHT - GAME_CONFIG.OBSTACLE_MIN_HEIGHT) +
@@ -29,6 +39,11 @@ export function createObstacle(x: number): Obstacle {
   }
 }
 
+/**
+ * jump utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of jump.
+ */
 export function jump(player: Player): Player {
   if (player.isGrounded && !player.isJumping) {
     return {

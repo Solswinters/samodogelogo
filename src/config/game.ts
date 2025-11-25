@@ -2,6 +2,11 @@
  * Game configuration constants
  */
 
+/**
+ * GAME_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GAME_CONFIG.
+ */
 export const GAME_CONFIG = {
   // Canvas
   CANVAS_WIDTH: 800,
