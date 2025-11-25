@@ -13,6 +13,11 @@ import {
 // Singleton service instance
 const walletConnectService = new WalletConnectService()
 
+/**
+ * useWalletConnect utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useWalletConnect.
+ */
 export function useWalletConnect() {
   const { address } = useAccount()
   const [sessions, setSessions] = useState<WalletConnectSession[]>([])

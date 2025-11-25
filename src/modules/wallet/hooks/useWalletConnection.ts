@@ -6,6 +6,11 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { injected } from 'wagmi/connectors'
 import { logger } from '@/utils/logger'
 
+/**
+ * useWalletConnection utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useWalletConnection.
+ */
 export function useWalletConnection() {
   const { address, isConnected, isConnecting, isDisconnected } = useAccount()
   const { connect } = useConnect()
