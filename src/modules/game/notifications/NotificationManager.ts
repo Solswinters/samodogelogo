@@ -41,7 +41,7 @@ export class NotificationManager {
     }
 
     // Trigger callbacks
-    this.callbacks.forEach(cb => cb(notification))
+    this.callbacks.forEach((cb) => cb(notification))
 
     // Auto-dismiss
     if (duration > 0) {
@@ -54,7 +54,7 @@ export class NotificationManager {
   }
 
   dismiss(id: string): boolean {
-    const index = this.notifications.findIndex(n => n.id === id)
+    const index = this.notifications.findIndex((n) => n.id === id)
     if (index !== -1) {
       this.notifications.splice(index, 1)
       return true
@@ -93,4 +93,9 @@ export class NotificationManager {
   }
 }
 
+/**
+ * notificationManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of notificationManager.
+ */
 export const notificationManager = new NotificationManager()

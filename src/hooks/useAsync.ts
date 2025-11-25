@@ -10,6 +10,11 @@ export interface AsyncState<T> {
   error: Error | null
 }
 
+/**
+ * useAsync utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useAsync.
+ */
 export function useAsync<T>(
   asyncFunction: () => Promise<T>,
   immediate: boolean = true
