@@ -20,6 +20,11 @@ export interface LeaderboardEntryProps {
   isCurrentUser?: boolean
 }
 
+/**
+ * LeaderboardEntry utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of LeaderboardEntry.
+ */
 export function LeaderboardEntry({ player, isCurrentUser = false }: LeaderboardEntryProps) {
   const getRankBadge = () => {
     if (player.rank === 1) return '🥇'

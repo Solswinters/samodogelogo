@@ -19,6 +19,11 @@ export interface PowerUpSlotProps {
   onClick?: () => void
 }
 
+/**
+ * PowerUpSlot utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of PowerUpSlot.
+ */
 export function PowerUpSlot({ powerUp, active = false, cooldown = 0, onClick }: PowerUpSlotProps) {
   const cooldownPercentage = Math.max(0, Math.min(100, cooldown * 100))
 

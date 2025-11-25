@@ -9,6 +9,11 @@ interface ProvidersProps {
   children: React.ReactNode
 }
 
+/**
+ * Providers utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Providers.
+ */
 export function Providers({ children }: ProvidersProps) {
   return (
     <GameProvider>
