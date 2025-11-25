@@ -40,12 +40,17 @@ interface GameModeSelectorProps {
   onSelect: (modeId: string) => void
 }
 
+/**
+ * GameModeSelector utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GameModeSelector.
+ */
 export function GameModeSelector({ selectedMode, onSelect }: GameModeSelectorProps) {
   const [hoveredMode, setHoveredMode] = useState<string | null>(null)
 
   return (
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-      {GAME_MODES.map(mode => (
+      {GAME_MODES.map((mode) => (
         <Card
           key={mode.id}
           className={`cursor-pointer transition-all ${
