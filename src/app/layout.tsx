@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
-import '@/styles/globals.css'
-import '@/styles/animations.css'
-import '@/styles/utilities.css'
-import '@/styles/print.css'
+
 import { cookieToInitialState } from 'wagmi'
-import { config } from '@/modules/wallet/config/web3'
+import { headers } from 'next/headers'
+
+import '@/styles/animations.css'
+import '@/styles/globals.css'
+import '@/styles/print.css'
+import '@/styles/utilities.css'
 import Web3Provider from '@/modules/wallet/components/Web3Provider'
 import { Providers } from './providers'
+import { config } from '@/modules/wallet/config/web3'
 
 export const metadata: Metadata = {
   title: 'Jump Game - Onchain Rewards',

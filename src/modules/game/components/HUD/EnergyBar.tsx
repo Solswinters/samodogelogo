@@ -11,6 +11,11 @@ export interface EnergyBarProps {
   depleted?: boolean
 }
 
+/**
+ * EnergyBar utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of EnergyBar.
+ */
 export function EnergyBar({
   current,
   max,
