@@ -6,6 +6,11 @@ import { useCallback, useState } from 'react'
 import { type Chain } from 'viem'
 import { useWalletClient } from 'wagmi'
 
+/**
+ * useAddChain utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useAddChain.
+ */
 export function useAddChain() {
   const { data: walletClient } = useWalletClient()
   const [isLoading, setIsLoading] = useState(false)

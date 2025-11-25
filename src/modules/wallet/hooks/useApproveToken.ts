@@ -19,6 +19,11 @@ const ERC20_ABI = [
   },
 ] as const
 
+/**
+ * useApproveToken utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useApproveToken.
+ */
 export function useApproveToken(tokenAddress: Address, spenderAddress: Address) {
   const { write, isPreparing, isConfirming, isSuccess, isError, error } = useContractWrite({
     address: tokenAddress,
