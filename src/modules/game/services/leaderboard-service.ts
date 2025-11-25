@@ -95,8 +95,13 @@ class LeaderboardService {
       return 0
     }
 
-    return Math.max(...Array.from(this.entries.values()).map(e => e.score))
+    return Math.max(...Array.from(this.entries.values()).map((e) => e.score))
   }
 }
 
+/**
+ * leaderboardService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of leaderboardService.
+ */
 export const leaderboardService = new LeaderboardService()
