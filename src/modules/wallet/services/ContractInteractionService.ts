@@ -1,35 +1,36 @@
-import { IService } from "@/common/interfaces";
-import { PublicClient, WalletClient, Address } from "viem";
+import { PublicClient, WalletClient, Address } from 'viem'
+
+import { IService } from '@/common/interfaces'
 
 /**
  * Service for managing contract interactions
  */
 
 export interface ContractCallParams {
-  address: Address;
-  abi: unknown[];
-  functionName: string;
-  args?: unknown[];
+  address: Address
+  abi: unknown[]
+  functionName: string
+  args?: unknown[]
 }
 
 export interface TransactionResult {
-  hash: Address;
-  success: boolean;
-  error?: string;
+  hash: Address
+  success: boolean
+  error?: string
 }
 
 export class ContractInteractionService implements IService {
-  public readonly serviceName = "ContractInteractionService";
+  public readonly serviceName = 'ContractInteractionService'
 
-  private publicClient?: PublicClient;
-  private walletClient?: WalletClient;
+  private publicClient?: PublicClient
+  private walletClient?: WalletClient
 
   /**
    * Initialize clients
    */
   init(publicClient: PublicClient, walletClient?: WalletClient): void {
-    this.publicClient = publicClient;
-    this.walletClient = walletClient;
+    this.publicClient = publicClient
+    this.walletClient = walletClient
   }
 
   /**
@@ -37,7 +38,7 @@ export class ContractInteractionService implements IService {
    */
   async read<T>(params: ContractCallParams): Promise<T> {
     if (!this.publicClient) {
-      throw new Error("Public client not initialized");
+      throw new Error('Public client not initialized')
     }
 
     const result = await this.publicClient.readContract({
@@ -45,9 +46,9 @@ export class ContractInteractionService implements IService {
       abi: params.abi,
       functionName: params.functionName,
       args: params.args,
-    });
+    })
 
-    return result as T;
+    return result as T
   }
 
   /**
@@ -55,7 +56,7 @@ export class ContractInteractionService implements IService {
    */
   async write(params: ContractCallParams): Promise<TransactionResult> {
     if (!this.walletClient) {
-      throw new Error("Wallet client not initialized");
+      throw new Error('Wallet client not initialized')
     }
 
     try {
@@ -64,18 +65,18 @@ export class ContractInteractionService implements IService {
         abi: params.abi,
         functionName: params.functionName,
         args: params.args,
-      });
+      })
 
       return {
         hash: hash as Address,
         success: true,
-      };
+      }
     } catch (error) {
       return {
-        hash: "0x0" as Address,
+        hash: '0x0' as Address,
         success: false,
-        error: error instanceof Error ? error.message : "Transaction failed",
-      };
+        error: error instanceof Error ? error.message : 'Transaction failed',
+      }
     }
   }
 
@@ -84,7 +85,7 @@ export class ContractInteractionService implements IService {
    */
   async simulate(params: ContractCallParams): Promise<{ success: boolean; error?: string }> {
     if (!this.publicClient) {
-      throw new Error("Public client not initialized");
+      throw new Error('Public client not initialized')
     }
 
     try {
@@ -93,19 +94,18 @@ export class ContractInteractionService implements IService {
         abi: params.abi,
         functionName: params.functionName,
         args: params.args,
-      });
-      return { success: true };
+      })
+      return { success: true }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Simulation failed",
-      };
+        error: error instanceof Error ? error.message : 'Simulation failed',
+      }
     }
   }
 
   destroy(): void {
-    this.publicClient = undefined;
-    this.walletClient = undefined;
+    this.publicClient = undefined
+    this.walletClient = undefined
   }
 }
-

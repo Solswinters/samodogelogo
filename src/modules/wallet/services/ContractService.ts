@@ -82,4 +82,9 @@ export class ContractService {
   }
 }
 
+/**
+ * contractService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of contractService.
+ */
 export const contractService = new ContractService()
