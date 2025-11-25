@@ -6,6 +6,11 @@
 
 import Link from 'next/link'
 
+/**
+ * Footer utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Footer.
+ */
 export function Footer() {
   return (
     <footer className="border-t border-gray-800 bg-black">

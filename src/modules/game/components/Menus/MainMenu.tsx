@@ -15,6 +15,11 @@ export interface MainMenuProps {
   isWalletConnected: boolean
 }
 
+/**
+ * MainMenu utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of MainMenu.
+ */
 export function MainMenu({
   onPlay,
   onMultiplayer,
