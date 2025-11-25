@@ -4,6 +4,11 @@
 
 import { lazy } from 'react'
 
+/**
+ * lazyWithRetry utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of lazyWithRetry.
+ */
 export function lazyWithRetry<T extends React.ComponentType<unknown>>(
   importFn: () => Promise<{ default: T }>,
   retries: number = 3
@@ -26,6 +31,11 @@ export function lazyWithRetry<T extends React.ComponentType<unknown>>(
   })
 }
 
+/**
+ * preloadComponent utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of preloadComponent.
+ */
 export function preloadComponent<T>(
   importFn: () => Promise<{ default: T }>
 ): (() => Promise<{ default: T }>) & { preload: () => Promise<{ default: T }> } {

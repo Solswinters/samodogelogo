@@ -15,6 +15,11 @@ interface ChatInputProps {
   placeholder?: string
 }
 
+/**
+ * ChatInput utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ChatInput.
+ */
 export function ChatInput({
   onSend,
   disabled = false,
@@ -42,7 +47,7 @@ export function ChatInput({
     <div className="flex gap-2">
       <Input
         value={message}
-        onChange={e => setMessage(e.target.value)}
+        onChange={(e) => setMessage(e.target.value)}
         onKeyPress={handleKeyPress}
         placeholder={placeholder}
         maxLength={maxLength}
