@@ -36,18 +36,24 @@ export class FPSCounter {
   }
 
   getAverageFPS(): number {
-    if (this.fpsHistory.length === 0) {return 0}
+    if (this.fpsHistory.length === 0) {
+      return 0
+    }
     const sum = this.fpsHistory.reduce((acc, fps) => acc + fps, 0)
     return Math.round(sum / this.fpsHistory.length)
   }
 
   getMinFPS(): number {
-    if (this.fpsHistory.length === 0) {return 0}
+    if (this.fpsHistory.length === 0) {
+      return 0
+    }
     return Math.min(...this.fpsHistory)
   }
 
   getMaxFPS(): number {
-    if (this.fpsHistory.length === 0) {return 0}
+    if (this.fpsHistory.length === 0) {
+      return 0
+    }
     return Math.max(...this.fpsHistory)
   }
 
@@ -63,7 +69,9 @@ export class FPSCounter {
   }
 
   isStable(threshold: number = 5): boolean {
-    if (this.fpsHistory.length < this.historySize) {return true}
+    if (this.fpsHistory.length < this.historySize) {
+      return true
+    }
 
     const avgFPS = this.getAverageFPS()
     const variance =
@@ -76,9 +84,15 @@ export class FPSCounter {
 
   getPerformanceRating(): 'excellent' | 'good' | 'fair' | 'poor' {
     const avgFPS = this.getAverageFPS()
-    if (avgFPS >= 55) {return 'excellent'}
-    if (avgFPS >= 45) {return 'good'}
-    if (avgFPS >= 30) {return 'fair'}
+    if (avgFPS >= 55) {
+      return 'excellent'
+    }
+    if (avgFPS >= 45) {
+      return 'good'
+    }
+    if (avgFPS >= 30) {
+      return 'fair'
+    }
     return 'poor'
   }
 }

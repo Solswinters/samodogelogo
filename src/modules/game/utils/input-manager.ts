@@ -140,9 +140,19 @@ class InputManager {
   }
 }
 
+/**
+ * inputManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of inputManager.
+ */
 export const inputManager = new InputManager()
 
 // Common key constants
+/**
+ * KEY utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of KEY.
+ */
 export const KEY = {
   SPACE: ' ',
   UP: 'ArrowUp',
