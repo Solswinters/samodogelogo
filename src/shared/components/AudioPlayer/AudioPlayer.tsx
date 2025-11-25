@@ -13,6 +13,11 @@ export interface AudioPlayerProps {
   loop?: boolean
 }
 
+/**
+ * AudioPlayer utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of AudioPlayer.
+ */
 export function AudioPlayer({
   src,
   title = 'Audio Track',
