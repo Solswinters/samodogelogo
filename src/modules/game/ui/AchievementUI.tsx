@@ -24,6 +24,11 @@ const rarityColors = {
   legendary: 'from-yellow-500 to-yellow-600',
 }
 
+/**
+ * AchievementUI utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of AchievementUI.
+ */
 export const AchievementUI: React.FC<AchievementUIProps> = ({ achievement, onClose }) => {
   const [isVisible, setIsVisible] = useState(false)
 

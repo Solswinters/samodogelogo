@@ -85,4 +85,9 @@ export class EventListener {
 }
 
 // Singleton instance
+/**
+ * eventListener utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of eventListener.
+ */
 export const eventListener = new EventListener()

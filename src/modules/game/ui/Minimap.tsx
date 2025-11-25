@@ -10,6 +10,11 @@ export interface MinimapProps {
   obstacles: Array<{ x: number; y: number; width: number; height: number }>
 }
 
+/**
+ * Minimap utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Minimap.
+ */
 export const Minimap: React.FC<MinimapProps> = ({
   width,
   height,

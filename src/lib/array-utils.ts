@@ -20,6 +20,11 @@ export function chunk<T>(array: T[], size: number): T[][] {
   return chunks
 }
 
+/**
+ * shuffle utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of shuffle.
+ */
 export function shuffle<T>(array: T[]): T[] {
   const result = [...array]
   for (let i = result.length - 1; i > 0; i--) {
@@ -29,10 +34,20 @@ export function shuffle<T>(array: T[]): T[] {
   return result
 }
 
+/**
+ * unique utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of unique.
+ */
 export function unique<T>(array: T[]): T[] {
   return Array.from(new Set(array))
 }
 
+/**
+ * uniqueBy utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of uniqueBy.
+ */
 export function uniqueBy<T>(array: T[], key: keyof T): T[] {
   const seen = new Set()
   return array.filter((item) => {
@@ -45,6 +60,11 @@ export function uniqueBy<T>(array: T[], key: keyof T): T[] {
   })
 }
 
+/**
+ * groupBy utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of groupBy.
+ */
 export function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
   return array.reduce(
     (groups, item) => {
@@ -59,6 +79,11 @@ export function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
   )
 }
 
+/**
+ * sortBy utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of sortBy.
+ */
 export function sortBy<T>(array: T[], key: keyof T, direction: 'asc' | 'desc' = 'asc'): T[] {
   return [...array].sort((a, b) => {
     const aVal = a[key]
@@ -68,6 +93,11 @@ export function sortBy<T>(array: T[], key: keyof T, direction: 'asc' | 'desc' = 
   })
 }
 
+/**
+ * partition utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of partition.
+ */
 export function partition<T>(array: T[], predicate: (item: T) => boolean): [T[], T[]] {
   const truthy: T[] = []
   const falsy: T[] = []
@@ -75,10 +105,20 @@ export function partition<T>(array: T[], predicate: (item: T) => boolean): [T[],
   return [truthy, falsy]
 }
 
+/**
+ * last utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of last.
+ */
 export function last<T>(array: T[]): T | undefined {
   return array[array.length - 1]
 }
 
+/**
+ * first utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of first.
+ */
 export function first<T>(array: T[]): T | undefined {
   return array[0]
 }
