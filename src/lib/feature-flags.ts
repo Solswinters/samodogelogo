@@ -54,6 +54,11 @@ class FeatureFlagManager {
   }
 }
 
+/**
+ * featureFlags utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of featureFlags.
+ */
 export const featureFlags = new FeatureFlagManager({
   enableMultiplayer: true,
   enableRewards: true,
@@ -61,6 +66,11 @@ export const featureFlags = new FeatureFlagManager({
   enableAnalytics: false,
 })
 
+/**
+ * isFeatureEnabled utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of isFeatureEnabled.
+ */
 export function isFeatureEnabled(flag: FeatureFlag): boolean {
   return featureFlags.isEnabled(flag)
 }

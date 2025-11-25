@@ -14,6 +14,11 @@ export interface Velocity {
   y: number
 }
 
+/**
+ * applyGravity utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of applyGravity.
+ */
 export function applyGravity(velocity: Velocity): Velocity {
   return {
     x: velocity.x,
@@ -21,6 +26,11 @@ export function applyGravity(velocity: Velocity): Velocity {
   }
 }
 
+/**
+ * applyJump utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of applyJump.
+ */
 export function applyJump(velocity: Velocity, power: number = PHYSICS.JUMP_POWER): Velocity {
   return {
     x: velocity.x,
@@ -28,6 +38,11 @@ export function applyJump(velocity: Velocity, power: number = PHYSICS.JUMP_POWER
   }
 }
 
+/**
+ * updatePosition utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of updatePosition.
+ */
 export function updatePosition(position: Position, velocity: Velocity): Position {
   return {
     x: position.x + velocity.x,
@@ -35,6 +50,11 @@ export function updatePosition(position: Position, velocity: Velocity): Position
   }
 }
 
+/**
+ * clampToGround utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of clampToGround.
+ */
 export function clampToGround(position: Position, groundY: number): Position {
   return {
     x: position.x,
@@ -42,10 +62,20 @@ export function clampToGround(position: Position, groundY: number): Position {
   }
 }
 
+/**
+ * isOnGround utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of isOnGround.
+ */
 export function isOnGround(position: Position, groundY: number): boolean {
   return position.y >= groundY
 }
 
+/**
+ * checkCollision utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of checkCollision.
+ */
 export function checkCollision(
   pos1: Position,
   size1: { width: number; height: number },
@@ -60,6 +90,11 @@ export function checkCollision(
   )
 }
 
+/**
+ * calculateDistance utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateDistance.
+ */
 export function calculateDistance(pos1: Position, pos2: Position): number {
   const dx = pos2.x - pos1.x
   const dy = pos2.y - pos1.y
