@@ -20,6 +20,11 @@ interface CreateRoomModalProps {
   username: string
 }
 
+/**
+ * CreateRoomModal utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of CreateRoomModal.
+ */
 export function CreateRoomModal({ isOpen, onClose, playerId, username }: CreateRoomModalProps) {
   const { createRoom, isLoading } = useRoom()
   const [roomName, setRoomName] = useState('')
@@ -57,7 +62,7 @@ export function CreateRoomModal({ isOpen, onClose, playerId, username }: CreateR
           <label className="mb-2 block text-sm text-gray-400">Room Name</label>
           <Input
             value={roomName}
-            onChange={e => setRoomName(e.target.value)}
+            onChange={(e) => setRoomName(e.target.value)}
             placeholder="Enter room name"
           />
         </div>
@@ -112,7 +117,7 @@ export function CreateRoomModal({ isOpen, onClose, playerId, username }: CreateR
             <Input
               type="password"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
             />
           </div>

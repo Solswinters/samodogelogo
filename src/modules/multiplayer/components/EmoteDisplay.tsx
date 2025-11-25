@@ -6,6 +6,11 @@
 
 import { useEmote } from '../hooks/useEmote'
 
+/**
+ * EmoteDisplay utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of EmoteDisplay.
+ */
 export function EmoteDisplay() {
   const { recentEmotes } = useEmote()
 

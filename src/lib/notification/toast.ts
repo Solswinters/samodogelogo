@@ -149,4 +149,9 @@ export class ToastManager {
 }
 
 // Export singleton instance
+/**
+ * toast utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of toast.
+ */
 export const toast = ToastManager.getInstance()
