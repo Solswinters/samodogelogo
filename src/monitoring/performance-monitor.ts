@@ -51,7 +51,7 @@ class PerformanceMonitor {
 
   getMetrics(name?: string): PerformanceMetric[] {
     if (name) {
-      return this.metrics.filter(m => m.name === name)
+      return this.metrics.filter((m) => m.name === name)
     }
     return [...this.metrics]
   }
@@ -82,4 +82,9 @@ class PerformanceMonitor {
   }
 }
 
+/**
+ * performanceMonitor utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of performanceMonitor.
+ */
 export const performanceMonitor = new PerformanceMonitor()

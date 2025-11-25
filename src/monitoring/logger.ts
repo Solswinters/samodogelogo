@@ -40,7 +40,7 @@ class Logger {
       error,
     }
 
-    this.handlers.forEach(handler => handler(entry))
+    this.handlers.forEach((handler) => handler(entry))
 
     // Console output
     const levelName = LogLevel[level]
@@ -72,11 +72,16 @@ class Logger {
   }
 }
 
+/**
+ * logger utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of logger.
+ */
 export const logger = new Logger()
 
 // Production: Send to analytics
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
-  logger.addHandler(entry => {
+  logger.addHandler((entry) => {
     if (entry.level >= LogLevel.WARN) {
       // Send to external service (e.g., Sentry, Datadog)
       console.log('Would send to analytics:', entry)
