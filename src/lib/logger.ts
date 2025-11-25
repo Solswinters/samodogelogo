@@ -118,6 +118,11 @@ export class Logger {
   }
 }
 
+/**
+ * requestLogger utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of requestLogger.
+ */
 export function requestLogger(logger: Logger = new Logger('API')) {
   return async (request: NextRequest, handler: () => Promise<Response>): Promise<Response> => {
     const startTime = Date.now()
@@ -160,8 +165,33 @@ export function requestLogger(logger: Logger = new Logger('API')) {
   }
 }
 
+/**
+ * logger utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of logger.
+ */
 export const logger = new Logger('APP')
+/**
+ * gameLogger utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of gameLogger.
+ */
 export const gameLogger = new Logger('GAME')
+/**
+ * contractLogger utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of contractLogger.
+ */
 export const contractLogger = new Logger('CONTRACT')
+/**
+ * multiplayerLogger utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of multiplayerLogger.
+ */
 export const multiplayerLogger = new Logger('MULTIPLAYER')
+/**
+ * apiLogger utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of apiLogger.
+ */
 export const apiLogger = new Logger('API')

@@ -9,6 +9,11 @@ import { useLatency } from '../hooks/useLatency'
 import { Badge } from '@/shared/components/Badge'
 import { Tooltip } from '@/shared/components/Tooltip'
 
+/**
+ * ConnectionIndicator utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ConnectionIndicator.
+ */
 export function ConnectionIndicator() {
   const { isConnected } = useWebSocket()
   const { latency, quality } = useLatency()

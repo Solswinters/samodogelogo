@@ -22,7 +22,7 @@ export function lazyWithRetry<T extends React.ComponentType<unknown>>(
       } catch (error) {
         lastError = error as Error
         if (attempt < retries) {
-          await new Promise(resolve => setTimeout(resolve, 1000 * attempt))
+          await new Promise((resolve) => setTimeout(resolve, 1000 * attempt))
         }
       }
     }
