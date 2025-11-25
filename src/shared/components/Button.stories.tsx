@@ -26,6 +26,11 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/**
+ * Primary utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Primary.
+ */
 export const Primary: Story = {
   args: {
     variant: 'primary',
@@ -33,6 +38,11 @@ export const Primary: Story = {
   },
 }
 
+/**
+ * Secondary utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Secondary.
+ */
 export const Secondary: Story = {
   args: {
     variant: 'secondary',
@@ -40,6 +50,11 @@ export const Secondary: Story = {
   },
 }
 
+/**
+ * Danger utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Danger.
+ */
 export const Danger: Story = {
   args: {
     variant: 'danger',
@@ -47,6 +62,11 @@ export const Danger: Story = {
   },
 }
 
+/**
+ * Outline utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Outline.
+ */
 export const Outline: Story = {
   args: {
     variant: 'outline',
@@ -54,6 +74,11 @@ export const Outline: Story = {
   },
 }
 
+/**
+ * Small utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Small.
+ */
 export const Small: Story = {
   args: {
     size: 'sm',
@@ -61,6 +86,11 @@ export const Small: Story = {
   },
 }
 
+/**
+ * Large utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Large.
+ */
 export const Large: Story = {
   args: {
     size: 'lg',
@@ -68,6 +98,11 @@ export const Large: Story = {
   },
 }
 
+/**
+ * Disabled utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Disabled.
+ */
 export const Disabled: Story = {
   args: {
     disabled: true,
