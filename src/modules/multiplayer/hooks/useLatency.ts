@@ -9,6 +9,11 @@ import { useWebSocket } from './useWebSocket'
 // Singleton service
 const latencyService = new LatencyService()
 
+/**
+ * useLatency utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useLatency.
+ */
 export function useLatency() {
   const { send, on, isConnected } = useWebSocket()
   const [latency, setLatency] = useState(0)
@@ -32,7 +37,7 @@ export function useLatency() {
 
   // Listen for pong
   useEffect(() => {
-    const unsubscribe = on('pong', event => {
+    const unsubscribe = on('pong', (event) => {
       const { id } = event.data as { id: string }
       latencyService.recordPong(id)
 

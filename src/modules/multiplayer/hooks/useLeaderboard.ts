@@ -10,6 +10,11 @@ import type { Leaderboard, LeaderboardEntry } from '../types'
 // Singleton service
 const leaderboardService = new LeaderboardService()
 
+/**
+ * useLeaderboard utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useLeaderboard.
+ */
 export function useLeaderboard(period: 'daily' | 'weekly' | 'monthly' | 'allTime' = 'allTime') {
   const { send, on } = useWebSocket()
   const [leaderboard, setLeaderboard] = useState<Leaderboard | null>(null)
@@ -17,7 +22,7 @@ export function useLeaderboard(period: 'daily' | 'weekly' | 'monthly' | 'allTime
 
   // Listen for leaderboard updates
   useEffect(() => {
-    const unsubscribe = on('leaderboard_update', event => {
+    const unsubscribe = on('leaderboard_update', (event) => {
       const data = event.data as { period: string; entries: LeaderboardEntry[] }
       if (data.period === period) {
         leaderboardService.updateLeaderboard(period, data.entries)

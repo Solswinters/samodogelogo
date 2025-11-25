@@ -21,14 +21,14 @@ export function useInvite(playerId: string) {
 
   // Listen for invite updates
   useEffect(() => {
-    const unsubscribeInvite = on('invite_received', event => {
+    const unsubscribeInvite = on('invite_received', (event) => {
       const invite = event.data as Invite
-      setPendingInvites(prev => [...prev, invite])
+      setPendingInvites((prev) => [...prev, invite])
     })
 
-    const unsubscribeRemove = on('invite_cancelled', event => {
+    const unsubscribeRemove = on('invite_cancelled', (event) => {
       const { inviteId } = event.data as { inviteId: string }
-      setPendingInvites(prev => prev.filter(i => i.id !== inviteId))
+      setPendingInvites((prev) => prev.filter((i) => i.id !== inviteId))
     })
 
     return () => {
@@ -61,7 +61,7 @@ export function useInvite(playerId: string) {
       const roomId = inviteService.acceptInvite(inviteId)
       if (roomId) {
         send('accept_invite', { inviteId })
-        setPendingInvites(prev => prev.filter(i => i.id !== inviteId))
+        setPendingInvites((prev) => prev.filter((i) => i.id !== inviteId))
       }
       return roomId
     },
@@ -72,7 +72,7 @@ export function useInvite(playerId: string) {
     (inviteId: string) => {
       inviteService.declineInvite(inviteId)
       send('decline_invite', { inviteId })
-      setPendingInvites(prev => prev.filter(i => i.id !== inviteId))
+      setPendingInvites((prev) => prev.filter((i) => i.id !== inviteId))
     },
     [send]
   )
