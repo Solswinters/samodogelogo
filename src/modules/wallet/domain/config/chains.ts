@@ -4,8 +4,18 @@
 
 import { base, baseSepolia } from "@reown/appkit/networks";
 
+/**
+ * SUPPORTED_CHAINS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SUPPORTED_CHAINS.
+ */
 export const SUPPORTED_CHAINS = [base, baseSepolia] as const;
 
+/**
+ * CHAIN_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of CHAIN_CONFIG.
+ */
 export const CHAIN_CONFIG = {
   DEFAULT_CHAIN_ID: base.id,
   TESTNET_CHAIN_ID: baseSepolia.id,
@@ -31,14 +41,29 @@ export const CHAIN_CONFIG = {
   },
 } as const;
 
+/**
+ * getChainById utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getChainById.
+ */
 export function getChainById(chainId: number) {
   return CHAIN_CONFIG.CHAINS[chainId];
 }
 
+/**
+ * getDefaultChain utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getDefaultChain.
+ */
 export function getDefaultChain() {
   return getChainById(CHAIN_CONFIG.DEFAULT_CHAIN_ID);
 }
 
+/**
+ * isTestnet utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of isTestnet.
+ */
 export function isTestnet(chainId: number): boolean {
   const chain = getChainById(chainId);
   return chain?.isTestnet ?? false;
