@@ -32,7 +32,7 @@ export function optimizeImage(src: string, options: ImageOptimizationOptions = {
  * @returns The result of generateSrcSet.
  */
 export function generateSrcSet(src: string, widths: number[]): string {
-  return widths.map(width => `${optimizeImage(src, { width })} ${width}w`).join(', ')
+  return widths.map((width) => `${optimizeImage(src, { width })} ${width}w`).join(', ')
 }
 
 /**
@@ -52,7 +52,7 @@ export function generateSizes(breakpoints: Record<string, number>): string {
  * @returns The result of preloadCriticalImages.
  */
 export function preloadCriticalImages(images: string[]) {
-  images.forEach(src => {
+  images.forEach((src) => {
     const link = document.createElement('link')
     link.rel = 'preload'
     link.as = 'image'
