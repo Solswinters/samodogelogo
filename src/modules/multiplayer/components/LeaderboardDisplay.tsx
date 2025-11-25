@@ -11,6 +11,11 @@ import { Tabs } from '@/shared/components/Tabs'
 import { Badge } from '@/shared/components/Badge'
 import { Skeleton } from '@/shared/components/Skeleton'
 
+/**
+ * LeaderboardDisplay utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of LeaderboardDisplay.
+ */
 export function LeaderboardDisplay() {
   const daily = useLeaderboard('daily')
   const weekly = useLeaderboard('weekly')
@@ -71,7 +76,7 @@ function LeaderboardTable({
 
   return (
     <div className="space-y-2">
-      {entries.map(entry => (
+      {entries.map((entry) => (
         <div
           key={entry.rank}
           className="flex items-center justify-between rounded-lg bg-gray-700/50 p-3"

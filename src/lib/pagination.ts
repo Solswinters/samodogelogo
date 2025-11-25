@@ -16,6 +16,11 @@ export interface PaginationMeta {
   hasPrev: boolean
 }
 
+/**
+ * calculatePagination utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculatePagination.
+ */
 export function calculatePagination(params: PaginationParams, total: number): PaginationMeta {
   const { page, pageSize } = params
   const totalPages = Math.ceil(total / pageSize)
@@ -30,11 +35,21 @@ export function calculatePagination(params: PaginationParams, total: number): Pa
   }
 }
 
+/**
+ * paginate utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of paginate.
+ */
 export function paginate<T>(items: T[], page: number, pageSize: number): T[] {
   const startIndex = (page - 1) * pageSize
   return items.slice(startIndex, startIndex + pageSize)
 }
 
+/**
+ * getPageRange utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getPageRange.
+ */
 export function getPageRange(
   currentPage: number,
   totalPages: number,
