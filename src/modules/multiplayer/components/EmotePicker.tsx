@@ -47,7 +47,7 @@ export function EmotePicker({ playerId, username }: EmotePickerProps) {
       {isOpen && (
         <div className="absolute bottom-full right-0 mb-2 rounded-lg bg-gray-800 p-2 shadow-lg">
           <div className="grid grid-cols-4 gap-2">
-            {EMOTES.map(emote => (
+            {EMOTES.map((emote) => (
               <button
                 key={emote.type}
                 onClick={() => handleEmoteClick(emote.type, emote.emoji)}

@@ -14,6 +14,11 @@ interface ErrorDisplayProps {
   onDismiss?: () => void
 }
 
+/**
+ * ErrorDisplay utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ErrorDisplay.
+ */
 export function ErrorDisplay({ error, onRetry, onDismiss }: ErrorDisplayProps) {
   const message = getErrorMessage(error)
 
