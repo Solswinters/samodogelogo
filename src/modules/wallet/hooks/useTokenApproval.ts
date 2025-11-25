@@ -12,6 +12,11 @@ export interface UseTokenApprovalParams {
   enabled?: boolean
 }
 
+/**
+ * useTokenApproval utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useTokenApproval.
+ */
 export function useTokenApproval({
   tokenAddress,
   spenderAddress,

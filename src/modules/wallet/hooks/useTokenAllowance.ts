@@ -6,6 +6,11 @@ import { useState, useEffect, useCallback } from 'react'
 import { type Address } from 'viem'
 import { useAccount, usePublicClient } from 'wagmi'
 
+/**
+ * useTokenAllowance utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useTokenAllowance.
+ */
 export function useTokenAllowance(tokenAddress: Address, spenderAddress: Address) {
   const { address: ownerAddress } = useAccount()
   const publicClient = usePublicClient()
