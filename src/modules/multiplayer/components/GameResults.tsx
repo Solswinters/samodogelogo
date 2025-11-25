@@ -21,6 +21,11 @@ interface GameResultsProps {
   onLeave: () => void
 }
 
+/**
+ * GameResults utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GameResults.
+ */
 export function GameResults({
   players,
   currentPlayerId,
@@ -29,7 +34,7 @@ export function GameResults({
   onLeave,
 }: GameResultsProps) {
   const sortedPlayers = [...players].sort((a, b) => a.rank - b.rank)
-  const currentPlayer = players.find(p => p.id === currentPlayerId)
+  const currentPlayer = players.find((p) => p.id === currentPlayerId)
   const isWinner = currentPlayer?.rank === 1
 
   const getRankMedal = (rank: number) => {
@@ -62,7 +67,7 @@ export function GameResults({
       <Card>
         <h3 className="mb-4 text-lg font-semibold text-white">Final Rankings</h3>
         <div className="space-y-2">
-          {sortedPlayers.map(player => (
+          {sortedPlayers.map((player) => (
             <div
               key={player.id}
               className={`flex items-center justify-between rounded-lg p-3 ${

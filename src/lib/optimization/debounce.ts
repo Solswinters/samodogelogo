@@ -5,6 +5,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-this-alias */
 
+/**
+ * debounce utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of debounce.
+ */
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
