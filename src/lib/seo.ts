@@ -12,6 +12,11 @@ export interface SEOConfig {
   url?: string
 }
 
+/**
+ * generateMetadata utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of generateMetadata.
+ */
 export function generateMetadata(config: SEOConfig): Metadata {
   const {
     title,
@@ -62,6 +67,11 @@ export function generateMetadata(config: SEOConfig): Metadata {
   }
 }
 
+/**
+ * defaultSEO utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of defaultSEO.
+ */
 export const defaultSEO: SEOConfig = {
   title: 'Samodoge Jump Game - Play & Earn Crypto Rewards',
   description:
@@ -78,6 +88,11 @@ export const defaultSEO: SEOConfig = {
   ],
 }
 
+/**
+ * generateStructuredData utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of generateStructuredData.
+ */
 export function generateStructuredData(type: 'Game' | 'Organization') {
   if (type === 'Game') {
     return {

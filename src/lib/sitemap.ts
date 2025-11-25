@@ -9,6 +9,11 @@ export interface SitemapEntry {
   priority?: number
 }
 
+/**
+ * generateSitemap utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of generateSitemap.
+ */
 export function generateSitemap(baseUrl: string): SitemapEntry[] {
   return [
     {
@@ -44,10 +49,15 @@ export function generateSitemap(baseUrl: string): SitemapEntry[] {
   ]
 }
 
+/**
+ * formatSitemapXML utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatSitemapXML.
+ */
 export function formatSitemapXML(entries: SitemapEntry[]): string {
   const urls = entries
     .map(
-      entry => `
+      (entry) => `
     <url>
       <loc>${entry.url}</loc>
       ${entry.lastModified ? `<lastmod>${entry.lastModified.toISOString()}</lastmod>` : ''}
