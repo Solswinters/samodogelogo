@@ -20,7 +20,9 @@ class CacheManager {
 
   get<T>(key: string): T | null {
     const entry = this.cache.get(key) as CacheEntry<T> | undefined
-    if (!entry) {return null}
+    if (!entry) {
+      return null
+    }
 
     const now = Date.now()
     if (now > entry.expiresAt) {
@@ -85,6 +87,11 @@ class CacheManager {
   }
 }
 
+/**
+ * cache utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of cache.
+ */
 export const cache = new CacheManager()
 
 // Clean expired cache entries periodically
@@ -97,18 +104,38 @@ export interface CacheConfig {
   keyGenerator?: (request: NextRequest) => string
 }
 
+/**
+ * DEFAULT_CACHE_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of DEFAULT_CACHE_CONFIG.
+ */
 export const DEFAULT_CACHE_CONFIG: CacheConfig = {
   ttl: 5 * 60 * 1000,
 }
 
+/**
+ * SHORT_CACHE utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SHORT_CACHE.
+ */
 export const SHORT_CACHE: CacheConfig = {
   ttl: 1 * 60 * 1000,
 }
 
+/**
+ * MEDIUM_CACHE utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of MEDIUM_CACHE.
+ */
 export const MEDIUM_CACHE: CacheConfig = {
   ttl: 5 * 60 * 1000,
 }
 
+/**
+ * LONG_CACHE utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of LONG_CACHE.
+ */
 export const LONG_CACHE: CacheConfig = {
   ttl: 60 * 60 * 1000,
 }
@@ -130,6 +157,11 @@ function generateCacheKey(
   return `${request.method}:${pathname}${sortedParams ? `?${sortedParams}` : ''}`
 }
 
+/**
+ * cacheMiddleware utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of cacheMiddleware.
+ */
 export function cacheMiddleware<T>(config: CacheConfig = DEFAULT_CACHE_CONFIG) {
   return async (
     request: NextRequest,

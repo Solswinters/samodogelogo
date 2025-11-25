@@ -18,7 +18,7 @@ class AchievementTracker {
   }
 
   private initializeAchievements(): void {
-    Object.values(ACHIEVEMENT_IDS).forEach(id => {
+    Object.values(ACHIEVEMENT_IDS).forEach((id) => {
       if (!this.achievements.has(id)) {
         this.achievements.set(id, {
           id,
@@ -68,7 +68,7 @@ class AchievementTracker {
     try {
       const saved = storage.get<Achievement[]>(STORAGE_KEY, [])
       if (saved) {
-        saved.forEach(achievement => {
+        saved.forEach((achievement) => {
           this.achievements.set(achievement.id, achievement)
         })
         logger.info(`Loaded ${saved.length} achievements from storage`)
@@ -155,11 +155,11 @@ class AchievementTracker {
   }
 
   getUnlockedAchievements(): Achievement[] {
-    return this.getAllAchievements().filter(a => a.unlockedAt)
+    return this.getAllAchievements().filter((a) => a.unlockedAt)
   }
 
   getLockedAchievements(): Achievement[] {
-    return this.getAllAchievements().filter(a => !a.unlockedAt)
+    return this.getAllAchievements().filter((a) => !a.unlockedAt)
   }
 
   getUnlockedCount(): number {
@@ -171,7 +171,9 @@ class AchievementTracker {
   }
 
   getCompletionPercentage(): number {
-    if (this.achievements.size === 0) {return 0}
+    if (this.achievements.size === 0) {
+      return 0
+    }
     return (this.getUnlockedCount() / this.getTotalCount()) * 100
   }
 
@@ -188,15 +190,25 @@ class AchievementTracker {
     this.incrementProgress(ACHIEVEMENT_IDS.PLAY_100_GAMES)
 
     // Score achievements
-    if (score >= 1000) {this.unlockAchievement(ACHIEVEMENT_IDS.SCORE_1000)}
-    if (score >= 5000) {this.unlockAchievement(ACHIEVEMENT_IDS.SCORE_5000)}
-    if (score >= 10000) {this.unlockAchievement(ACHIEVEMENT_IDS.SCORE_10000)}
+    if (score >= 1000) {
+      this.unlockAchievement(ACHIEVEMENT_IDS.SCORE_1000)
+    }
+    if (score >= 5000) {
+      this.unlockAchievement(ACHIEVEMENT_IDS.SCORE_5000)
+    }
+    if (score >= 10000) {
+      this.unlockAchievement(ACHIEVEMENT_IDS.SCORE_10000)
+    }
 
     // Perfect run
-    if (damageTaken === 0) {this.unlockAchievement(ACHIEVEMENT_IDS.PERFECT_RUN)}
+    if (damageTaken === 0) {
+      this.unlockAchievement(ACHIEVEMENT_IDS.PERFECT_RUN)
+    }
 
     // Speedrunner
-    if (timeTaken < 120000) {this.unlockAchievement(ACHIEVEMENT_IDS.SPEEDRUNNER)}
+    if (timeTaken < 120000) {
+      this.unlockAchievement(ACHIEVEMENT_IDS.SPEEDRUNNER)
+    }
   }
 
   onGameWin(): void {
@@ -209,4 +221,9 @@ class AchievementTracker {
   }
 }
 
+/**
+ * achievementTracker utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of achievementTracker.
+ */
 export const achievementTracker = new AchievementTracker()

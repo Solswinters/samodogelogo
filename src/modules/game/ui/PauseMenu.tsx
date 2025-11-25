@@ -7,6 +7,11 @@ export interface PauseMenuProps {
   onMainMenu: () => void
 }
 
+/**
+ * PauseMenu utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of PauseMenu.
+ */
 export const PauseMenu: React.FC<PauseMenuProps> = ({ onResume, onRestart, onMainMenu }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
