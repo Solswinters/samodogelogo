@@ -13,11 +13,21 @@ export interface ChatMessage {
 
 let messageIdCounter = 0
 
+/**
+ * generateMessageId utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of generateMessageId.
+ */
 export function generateMessageId(): string {
   messageIdCounter++
   return `msg-${Date.now()}-${messageIdCounter}`
 }
 
+/**
+ * createChatMessage utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of createChatMessage.
+ */
 export function createChatMessage(
   playerId: string,
   playerName: string,
@@ -33,6 +43,11 @@ export function createChatMessage(
   }
 }
 
+/**
+ * createSystemMessage utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of createSystemMessage.
+ */
 export function createSystemMessage(message: string): ChatMessage {
   return {
     id: generateMessageId(),
@@ -44,15 +59,30 @@ export function createSystemMessage(message: string): ChatMessage {
   }
 }
 
+/**
+ * sanitizeChatMessage utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of sanitizeChatMessage.
+ */
 export function sanitizeChatMessage(message: string): string {
   return message.trim().slice(0, 200).replace(/[<>]/g, '')
 }
 
+/**
+ * isValidChatMessage utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of isValidChatMessage.
+ */
 export function isValidChatMessage(message: string): boolean {
   const trimmed = message.trim()
   return trimmed.length > 0 && trimmed.length <= 200
 }
 
+/**
+ * formatTimestamp utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatTimestamp.
+ */
 export function formatTimestamp(timestamp: number): string {
   const date = new Date(timestamp)
   return date.toLocaleTimeString('en-US', {
