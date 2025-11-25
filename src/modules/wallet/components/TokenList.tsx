@@ -53,6 +53,11 @@ function TokenListItem({ address, name, symbol, decimals, logo }: TokenListItemP
   )
 }
 
+/**
+ * TokenList utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of TokenList.
+ */
 export function TokenList() {
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -66,13 +71,13 @@ export function TokenList() {
         type="text"
         placeholder="Search tokens..."
         value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
+        onChange={(e) => setSearchQuery(e.target.value)}
         className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none"
       />
 
       <div className="space-y-2">
         {tokens.length > 0 ? (
-          tokens.map(token => (
+          tokens.map((token) => (
             <TokenListItem
               key={token.address}
               address={token.address}

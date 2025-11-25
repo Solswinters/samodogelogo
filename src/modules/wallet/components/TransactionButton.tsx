@@ -16,6 +16,11 @@ export interface TransactionButtonProps {
   variant?: 'primary' | 'secondary' | 'danger'
 }
 
+/**
+ * TransactionButton utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of TransactionButton.
+ */
 export function TransactionButton({
   onClick,
   children,

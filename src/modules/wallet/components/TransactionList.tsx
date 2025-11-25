@@ -9,6 +9,11 @@ import { useTransactionsStore } from '../stores/transactions-store'
 import { formatAddress } from '../utils/blockchain'
 import { getBlockExplorerUrl } from '../utils/blockchain'
 
+/**
+ * TransactionList utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of TransactionList.
+ */
 export function TransactionList() {
   const { chain } = useAccount()
   const { transactions } = useTransactionsStore()
