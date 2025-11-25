@@ -1,5 +1,5 @@
-import { Player, Obstacle } from './types'
 import { GAME_CONFIG } from './config'
+import { Player, Obstacle } from './types'
 
 /**
  * checkCollision utility function.
