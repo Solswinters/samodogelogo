@@ -15,6 +15,11 @@ interface StatsDisplayProps {
   playerId: string
 }
 
+/**
+ * StatsDisplay utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of StatsDisplay.
+ */
 export function StatsDisplay({ playerId }: StatsDisplayProps) {
   const { stats, fetchStats } = useStats(playerId)
 

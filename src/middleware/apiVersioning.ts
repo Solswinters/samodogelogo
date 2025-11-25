@@ -6,6 +6,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export type ApiVersion = "v1" | "v2";
 
+/**
+ * getApiVersion utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getApiVersion.
+ */
 export function getApiVersion(request: NextRequest): ApiVersion {
   // Check header
   const versionHeader = request.headers.get("X-API-Version");
@@ -19,6 +24,11 @@ export function getApiVersion(request: NextRequest): ApiVersion {
   return "v1";
 }
 
+/**
+ * withVersioning utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of withVersioning.
+ */
 export function withVersioning(
   handlers: Record<ApiVersion, (req: NextRequest) => Promise<NextResponse>>
 ) {
