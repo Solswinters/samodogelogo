@@ -8,8 +8,18 @@
  * Players can claim achievements without paying gas fees using EIP-2771 meta-transactions.
  */
 
+/**
+ * GASLESS_ACHIEVEMENTS_ADDRESS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GASLESS_ACHIEVEMENTS_ADDRESS.
+ */
 export const GASLESS_ACHIEVEMENTS_ADDRESS = '0x2c366F0a2c9CB85ef7e1f6Af7b264640840faA89' as const
 
+/**
+ * GASLESS_ACHIEVEMENTS_ABI utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GASLESS_ACHIEVEMENTS_ABI.
+ */
 export const GASLESS_ACHIEVEMENTS_ABI = [
   {
     type: 'constructor',
