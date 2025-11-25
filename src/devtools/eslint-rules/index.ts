@@ -2,6 +2,11 @@
  * Custom ESLint rules for project
  */
 
+/**
+ * rules utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of rules.
+ */
 export const rules = {
   'no-direct-store-import': {
     meta: {

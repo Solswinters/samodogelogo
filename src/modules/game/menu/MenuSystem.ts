@@ -72,4 +72,9 @@ export class MenuSystem {
   }
 }
 
+/**
+ * menuSystem utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of menuSystem.
+ */
 export const menuSystem = new MenuSystem()
