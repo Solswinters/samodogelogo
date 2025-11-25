@@ -6,6 +6,11 @@ import { useAccount, useDisconnect, useSwitchChain } from 'wagmi'
 import { useCallback } from 'react'
 import { walletAnalytics } from '../services/WalletAnalytics'
 
+/**
+ * useWalletActions utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useWalletActions.
+ */
 export function useWalletActions() {
   const { address, chainId } = useAccount()
   const { disconnect } = useDisconnect()

@@ -19,6 +19,11 @@ const ERC20_ABI = [
   },
 ] as const
 
+/**
+ * useTokenTransfer utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useTokenTransfer.
+ */
 export function useTokenTransfer(tokenAddress: Address) {
   const { write, isPreparing, isConfirming, isSuccess, isError, error, data } = useContractWrite({
     address: tokenAddress,

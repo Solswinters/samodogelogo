@@ -7,6 +7,11 @@ import { useAccount, useBlockNumber, usePublicClient } from 'wagmi'
 import { useTransactionsStore } from '../stores/transactions-store'
 import type { Transaction } from '../types/blockchain'
 
+/**
+ * useTransactionHistory utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useTransactionHistory.
+ */
 export function useTransactionHistory() {
   const { address } = useAccount()
   const publicClient = usePublicClient()
