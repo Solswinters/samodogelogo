@@ -13,6 +13,11 @@ export interface AvatarProps {
   shape?: 'circle' | 'square'
 }
 
+/**
+ * Avatar utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of Avatar.
+ */
 export function Avatar({
   src,
   alt = '',
