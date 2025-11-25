@@ -6,6 +6,11 @@
 
 import { useNetwork } from '../hooks/useNetwork'
 
+/**
+ * NetworkBadge utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of NetworkBadge.
+ */
 export function NetworkBadge() {
   const { chain, isSupported } = useNetwork()
 
