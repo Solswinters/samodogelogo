@@ -33,4 +33,3 @@ export function applyGravity(velocityY: number): number {
 export function calculateJumpVelocity(): number {
   return GAME_CONFIG.JUMP_FORCE
 }
-
