@@ -9,6 +9,11 @@ import { Alert } from '@/shared/components/Alert'
 import { Button } from '@/shared/components/Button'
 import { Progress } from '@/shared/components/Progress'
 
+/**
+ * RecoveryBanner utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of RecoveryBanner.
+ */
 export function RecoveryBanner() {
   const { isRecovering, canRecover, attemptCount, forceReconnect } = useConnectionRecovery()
 

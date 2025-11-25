@@ -30,7 +30,7 @@ export function ReadyCheck({ players, duration = 30000, onAccept, onDecline }: R
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(prev => Math.max(0, prev - 100))
+      setTimeLeft((prev) => Math.max(0, prev - 100))
     }, 100)
 
     return () => clearInterval(interval)
@@ -43,7 +43,7 @@ export function ReadyCheck({ players, duration = 30000, onAccept, onDecline }: R
   }, [timeLeft, onDecline])
 
   const progress = (timeLeft / duration) * 100
-  const readyCount = players.filter(p => p.isReady).length
+  const readyCount = players.filter((p) => p.isReady).length
 
   return (
     <Card className="border-2 border-purple-500">
@@ -58,7 +58,7 @@ export function ReadyCheck({ players, duration = 30000, onAccept, onDecline }: R
         <Progress value={progress} />
 
         <div className="space-y-1">
-          {players.map(player => (
+          {players.map((player) => (
             <div key={player.id} className="flex items-center justify-between text-sm">
               <span className="text-white">{player.name}</span>
               <span className={player.isReady ? 'text-green-500' : 'text-gray-400'}>
