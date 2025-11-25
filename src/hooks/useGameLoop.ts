@@ -12,6 +12,11 @@ interface UseGameLoopOptions {
   fps?: number
 }
 
+/**
+ * useGameLoop utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useGameLoop.
+ */
 export function useGameLoop({ onUpdate, isRunning, fps }: UseGameLoopOptions) {
   const requestRef = useRef<number>()
   const previousTimeRef = useRef<number>()

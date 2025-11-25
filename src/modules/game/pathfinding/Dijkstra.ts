@@ -9,6 +9,11 @@ interface DijkstraNode {
   parent: DijkstraNode | null
 }
 
+/**
+ * dijkstra utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of dijkstra.
+ */
 export function dijkstra(
   start: { x: number; y: number },
   end: { x: number; y: number },
