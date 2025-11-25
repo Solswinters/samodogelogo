@@ -17,6 +17,11 @@ interface SendTokenFormProps {
   onSuccess?: () => void
 }
 
+/**
+ * SendTokenForm utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SendTokenForm.
+ */
 export function SendTokenForm({ tokenAddress, onSuccess }: SendTokenFormProps) {
   const [recipient, setRecipient] = useState('')
   const [amount, setAmount] = useState('')
@@ -93,7 +98,7 @@ export function SendTokenForm({ tokenAddress, onSuccess }: SendTokenFormProps) {
             type="text"
             placeholder="0x..."
             value={recipient}
-            onChange={e => setRecipient(e.target.value)}
+            onChange={(e) => setRecipient(e.target.value)}
             disabled={isTransferring}
           />
         </div>
@@ -114,7 +119,7 @@ export function SendTokenForm({ tokenAddress, onSuccess }: SendTokenFormProps) {
             type="text"
             placeholder="0.0"
             value={amount}
-            onChange={e => setAmount(e.target.value)}
+            onChange={(e) => setAmount(e.target.value)}
             disabled={isTransferring}
           />
         </div>

@@ -10,6 +10,11 @@ export interface StatusIndicatorProps {
   showText?: boolean
 }
 
+/**
+ * StatusIndicator utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of StatusIndicator.
+ */
 export function StatusIndicator({ showText = true }: StatusIndicatorProps) {
   const { isConnected, isConnecting, isDisconnected } = useAccount()
 
