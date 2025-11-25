@@ -6,6 +6,11 @@ import { useSignMessage as useWagmiSignMessage, useAccount } from 'wagmi'
 import { useState } from 'react'
 import type { SignedMessage } from '../services/SignatureService'
 
+/**
+ * useSignMessage utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useSignMessage.
+ */
 export function useSignMessage() {
   const { address } = useAccount()
   const { signMessageAsync, isPending, error } = useWagmiSignMessage()

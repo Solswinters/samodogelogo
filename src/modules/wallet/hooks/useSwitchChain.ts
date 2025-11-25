@@ -6,10 +6,15 @@ import { useSwitchNetwork, useNetwork } from 'wagmi'
 import { useCallback } from 'react'
 import { useWalletStore } from './useWalletStore'
 
+/**
+ * useSwitchChain utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useSwitchChain.
+ */
 export function useSwitchChain() {
   const { chain } = useNetwork()
   const { switchNetwork, isLoading, error, pendingChainId } = useSwitchNetwork()
-  const addTransaction = useWalletStore(state => state.addTransaction)
+  const addTransaction = useWalletStore((state) => state.addTransaction)
 
   const switchChain = useCallback(
     async (chainId: number) => {
