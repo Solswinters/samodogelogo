@@ -18,6 +18,11 @@ interface ChatBoxProps {
   height?: string
 }
 
+/**
+ * ChatBox utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ChatBox.
+ */
 export function ChatBox({ channelId, playerId, username, height = '400px' }: ChatBoxProps) {
   const { messages, sendMessage } = useChat(channelId)
   const [inputValue, setInputValue] = useState('')
@@ -50,7 +55,7 @@ export function ChatBox({ channelId, playerId, username, height = '400px' }: Cha
     <Card className="flex flex-col p-4" style={{ height }}>
       {/* Messages */}
       <div className="flex-1 space-y-3 overflow-y-auto">
-        {messages.map(message => (
+        {messages.map((message) => (
           <div key={message.id} className="flex gap-3">
             <div className="h-8 w-8 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-500 to-purple-600" />
             <div className="flex-1">
@@ -71,7 +76,7 @@ export function ChatBox({ channelId, playerId, username, height = '400px' }: Cha
       <div className="mt-4 flex gap-2">
         <Input
           value={inputValue}
-          onChange={e => setInputValue(e.target.value)}
+          onChange={(e) => setInputValue(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Type a message..."
           className="flex-1"
