@@ -1,5 +1,10 @@
 // Socket.io event type constants
 
+/**
+ * SOCKET_EVENTS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SOCKET_EVENTS.
+ */
 export const SOCKET_EVENTS = {
   // Connection events
   CONNECT: 'connect',
@@ -42,6 +47,11 @@ export const SOCKET_EVENTS = {
 export type SocketEvent = (typeof SOCKET_EVENTS)[keyof typeof SOCKET_EVENTS]
 
 // Socket connection states
+/**
+ * SOCKET_STATES utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SOCKET_STATES.
+ */
 export const SOCKET_STATES = {
   CONNECTING: 'connecting',
   CONNECTED: 'connected',
@@ -53,6 +63,11 @@ export const SOCKET_STATES = {
 export type SocketState = (typeof SOCKET_STATES)[keyof typeof SOCKET_STATES]
 
 // Socket error codes
+/**
+ * SOCKET_ERROR_CODES utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SOCKET_ERROR_CODES.
+ */
 export const SOCKET_ERROR_CODES = {
   CONNECTION_FAILED: 'CONNECTION_FAILED',
   ROOM_NOT_FOUND: 'ROOM_NOT_FOUND',
@@ -65,6 +80,11 @@ export const SOCKET_ERROR_CODES = {
 export type SocketErrorCode = (typeof SOCKET_ERROR_CODES)[keyof typeof SOCKET_ERROR_CODES]
 
 // Socket configuration constants
+/**
+ * SOCKET_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SOCKET_CONFIG.
+ */
 export const SOCKET_CONFIG = {
   // Reconnection settings
   RECONNECTION: true,
@@ -86,6 +106,11 @@ export const SOCKET_CONFIG = {
 } as const
 
 // Event payload size limits (in bytes)
+/**
+ * SOCKET_LIMITS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SOCKET_LIMITS.
+ */
 export const SOCKET_LIMITS = {
   MAX_PAYLOAD_SIZE: 10240, // 10KB
   MAX_PLAYERS_PER_ROOM: 4,
@@ -94,6 +119,11 @@ export const SOCKET_LIMITS = {
 } as const
 
 // Rate limiting for socket events
+/**
+ * SOCKET_RATE_LIMITS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SOCKET_RATE_LIMITS.
+ */
 export const SOCKET_RATE_LIMITS = {
   POSITION_UPDATE: {
     MAX_PER_SECOND: 60, // 60fps
@@ -112,4 +142,3 @@ export const SOCKET_RATE_LIMITS = {
     BURST_SIZE: 10,
   },
 } as const
-

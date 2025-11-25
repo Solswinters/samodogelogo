@@ -4,6 +4,11 @@
 
 import { useEffect, useState, useCallback } from 'react'
 
+/**
+ * useKeyboard utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useKeyboard.
+ */
 export function useKeyboard(targetKey: string): boolean {
   const [isPressed, setIsPressed] = useState(false)
 
@@ -38,6 +43,11 @@ export function useKeyboard(targetKey: string): boolean {
   return isPressed
 }
 
+/**
+ * useKeys utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useKeys.
+ */
 export function useKeys(keys: string[]): Record<string, boolean> {
   const [pressedKeys, setPressedKeys] = useState<Record<string, boolean>>(() =>
     keys.reduce((acc, key) => ({ ...acc, [key]: false }), {})
@@ -46,13 +56,13 @@ export function useKeys(keys: string[]): Record<string, boolean> {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (keys.includes(event.key) || keys.includes(event.code)) {
-        setPressedKeys(prev => ({ ...prev, [event.key]: true, [event.code]: true }))
+        setPressedKeys((prev) => ({ ...prev, [event.key]: true, [event.code]: true }))
       }
     }
 
     const handleKeyUp = (event: KeyboardEvent) => {
       if (keys.includes(event.key) || keys.includes(event.code)) {
-        setPressedKeys(prev => ({ ...prev, [event.key]: false, [event.code]: false }))
+        setPressedKeys((prev) => ({ ...prev, [event.key]: false, [event.code]: false }))
       }
     }
 
