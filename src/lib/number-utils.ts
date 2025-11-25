@@ -2,35 +2,75 @@
  * Number manipulation utilities
  */
 
+/**
+ * clamp utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of clamp.
+ */
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max)
 }
 
+/**
+ * randomInt utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of randomInt.
+ */
 export function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+/**
+ * randomFloat utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of randomFloat.
+ */
 export function randomFloat(min: number, max: number): number {
   return Math.random() * (max - min) + min
 }
 
+/**
+ * lerp utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of lerp.
+ */
 export function lerp(start: number, end: number, amount: number): number {
   return start + (end - start) * amount
 }
 
+/**
+ * roundTo utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of roundTo.
+ */
 export function roundTo(value: number, decimals: number): number {
   const multiplier = Math.pow(10, decimals)
   return Math.round(value * multiplier) / multiplier
 }
 
+/**
+ * isInRange utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of isInRange.
+ */
 export function isInRange(value: number, min: number, max: number): boolean {
   return value >= min && value <= max
 }
 
+/**
+ * percentage utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of percentage.
+ */
 export function percentage(value: number, total: number): number {
   return total === 0 ? 0 : (value / total) * 100
 }
 
+/**
+ * average utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of average.
+ */
 export function average(numbers: number[]): number {
   if (numbers.length === 0) {
     return 0
@@ -38,14 +78,29 @@ export function average(numbers: number[]): number {
   return numbers.reduce((sum, n) => sum + n, 0) / numbers.length
 }
 
+/**
+ * sum utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of sum.
+ */
 export function sum(numbers: number[]): number {
   return numbers.reduce((total, n) => total + n, 0)
 }
 
+/**
+ * max utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of max.
+ */
 export function max(numbers: number[]): number {
   return Math.max(...numbers)
 }
 
+/**
+ * min utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of min.
+ */
 export function min(numbers: number[]): number {
   return Math.min(...numbers)
 }

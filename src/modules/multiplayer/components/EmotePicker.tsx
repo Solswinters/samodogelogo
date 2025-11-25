@@ -24,6 +24,11 @@ interface EmotePickerProps {
   username: string
 }
 
+/**
+ * EmotePicker utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of EmotePicker.
+ */
 export function EmotePicker({ playerId, username }: EmotePickerProps) {
   const { sendEmote } = useEmote()
   const [isOpen, setIsOpen] = useState(false)
