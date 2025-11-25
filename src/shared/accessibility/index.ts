@@ -106,6 +106,11 @@ export function focusElement(element: HTMLElement | null) {
   }
 }
 
+/**
+ * focusFirstFocusableChild utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of focusFirstFocusableChild.
+ */
 export function focusFirstFocusableChild(container: HTMLElement) {
   const focusable = container.querySelectorAll<HTMLElement>(
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -115,12 +120,17 @@ export function focusFirstFocusableChild(container: HTMLElement) {
   }
 }
 
+/**
+ * trapFocus utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of trapFocus.
+ */
 export function trapFocus(container: HTMLElement, event: KeyboardEvent) {
   const focusable = Array.from(
     container.querySelectorAll<HTMLElement>(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     )
-  ).filter(el => !el.hasAttribute('disabled'))
+  ).filter((el) => !el.hasAttribute('disabled'))
 
   const first = focusable[0]
   const last = focusable[focusable.length - 1]

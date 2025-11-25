@@ -2,6 +2,11 @@
  * Animation utilities and presets
  */
 
+/**
+ * animations utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of animations.
+ */
 export const animations = {
   // Fade animations
   fadeIn: 'animate-in fade-in duration-200',
