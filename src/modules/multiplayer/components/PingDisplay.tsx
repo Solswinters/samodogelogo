@@ -6,6 +6,11 @@
 
 import { useLatency } from '../hooks/useLatency'
 
+/**
+ * PingDisplay utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of PingDisplay.
+ */
 export function PingDisplay() {
   const { latency, getQuality } = useLatency()
 

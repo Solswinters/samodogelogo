@@ -30,7 +30,7 @@ export function OnlinePlayersList({ playerId, username }: OnlinePlayersListProps
       </div>
 
       <div className="space-y-2">
-        {onlinePlayers.map(player => (
+        {onlinePlayers.map((player) => (
           <div
             key={player.playerId}
             className="flex items-center justify-between rounded-lg bg-gray-700/50 p-2"

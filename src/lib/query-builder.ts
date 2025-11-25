@@ -30,7 +30,9 @@ export class QueryBuilder {
   }
 
   build(): string {
-    if (this.params.size === 0) {return ''}
+    if (this.params.size === 0) {
+      return ''
+    }
 
     const queryString = Array.from(this.params.entries())
       .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -44,6 +46,11 @@ export class QueryBuilder {
   }
 }
 
+/**
+ * buildQuery utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of buildQuery.
+ */
 export function buildQuery(
   params: Record<string, string | number | boolean | null | undefined>
 ): string {
