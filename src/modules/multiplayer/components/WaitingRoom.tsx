@@ -28,6 +28,11 @@ interface WaitingRoomProps {
   onLeave: () => void
 }
 
+/**
+ * WaitingRoom utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of WaitingRoom.
+ */
 export function WaitingRoom({
   room,
   players,
@@ -37,8 +42,8 @@ export function WaitingRoom({
   onStartGame,
   onLeave,
 }: WaitingRoomProps) {
-  const currentPlayer = players.find(p => p.id === currentPlayerId)
-  const allReady = players.every(p => p.isReady || p.isHost)
+  const currentPlayer = players.find((p) => p.id === currentPlayerId)
+  const allReady = players.every((p) => p.isReady || p.isHost)
   const enoughPlayers = players.length >= 2
 
   return (
@@ -52,7 +57,7 @@ export function WaitingRoom({
 
       <div className="space-y-2">
         <h3 className="text-lg font-semibold text-white">Players</h3>
-        {players.map(player => (
+        {players.map((player) => (
           <PlayerCard key={player.id} player={player} />
         ))}
       </div>
