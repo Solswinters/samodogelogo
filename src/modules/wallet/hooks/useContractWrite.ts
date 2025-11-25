@@ -15,6 +15,11 @@ interface UseContractWriteConfig<TAbi extends Abi, TFunctionName extends string>
   onError?: (error: Error) => void
 }
 
+/**
+ * useContractWrite utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useContractWrite.
+ */
 export function useContractWrite<TAbi extends Abi, TFunctionName extends string>({
   address,
   abi,

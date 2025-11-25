@@ -17,6 +17,11 @@ interface UseContractReadConfig<TAbi extends Abi, TFunctionName extends string> 
   cacheTime?: number
 }
 
+/**
+ * useContractRead utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useContractRead.
+ */
 export function useContractRead<TAbi extends Abi, TFunctionName extends string>({
   address,
   abi,
@@ -26,7 +31,7 @@ export function useContractRead<TAbi extends Abi, TFunctionName extends string>(
   watch = false,
   cacheTime = 2000,
 }: UseContractReadConfig<TAbi, TFunctionName>) {
-  const addTransaction = useWalletStore(state => state.addTransaction)
+  const addTransaction = useWalletStore((state) => state.addTransaction)
 
   const result = useWagmiContractRead({
     address,
