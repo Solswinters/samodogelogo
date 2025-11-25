@@ -26,6 +26,11 @@ const EXPLORER_CONFIGS: Record<number, { baseUrl: string; apiKey?: string }> = {
   },
 }
 
+/**
+ * useBlockExplorer utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useBlockExplorer.
+ */
 export function useBlockExplorer() {
   const { chain } = useNetwork()
 

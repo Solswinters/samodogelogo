@@ -4,6 +4,11 @@
 
 import { useAccount, useBalance as useWagmiBalance } from 'wagmi'
 
+/**
+ * useBalance utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useBalance.
+ */
 export function useBalance() {
   const { address } = useAccount()
 
