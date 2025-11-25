@@ -42,14 +42,16 @@ class MetricsCollector {
 
   getMetrics(name?: string): MetricEntry[] {
     if (name) {
-      return this.metrics.filter(m => m.name === name)
+      return this.metrics.filter((m) => m.name === name)
     }
     return [...this.metrics]
   }
 
   getAverage(name: string): number {
     const metrics = this.getMetrics(name)
-    if (metrics.length === 0) {return 0}
+    if (metrics.length === 0) {
+      return 0
+    }
 
     const sum = metrics.reduce((acc, m) => acc + m.value, 0)
     return sum / metrics.length
@@ -65,4 +67,9 @@ class MetricsCollector {
   }
 }
 
+/**
+ * metrics utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of metrics.
+ */
 export const metrics = new MetricsCollector()
