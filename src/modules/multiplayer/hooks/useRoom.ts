@@ -9,6 +9,11 @@ import { useWebSocket } from './useWebSocket'
 // Singleton service
 const roomService = new RoomService()
 
+/**
+ * useRoom utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useRoom.
+ */
 export function useRoom() {
   const { send, on } = useWebSocket()
   const [currentRoom, setCurrentRoom] = useState<Room | null>(null)
@@ -18,22 +23,22 @@ export function useRoom() {
 
   // Listen for room updates
   useEffect(() => {
-    const unsubscribeRoomUpdate = on('room_update', event => {
+    const unsubscribeRoomUpdate = on('room_update', (event) => {
       const room = event.data as Room
       setCurrentRoom(room)
     })
 
-    const unsubscribeRoomList = on('room_list', event => {
+    const unsubscribeRoomList = on('room_list', (event) => {
       const rooms = event.data as Room[]
       setAvailableRooms(rooms)
     })
 
-    const unsubscribePlayerJoined = on('player_joined', event => {
+    const unsubscribePlayerJoined = on('player_joined', (event) => {
       const room = event.data as Room
       setCurrentRoom(room)
     })
 
-    const unsubscribePlayerLeft = on('player_left', event => {
+    const unsubscribePlayerLeft = on('player_left', (event) => {
       const room = event.data as Room
       setCurrentRoom(room)
     })

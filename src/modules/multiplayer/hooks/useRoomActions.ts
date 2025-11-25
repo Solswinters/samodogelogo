@@ -7,6 +7,11 @@
 import { useCallback } from 'react'
 import { useMultiplayerStore } from './useMultiplayerStore'
 
+/**
+ * useRoomActions utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useRoomActions.
+ */
 export function useRoomActions() {
   const { setCurrentRoom, addPlayer, removePlayer, updatePlayer } = useMultiplayerStore()
 
