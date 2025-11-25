@@ -1,6 +1,11 @@
 import { Player, Obstacle } from './types'
 import { GAME_CONFIG } from './config'
 
+/**
+ * checkCollision utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of checkCollision.
+ */
 export function checkCollision(player: Player, obstacle: Obstacle): boolean {
   return (
     player.x < obstacle.x + obstacle.width &&
@@ -10,21 +15,29 @@ export function checkCollision(player: Player, obstacle: Obstacle): boolean {
   )
 }
 
-export function checkCollisionWithObstacles(
-  player: Player,
-  obstacles: Obstacle[]
-): boolean {
-  return obstacles.some(obstacle => checkCollision(player, obstacle))
+/**
+ * checkCollisionWithObstacles utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of checkCollisionWithObstacles.
+ */
+export function checkCollisionWithObstacles(player: Player, obstacles: Obstacle[]): boolean {
+  return obstacles.some((obstacle) => checkCollision(player, obstacle))
 }
 
+/**
+ * isPlayerOnGround utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of isPlayerOnGround.
+ */
 export function isPlayerOnGround(player: Player): boolean {
   return player.y + GAME_CONFIG.PLAYER_HEIGHT >= GAME_CONFIG.GROUND_Y
 }
 
-export function hasObstacleCleared(
-  obstacle: Obstacle,
-  playerX: number
-): boolean {
+/**
+ * hasObstacleCleared utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of hasObstacleCleared.
+ */
+export function hasObstacleCleared(obstacle: Obstacle, playerX: number): boolean {
   return obstacle.x + obstacle.width < playerX
 }
-

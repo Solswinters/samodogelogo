@@ -60,7 +60,7 @@ export const env = getConfig()
 export function validateEnvironment() {
   const required = ['NEXT_PUBLIC_API_URL', 'NEXT_PUBLIC_WS_URL', 'NEXT_PUBLIC_CHAIN_ID']
 
-  const missing = required.filter(key => !process.env[key])
+  const missing = required.filter((key) => !process.env[key])
 
   if (missing.length > 0 && env.nodeEnv === 'production') {
     console.error('Missing required environment variables:', missing)
