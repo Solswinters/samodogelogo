@@ -80,4 +80,9 @@ export class GasService {
   }
 }
 
+/**
+ * gasService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of gasService.
+ */
 export const gasService = new GasService()

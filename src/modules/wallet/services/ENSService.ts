@@ -45,4 +45,9 @@ export class ENSService {
   }
 }
 
+/**
+ * ensService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ensService.
+ */
 export const ensService = new ENSService()
