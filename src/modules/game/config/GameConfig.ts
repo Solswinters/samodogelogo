@@ -110,4 +110,9 @@ export class GameConfig {
   }
 }
 
+/**
+ * gameConfig utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of gameConfig.
+ */
 export const gameConfig = GameConfig.getInstance()

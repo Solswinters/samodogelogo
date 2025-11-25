@@ -4,6 +4,11 @@
  */
 
 // Game Configuration
+/**
+ * GAME_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GAME_CONFIG.
+ */
 export const GAME_CONFIG = {
   // Canvas
   CANVAS_WIDTH: 800,
@@ -29,6 +34,11 @@ export const GAME_CONFIG = {
 } as const
 
 // Player Configuration
+/**
+ * PLAYER_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of PLAYER_CONFIG.
+ */
 export const PLAYER_CONFIG = {
   // Size
   WIDTH: 50,
@@ -60,6 +70,11 @@ export const PLAYER_CONFIG = {
 } as const
 
 // Obstacle Configuration
+/**
+ * OBSTACLE_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of OBSTACLE_CONFIG.
+ */
 export const OBSTACLE_CONFIG = {
   // Types
   TYPES: {
@@ -91,6 +106,11 @@ export const OBSTACLE_CONFIG = {
 } as const
 
 // Power-Up Configuration
+/**
+ * POWERUP_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of POWERUP_CONFIG.
+ */
 export const POWERUP_CONFIG = {
   // Types
   TYPES: {
@@ -127,6 +147,11 @@ export const POWERUP_CONFIG = {
 } as const
 
 // Collectible Configuration
+/**
+ * COLLECTIBLE_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of COLLECTIBLE_CONFIG.
+ */
 export const COLLECTIBLE_CONFIG = {
   // Types
   TYPES: {
@@ -161,6 +186,11 @@ export const COLLECTIBLE_CONFIG = {
 } as const
 
 // Scoring Configuration
+/**
+ * SCORE_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SCORE_CONFIG.
+ */
 export const SCORE_CONFIG = {
   // Base Points
   DISTANCE_POINTS_PER_PIXEL: 0.1,
@@ -179,6 +209,11 @@ export const SCORE_CONFIG = {
 } as const
 
 // Difficulty Configuration
+/**
+ * DIFFICULTY_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of DIFFICULTY_CONFIG.
+ */
 export const DIFFICULTY_CONFIG = {
   // Levels
   LEVELS: {
@@ -207,6 +242,11 @@ export const DIFFICULTY_CONFIG = {
 } as const
 
 // Achievement Configuration
+/**
+ * ACHIEVEMENT_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ACHIEVEMENT_CONFIG.
+ */
 export const ACHIEVEMENT_CONFIG = {
   // Categories
   CATEGORIES: {
@@ -233,6 +273,11 @@ export const ACHIEVEMENT_CONFIG = {
 } as const
 
 // Particle Configuration
+/**
+ * PARTICLE_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of PARTICLE_CONFIG.
+ */
 export const PARTICLE_CONFIG = {
   // Pool Size
   MAX_PARTICLES: 500,
@@ -263,6 +308,11 @@ export const PARTICLE_CONFIG = {
 } as const
 
 // Sound Configuration
+/**
+ * SOUND_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SOUND_CONFIG.
+ */
 export const SOUND_CONFIG = {
   // Master Volume
   MASTER_VOLUME: 0.7,
@@ -297,6 +347,11 @@ export const SOUND_CONFIG = {
 } as const
 
 // Visual Configuration
+/**
+ * VISUAL_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of VISUAL_CONFIG.
+ */
 export const VISUAL_CONFIG = {
   // Colors
   COLORS: {
@@ -335,6 +390,11 @@ export const VISUAL_CONFIG = {
 } as const
 
 // Network Configuration
+/**
+ * NETWORK_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of NETWORK_CONFIG.
+ */
 export const NETWORK_CONFIG = {
   // Blockchain
   CHAIN_ID: 8453, // Base mainnet
@@ -358,6 +418,11 @@ export const NETWORK_CONFIG = {
 } as const
 
 // Storage Keys
+/**
+ * STORAGE_KEYS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of STORAGE_KEYS.
+ */
 export const STORAGE_KEYS = {
   HIGH_SCORE: 'samodoge_highscore',
   SETTINGS: 'samodoge_settings',
@@ -369,6 +434,11 @@ export const STORAGE_KEYS = {
 } as const
 
 // Tutorial Configuration
+/**
+ * TUTORIAL_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of TUTORIAL_CONFIG.
+ */
 export const TUTORIAL_CONFIG = {
   // Steps
   STEPS: [
@@ -387,6 +457,11 @@ export const TUTORIAL_CONFIG = {
 } as const
 
 // Performance Configuration
+/**
+ * PERFORMANCE_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of PERFORMANCE_CONFIG.
+ */
 export const PERFORMANCE_CONFIG = {
   // Optimization
   ENABLE_OBJECT_POOLING: true,
@@ -423,6 +498,11 @@ export const PERFORMANCE_CONFIG = {
 } as const
 
 // Input Configuration
+/**
+ * INPUT_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of INPUT_CONFIG.
+ */
 export const INPUT_CONFIG = {
   // Keyboard
   KEYS: {
@@ -445,6 +525,11 @@ export const INPUT_CONFIG = {
 } as const
 
 // Debug Configuration
+/**
+ * DEBUG_CONFIG utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of DEBUG_CONFIG.
+ */
 export const DEBUG_CONFIG = {
   ENABLED: process.env.NODE_ENV === 'development',
   SHOW_HITBOXES: false,
