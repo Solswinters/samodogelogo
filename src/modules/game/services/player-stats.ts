@@ -327,4 +327,9 @@ class PlayerStatsService {
   }
 }
 
+/**
+ * playerStatsService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of playerStatsService.
+ */
 export const playerStatsService = new PlayerStatsService()

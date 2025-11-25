@@ -1,5 +1,10 @@
 import { useEffect, useState, useRef } from 'react'
 
+/**
+ * useOnScreen utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useOnScreen.
+ */
 export function useOnScreen<T extends HTMLElement = HTMLElement>(
   options?: IntersectionObserverInit
 ): [React.RefObject<T>, boolean] {
