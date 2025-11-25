@@ -68,6 +68,11 @@ function getNormals(polygon: Polygon): Vector2D[] {
   return normals
 }
 
+/**
+ * checkSATCollision utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of checkSATCollision.
+ */
 export function checkSATCollision(poly1: Polygon, poly2: Polygon): boolean {
   const axes = [...getNormals(poly1), ...getNormals(poly2)]
 
@@ -83,6 +88,11 @@ export function checkSATCollision(poly1: Polygon, poly2: Polygon): boolean {
   return true
 }
 
+/**
+ * rectangleToPolygon utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of rectangleToPolygon.
+ */
 export function rectangleToPolygon(x: number, y: number, width: number, height: number): Polygon {
   return {
     vertices: [
