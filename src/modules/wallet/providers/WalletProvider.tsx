@@ -8,8 +8,13 @@ interface WalletProviderProps {
   children: React.ReactNode
 }
 
+/**
+ * WalletProvider utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of WalletProvider.
+ */
 export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
-  const disconnect = useWalletStore(state => state.disconnect)
+  const disconnect = useWalletStore((state) => state.disconnect)
 
   useEffect(() => {
     logger.info('Wallet provider initialized')

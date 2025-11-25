@@ -13,15 +13,15 @@ export class ChainService {
   }
 
   getChainById(chainId: number): Chain | undefined {
-    return this.supportedChains.find(chain => chain.id === chainId)
+    return this.supportedChains.find((chain) => chain.id === chainId)
   }
 
   getChainByName(name: string): Chain | undefined {
-    return this.supportedChains.find(chain => chain.name.toLowerCase() === name.toLowerCase())
+    return this.supportedChains.find((chain) => chain.name.toLowerCase() === name.toLowerCase())
   }
 
   isChainSupported(chainId: number): boolean {
-    return this.supportedChains.some(chain => chain.id === chainId)
+    return this.supportedChains.some((chain) => chain.id === chainId)
   }
 
   getChainExplorerUrl(chainId: number): string | undefined {
@@ -48,12 +48,17 @@ export class ChainService {
   }
 
   isMainnet(chainId: number): boolean {
-    return this.getMainnetChains().some(chain => chain.id === chainId)
+    return this.getMainnetChains().some((chain) => chain.id === chainId)
   }
 
   isTestnet(chainId: number): boolean {
-    return this.getTestnetChains().some(chain => chain.id === chainId)
+    return this.getTestnetChains().some((chain) => chain.id === chainId)
   }
 }
 
+/**
+ * chainService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of chainService.
+ */
 export const chainService = new ChainService()
