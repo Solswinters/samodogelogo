@@ -16,6 +16,11 @@ interface TokenBalanceState {
   error: Error | null
 }
 
+/**
+ * useTokenBalance utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useTokenBalance.
+ */
 export function useTokenBalance(address: Address | undefined, refresh: boolean = false) {
   const [state, setState] = useState<TokenBalanceState>({
     balance: null,
@@ -29,7 +34,7 @@ export function useTokenBalance(address: Address | undefined, refresh: boolean =
 
   useEffect(() => {
     if (!address || !publicClient) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         balance: null,
         formattedBalance: '0.0',
@@ -38,7 +43,7 @@ export function useTokenBalance(address: Address | undefined, refresh: boolean =
     }
 
     const fetchBalance = async () => {
-      setState(prev => ({ ...prev, loading: true, error: null }))
+      setState((prev) => ({ ...prev, loading: true, error: null }))
 
       try {
         const tokenAddress = getContractAddress(chainId, 'gameToken')
@@ -59,7 +64,7 @@ export function useTokenBalance(address: Address | undefined, refresh: boolean =
         })
       } catch (error) {
         logger.error('Failed to fetch token balance', error)
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           loading: false,
           error: error as Error,

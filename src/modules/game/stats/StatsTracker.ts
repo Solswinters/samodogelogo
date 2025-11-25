@@ -138,4 +138,9 @@ export class StatsTracker {
   }
 }
 
+/**
+ * statsTracker utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of statsTracker.
+ */
 export const statsTracker = new StatsTracker()

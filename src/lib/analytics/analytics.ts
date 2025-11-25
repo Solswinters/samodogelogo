@@ -52,4 +52,9 @@ class Analytics {
   }
 }
 
+/**
+ * analytics utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of analytics.
+ */
 export const analytics = new Analytics()
