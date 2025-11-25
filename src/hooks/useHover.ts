@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 
+/**
+ * useHover utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useHover.
+ */
 export function useHover<T extends HTMLElement = HTMLElement>(): [React.RefObject<T>, boolean] {
   const [isHovering, setIsHovering] = useState(false)
   const ref = useRef<T>(null)

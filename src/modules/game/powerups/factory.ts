@@ -82,4 +82,9 @@ export class PowerUpFactory {
   }
 }
 
+/**
+ * powerUpFactory utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of powerUpFactory.
+ */
 export const powerUpFactory = PowerUpFactory.getInstance()
