@@ -20,6 +20,11 @@ export interface UsePlayerStatsResult {
   refetch: () => Promise<unknown>
 }
 
+/**
+ * usePlayerStats utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of usePlayerStats.
+ */
 export function usePlayerStats(
   chainId: number,
   playerAddress: Address | undefined

@@ -12,6 +12,11 @@ export interface UseRewardsParams {
   enabled?: boolean
 }
 
+/**
+ * useRewards utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useRewards.
+ */
 export function useRewards({ rewardsAddress, enabled = true }: UseRewardsParams) {
   const { address } = useAccount()
 
