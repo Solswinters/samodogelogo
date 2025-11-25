@@ -19,6 +19,11 @@ export interface LineChartProps {
   showDots?: boolean
 }
 
+/**
+ * LineChart utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of LineChart.
+ */
 export function LineChart({
   data,
   width = 400,
@@ -33,10 +38,10 @@ export function LineChart({
   const chartWidth = width - padding * 2
   const chartHeight = height - padding * 2
 
-  const xMin = Math.min(...data.map(d => d.x))
-  const xMax = Math.max(...data.map(d => d.x))
-  const yMin = Math.min(...data.map(d => d.y))
-  const yMax = Math.max(...data.map(d => d.y))
+  const xMin = Math.min(...data.map((d) => d.x))
+  const xMax = Math.max(...data.map((d) => d.x))
+  const yMin = Math.min(...data.map((d) => d.y))
+  const yMax = Math.max(...data.map((d) => d.y))
 
   const xScale = (x: number) => ((x - xMin) / (xMax - xMin)) * chartWidth + padding
   const yScale = (y: number) => height - (((y - yMin) / (yMax - yMin)) * chartHeight + padding)
@@ -54,7 +59,7 @@ export function LineChart({
       <svg width={width} height={height} className="overflow-visible">
         {showGrid && (
           <g className="text-gray-700">
-            {[0, 0.25, 0.5, 0.75, 1].map(ratio => (
+            {[0, 0.25, 0.5, 0.75, 1].map((ratio) => (
               <line
                 key={`h-${ratio}`}
                 x1={padding}
