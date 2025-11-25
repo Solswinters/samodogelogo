@@ -2,10 +2,20 @@
  * Number formatting utilities
  */
 
+/**
+ * formatNumber utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatNumber.
+ */
 export function formatNumber(num: number, decimals: number = 0): string {
   return num.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
+/**
+ * formatCurrency utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatCurrency.
+ */
 export function formatCurrency(
   amount: number,
   currency: string = 'USD',
@@ -19,10 +29,20 @@ export function formatCurrency(
   }).format(amount)
 }
 
+/**
+ * formatPercentage utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatPercentage.
+ */
 export function formatPercentage(value: number, decimals: number = 0): string {
   return `${(value * 100).toFixed(decimals)}%`
 }
 
+/**
+ * formatCompactNumber utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatCompactNumber.
+ */
 export function formatCompactNumber(num: number): string {
   return new Intl.NumberFormat('en-US', {
     notation: 'compact',
@@ -30,6 +50,11 @@ export function formatCompactNumber(num: number): string {
   }).format(num)
 }
 
+/**
+ * formatOrdinal utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of formatOrdinal.
+ */
 export function formatOrdinal(num: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']
   const value = num % 100

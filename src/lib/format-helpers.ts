@@ -94,7 +94,9 @@ export const formatDuration = (ms: number): string => {
  */
 export const formatFileSize = (bytes: number): string => {
   const sizes = ['B', 'KB', 'MB', 'GB']
-  if (bytes === 0) {return '0 B'}
+  if (bytes === 0) {
+    return '0 B'
+  }
   const i = Math.floor(Math.log(bytes) / Math.log(1024))
   return `${formatNumber(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`
 }
