@@ -8,6 +8,11 @@ import { Card } from '@/shared/components/Card'
 import { Stat } from '@/shared/components/Stat'
 import { useAnalytics } from '../hooks/useAnalytics'
 
+/**
+ * AnalyticsSummary utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of AnalyticsSummary.
+ */
 export function AnalyticsSummary() {
   const { getPlayerStats, getSessionStats } = useAnalytics()
 
