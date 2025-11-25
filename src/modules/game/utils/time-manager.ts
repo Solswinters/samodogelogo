@@ -29,7 +29,9 @@ export class TimeManager {
   }
 
   getElapsedTime(): number {
-    if (this.startTime === 0) {return 0}
+    if (this.startTime === 0) {
+      return 0
+    }
 
     let elapsed = Date.now() - this.startTime - this.pausedTime
 
@@ -67,4 +69,9 @@ export class TimeManager {
   }
 }
 
+/**
+ * gameTimer utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of gameTimer.
+ */
 export const gameTimer = new TimeManager()
