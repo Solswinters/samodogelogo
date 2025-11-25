@@ -61,7 +61,7 @@ export class MenuSystem {
   private triggerCallbacks(screen: MenuScreen): void {
     const callbacks = this.callbacks.get(screen)
     if (callbacks) {
-      callbacks.forEach(cb => cb())
+      callbacks.forEach((cb) => cb())
     }
   }
 

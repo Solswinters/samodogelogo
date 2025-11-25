@@ -115,6 +115,11 @@ export class HardcoreMode extends GameMode {
   }
 }
 
+/**
+ * gameModes utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of gameModes.
+ */
 export const gameModes = {
   endless: () => new EndlessModeconfig(),
   timeAttack: () => new TimeAttackMode(),
