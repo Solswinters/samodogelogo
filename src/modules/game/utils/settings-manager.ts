@@ -133,4 +133,9 @@ class SettingsManager {
   }
 }
 
+/**
+ * settingsManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of settingsManager.
+ */
 export const settingsManager = new SettingsManager()

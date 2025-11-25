@@ -463,6 +463,11 @@ export function removeLocalStorage(key: string): void {
 
 // Easing Functions
 
+/**
+ * easing utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of easing.
+ */
 export const easing = {
   linear: (t: number) => t,
   easeInQuad: (t: number) => t * t,
