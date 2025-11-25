@@ -12,6 +12,11 @@ interface SpectatorListProps {
   spectators: SpectatorInfo[]
 }
 
+/**
+ * SpectatorList utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SpectatorList.
+ */
 export function SpectatorList({ spectators }: SpectatorListProps) {
   if (spectators.length === 0) {
     return null
