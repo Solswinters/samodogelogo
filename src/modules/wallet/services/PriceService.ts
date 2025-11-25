@@ -47,7 +47,7 @@ export class PriceService {
     const prices = new Map<string, TokenPrice>()
 
     await Promise.all(
-      tokenAddresses.map(async address => {
+      tokenAddresses.map(async (address) => {
         const price = await this.getPrice(address)
         if (price) {
           prices.set(address, price)
@@ -63,4 +63,9 @@ export class PriceService {
   }
 }
 
+/**
+ * priceService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of priceService.
+ */
 export const priceService = new PriceService()

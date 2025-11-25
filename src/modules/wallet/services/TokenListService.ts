@@ -32,7 +32,7 @@ export class TokenListService {
       },
     ]
 
-    defaultTokens.forEach(token => {
+    defaultTokens.forEach((token) => {
       this.tokens.set(token.address, token)
     })
   }
@@ -56,7 +56,7 @@ export class TokenListService {
   searchTokens(query: string): TokenInfo[] {
     const lowerQuery = query.toLowerCase()
     return this.getAllTokens().filter(
-      token =>
+      (token) =>
         token.name.toLowerCase().includes(lowerQuery) ||
         token.symbol.toLowerCase().includes(lowerQuery) ||
         token.address.toLowerCase().includes(lowerQuery)
@@ -64,11 +64,11 @@ export class TokenListService {
   }
 
   getTokenBySymbol(symbol: string): TokenInfo | undefined {
-    return this.getAllTokens().find(token => token.symbol.toLowerCase() === symbol.toLowerCase())
+    return this.getAllTokens().find((token) => token.symbol.toLowerCase() === symbol.toLowerCase())
   }
 
   importTokenList(tokens: TokenInfo[]): void {
-    tokens.forEach(token => this.addToken(token))
+    tokens.forEach((token) => this.addToken(token))
   }
 
   clearCustomTokens(): void {
@@ -77,4 +77,9 @@ export class TokenListService {
   }
 }
 
+/**
+ * tokenListService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of tokenListService.
+ */
 export const tokenListService = new TokenListService()

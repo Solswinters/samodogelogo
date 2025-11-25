@@ -59,4 +59,9 @@ export class SignatureService {
   }
 }
 
+/**
+ * signatureService utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of signatureService.
+ */
 export const signatureService = new SignatureService()
