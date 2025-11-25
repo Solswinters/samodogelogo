@@ -15,6 +15,11 @@ interface ReplayListProps {
   onReplaySelect?: (replay: ReplayData) => void
 }
 
+/**
+ * ReplayList utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ReplayList.
+ */
 export function ReplayList({ onReplaySelect }: ReplayListProps) {
   const { getAllReplays, loadReplay, deleteReplay } = useReplay()
   const [replays, setReplays] = useState<ReplayData[]>([])
@@ -43,7 +48,7 @@ export function ReplayList({ onReplaySelect }: ReplayListProps) {
 
   return (
     <div className="space-y-3">
-      {replays.map(replay => (
+      {replays.map((replay) => (
         <Card key={replay.sessionId} className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex-1">
@@ -52,7 +57,7 @@ export function ReplayList({ onReplaySelect }: ReplayListProps) {
                 Duration: {formatDuration(Math.floor(replay.duration / 1000))}
               </p>
               <p className="text-xs text-gray-500">
-                {replay.metadata.players.map(p => p.username).join(', ')}
+                {replay.metadata.players.map((p) => p.username).join(', ')}
               </p>
               {replay.metadata.winner && (
                 <p className="mt-1 text-xs text-green-400">Winner: {replay.metadata.winner}</p>
