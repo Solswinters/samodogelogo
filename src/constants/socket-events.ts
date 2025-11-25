@@ -2,6 +2,11 @@
  * Socket.io event name constants
  */
 
+/**
+ * SOCKET_EVENTS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of SOCKET_EVENTS.
+ */
 export const SOCKET_EVENTS = {
   // Connection
   CONNECT: 'connect',

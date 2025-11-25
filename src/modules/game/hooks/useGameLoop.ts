@@ -11,6 +11,11 @@ export interface UseGameLoopOptions {
   onRender?: () => void
 }
 
+/**
+ * useGameLoop utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useGameLoop.
+ */
 export function useGameLoop(options: UseGameLoopOptions = {}): void {
   const { fps = 60, paused = false, onUpdate, onRender } = options
 
