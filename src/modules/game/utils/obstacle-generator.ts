@@ -7,11 +7,21 @@ import { GAME_CONFIG } from '@/modules/game/domain/engine/config'
 
 let obstacleIdCounter = 0
 
+/**
+ * generateObstacleId utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of generateObstacleId.
+ */
 export function generateObstacleId(): string {
   obstacleIdCounter++
   return `obstacle-${Date.now()}-${obstacleIdCounter}`
 }
 
+/**
+ * createRandomObstacle utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of createRandomObstacle.
+ */
 export function createRandomObstacle(x: number): Obstacle {
   const minHeight = GAME_CONFIG.OBSTACLE_MIN_HEIGHT
   const maxHeight = GAME_CONFIG.OBSTACLE_MAX_HEIGHT
@@ -26,6 +36,11 @@ export function createRandomObstacle(x: number): Obstacle {
   }
 }
 
+/**
+ * createObstaclePattern utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of createObstaclePattern.
+ */
 export function createObstaclePattern(
   startX: number,
   pattern: 'single' | 'double' | 'triple'
@@ -51,6 +66,11 @@ export function createObstaclePattern(
   return obstacles
 }
 
+/**
+ * getRandomPattern utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getRandomPattern.
+ */
 export function getRandomPattern(): 'single' | 'double' | 'triple' {
   const rand = Math.random()
   if (rand < 0.6) {
@@ -62,6 +82,11 @@ export function getRandomPattern(): 'single' | 'double' | 'triple' {
   return 'triple'
 }
 
+/**
+ * shouldSpawnObstacle utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of shouldSpawnObstacle.
+ */
 export function shouldSpawnObstacle(
   lastObstacleX: number,
   canvasWidth: number,
@@ -72,6 +97,11 @@ export function shouldSpawnObstacle(
   return canvasWidth - lastObstacleX > adjustedDistance
 }
 
+/**
+ * getMinimumGap utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getMinimumGap.
+ */
 export function getMinimumGap(difficulty: number): number {
   const baseGap = 300
   return Math.max(200, baseGap - difficulty * 20)

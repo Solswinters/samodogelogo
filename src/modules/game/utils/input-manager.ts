@@ -31,7 +31,9 @@ class InputManager {
   }
 
   destroy(): void {
-    if (typeof window === 'undefined') {return}
+    if (typeof window === 'undefined') {
+      return
+    }
 
     window.removeEventListener('keydown', this.handleKeyDown.bind(this))
     window.removeEventListener('keyup', this.handleKeyUp.bind(this))
@@ -42,7 +44,9 @@ class InputManager {
   }
 
   private handleKeyDown(event: KeyboardEvent): void {
-    if (!this.enabled) {return}
+    if (!this.enabled) {
+      return
+    }
 
     const key = event.key
     if (!this.pressedKeys.has(key)) {
@@ -62,7 +66,7 @@ class InputManager {
   }
 
   private checkBindings(): void {
-    this.bindings.forEach(binding => {
+    this.bindings.forEach((binding) => {
       if (binding.enabled && this.areKeysPressed(binding.keys)) {
         binding.callback()
       }
@@ -102,11 +106,11 @@ class InputManager {
   }
 
   areKeysPressed(keys: string[]): boolean {
-    return keys.every(key => this.pressedKeys.has(key))
+    return keys.every((key) => this.pressedKeys.has(key))
   }
 
   isAnyKeyPressed(keys: string[]): boolean {
-    return keys.some(key => this.pressedKeys.has(key))
+    return keys.some((key) => this.pressedKeys.has(key))
   }
 
   getPressedKeys(): string[] {
