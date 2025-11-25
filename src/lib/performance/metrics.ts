@@ -4,33 +4,43 @@
 
 import { onCLS, onFID, onFCP, onLCP, onTTFB } from 'web-vitals'
 
+/**
+ * reportWebVitals utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of reportWebVitals.
+ */
 export function reportWebVitals() {
-  onCLS(metric => {
+  onCLS((metric) => {
     console.log('CLS:', metric.value)
     // Send to analytics
   })
 
-  onFID(metric => {
+  onFID((metric) => {
     console.log('FID:', metric.value)
     // Send to analytics
   })
 
-  onFCP(metric => {
+  onFCP((metric) => {
     console.log('FCP:', metric.value)
     // Send to analytics
   })
 
-  onLCP(metric => {
+  onLCP((metric) => {
     console.log('LCP:', metric.value)
     // Send to analytics
   })
 
-  onTTFB(metric => {
+  onTTFB((metric) => {
     console.log('TTFB:', metric.value)
     // Send to analytics
   })
 }
 
+/**
+ * measurePageLoad utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of measurePageLoad.
+ */
 export function measurePageLoad() {
   if (typeof window === 'undefined') return
 

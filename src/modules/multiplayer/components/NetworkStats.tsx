@@ -7,6 +7,11 @@
 import { Card } from '@/shared/components/Card'
 import { useLatency } from '../hooks/useLatency'
 
+/**
+ * NetworkStats utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of NetworkStats.
+ */
 export function NetworkStats() {
   const { latency, jitter, packetLoss, getQuality } = useLatency()
 
