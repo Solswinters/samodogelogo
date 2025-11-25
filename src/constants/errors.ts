@@ -2,6 +2,11 @@
  * Error message constants
  */
 
+/**
+ * ERROR_MESSAGES utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ERROR_MESSAGES.
+ */
 export const ERROR_MESSAGES = {
   // Wallet errors
   WALLET_NOT_CONNECTED: 'Please connect your wallet to continue',
@@ -46,6 +51,11 @@ export const ERROR_MESSAGES = {
 
 export type ErrorMessage = (typeof ERROR_MESSAGES)[keyof typeof ERROR_MESSAGES]
 
+/**
+ * getErrorMessage utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getErrorMessage.
+ */
 export function getErrorMessage(code: string): string {
   return ERROR_MESSAGES[code as keyof typeof ERROR_MESSAGES] ?? ERROR_MESSAGES.UNKNOWN_ERROR
 }

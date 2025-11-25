@@ -55,4 +55,3 @@ export function jump(player: Player): Player {
   }
   return player
 }
-

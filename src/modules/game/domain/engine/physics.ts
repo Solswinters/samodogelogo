@@ -1,5 +1,5 @@
-import { Player } from './types'
 import { GAME_CONFIG } from './config'
+import { Player } from './types'
 
 export function updatePlayerPhysics(player: Player): Player {
   if (!player.isAlive) return player
