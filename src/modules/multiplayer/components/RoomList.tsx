@@ -15,6 +15,11 @@ interface RoomListProps {
   onJoinRoom: (roomId: string) => void
 }
 
+/**
+ * RoomList utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of RoomList.
+ */
 export function RoomList({ onJoinRoom }: RoomListProps) {
   const { availableRooms, refreshRoomList } = useRoom()
 
@@ -36,7 +41,7 @@ export function RoomList({ onJoinRoom }: RoomListProps) {
 
   return (
     <div className="space-y-3">
-      {availableRooms.map(room => (
+      {availableRooms.map((room) => (
         <RoomCard key={room.id} room={room} onJoin={() => onJoinRoom(room.id)} />
       ))}
     </div>
@@ -50,7 +55,7 @@ interface RoomCardProps {
 
 function RoomCard({ room, onJoin }: RoomCardProps) {
   const isFull = room.players.length >= room.maxPlayers
-  const hostPlayer = room.players.find(p => p.isHost)
+  const hostPlayer = room.players.find((p) => p.isHost)
 
   return (
     <Card className="p-4">

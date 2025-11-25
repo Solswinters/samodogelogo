@@ -16,6 +16,11 @@ interface RoomLobbyProps {
   onStart: () => void
 }
 
+/**
+ * RoomLobby utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of RoomLobby.
+ */
 export function RoomLobby({ playerId, onLeave, onStart }: RoomLobbyProps) {
   const { currentRoom, setReady, startGame } = useRoom()
 

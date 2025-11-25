@@ -2,20 +2,40 @@
  * String manipulation utilities
  */
 
+/**
+ * capitalize utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of capitalize.
+ */
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
 }
 
+/**
+ * capitalizeWords utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of capitalizeWords.
+ */
 export function capitalizeWords(str: string): string {
   return str.split(' ').map(capitalize).join(' ')
 }
 
+/**
+ * camelCase utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of camelCase.
+ */
 export function camelCase(str: string): string {
   return str
     .replace(/[-_\s]+(.)?/g, (_: string, char?: string) => (char ? char.toUpperCase() : ''))
     .replace(/^(.)/, (char: string) => char.toLowerCase())
 }
 
+/**
+ * snakeCase utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of snakeCase.
+ */
 export function snakeCase(str: string): string {
   return str
     .replace(/([A-Z])/g, '_$1')
@@ -23,6 +43,11 @@ export function snakeCase(str: string): string {
     .replace(/^_/, '')
 }
 
+/**
+ * kebabCase utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of kebabCase.
+ */
 export function kebabCase(str: string): string {
   return str
     .replace(/([A-Z])/g, '-$1')
@@ -30,6 +55,11 @@ export function kebabCase(str: string): string {
     .replace(/^-/, '')
 }
 
+/**
+ * truncate utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of truncate.
+ */
 export function truncate(str: string, length: number, suffix: string = '...'): string {
   if (str.length <= length) {
     return str
@@ -37,10 +67,20 @@ export function truncate(str: string, length: number, suffix: string = '...'): s
   return str.substring(0, length - suffix.length) + suffix
 }
 
+/**
+ * stripHtml utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of stripHtml.
+ */
 export function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, '')
 }
 
+/**
+ * escapeHtml utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of escapeHtml.
+ */
 export function escapeHtml(text: string): string {
   const map: Record<string, string> = {
     '&': '&amp;',
@@ -52,6 +92,11 @@ export function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (char) => map[char])
 }
 
+/**
+ * slugify utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of slugify.
+ */
 export function slugify(str: string): string {
   return str
     .toLowerCase()
@@ -61,6 +106,11 @@ export function slugify(str: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
+/**
+ * randomString utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of randomString.
+ */
 export function randomString(length: number, charset?: string): string {
   const chars = charset || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let result = ''
