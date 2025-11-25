@@ -28,6 +28,11 @@ export type GameServer = SocketIOServer<
 >
 
 // Connection handler
+/**
+ * handleConnection utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of handleConnection.
+ */
 export function handleConnection(io: GameServer, socket: GameSocket): void {
   const { playerId } = socket.data
   logger.info('Client connected', { socketId: socket.id, playerId })
@@ -170,7 +175,7 @@ export function handleConnection(io: GameServer, socket: GameSocket): void {
   })
 
   // Get rooms handler
-  socket.on('getRooms', callback => {
+  socket.on('getRooms', (callback) => {
     try {
       const rooms = roomManager.getPublicRooms()
       callback({ success: true, rooms })
@@ -187,7 +192,7 @@ export function handleConnection(io: GameServer, socket: GameSocket): void {
   })
 
   // Set ready handler
-  socket.on('setReady', data => {
+  socket.on('setReady', (data) => {
     try {
       const result = roomManager.setPlayerReady(data.roomId, socket.data.playerId, data.isReady)
 
@@ -217,7 +222,7 @@ export function handleConnection(io: GameServer, socket: GameSocket): void {
   })
 
   // Update player handler
-  socket.on('updatePlayer', data => {
+  socket.on('updatePlayer', (data) => {
     try {
       roomManager.updatePlayerPosition(data.roomId, socket.data.playerId, data.position)
 
@@ -247,7 +252,7 @@ export function handleConnection(io: GameServer, socket: GameSocket): void {
   })
 
   // Start game handler
-  socket.on('startGame', data => {
+  socket.on('startGame', (data) => {
     try {
       const result = roomManager.startGame(data.roomId)
 
@@ -268,12 +273,12 @@ export function handleConnection(io: GameServer, socket: GameSocket): void {
   })
 
   // Ping/pong for latency measurement
-  socket.on('ping', data => {
+  socket.on('ping', (data) => {
     socket.emit('pong', { timestamp: data.timestamp })
   })
 
   // Disconnect handler
-  socket.on('disconnect', reason => {
+  socket.on('disconnect', (reason) => {
     logger.info('Client disconnected', { socketId: socket.id, playerId, reason })
 
     // Remove player from room if in one

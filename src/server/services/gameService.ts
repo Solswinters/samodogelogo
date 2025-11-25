@@ -19,6 +19,11 @@ export interface ScoreValidationResult {
 }
 
 // Validate game score for anti-cheat
+/**
+ * validateGameScore utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of validateGameScore.
+ */
 export function validateGameScore(result: GameResult): ScoreValidationResult {
   const { score, duration, obstacles } = result
 
@@ -63,6 +68,11 @@ export function validateGameScore(result: GameResult): ScoreValidationResult {
 }
 
 // Calculate reward amount based on score
+/**
+ * calculateReward utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateReward.
+ */
 export function calculateReward(score: number, isWinner: boolean): string {
   // Base reward: 0.001 tokens per 100 score points
   const baseReward = score / 100000
@@ -78,6 +88,11 @@ export function calculateReward(score: number, isWinner: boolean): string {
 }
 
 // Calculate difficulty based on score
+/**
+ * calculateDifficulty utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateDifficulty.
+ */
 export function calculateDifficulty(score: number): number {
   // Difficulty increases every 500 points
   const baseDifficulty = 1
@@ -87,6 +102,11 @@ export function calculateDifficulty(score: number): number {
 }
 
 // Calculate game speed multiplier
+/**
+ * calculateGameSpeed utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateGameSpeed.
+ */
 export function calculateGameSpeed(score: number, difficulty: number): number {
   const baseSpeed = 1
   const scoreMultiplier = 1 + score / 5000 // Increases 0.1x per 500 points
@@ -96,6 +116,11 @@ export function calculateGameSpeed(score: number, difficulty: number): number {
 }
 
 // Record game session
+/**
+ * recordGameSession utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of recordGameSession.
+ */
 export function recordGameSession(result: GameResult): {
   success: boolean
   sessionId?: string
@@ -144,6 +169,11 @@ export function recordGameSession(result: GameResult): {
 }
 
 // Get player statistics
+/**
+ * getPlayerStats utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getPlayerStats.
+ */
 export function getPlayerStats(playerId: string): {
   totalGames: number
   totalScore: number
@@ -169,6 +199,11 @@ export function getPlayerStats(playerId: string): {
 }
 
 // Update leaderboard
+/**
+ * updateLeaderboard utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of updateLeaderboard.
+ */
 export function updateLeaderboard(
   playerId: string,
   address: string,
