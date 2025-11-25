@@ -143,5 +143,10 @@ class ConfigManager {
   }
 }
 
+/**
+ * configManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of configManager.
+ */
 export const configManager = new ConfigManager()
 export type { GameConfig }

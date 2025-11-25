@@ -2,6 +2,11 @@
  * Game configuration and constants
  */
 
+/**
+ * GAME_CONSTANTS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GAME_CONSTANTS.
+ */
 export const GAME_CONSTANTS = {
   CANVAS_WIDTH: 800,
   CANVAS_HEIGHT: 600,
@@ -47,6 +52,11 @@ export const GAME_CONSTANTS = {
   FONT_SIZE_SMALL: 16,
 } as const
 
+/**
+ * PLAYER_COLORS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of PLAYER_COLORS.
+ */
 export const PLAYER_COLORS = {
   BLUE: '#3B82F6',
   RED: '#EF4444',
@@ -60,6 +70,11 @@ export const PLAYER_COLORS = {
 
 export type PlayerColor = (typeof PLAYER_COLORS)[keyof typeof PLAYER_COLORS]
 
+/**
+ * GAME_STATES utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GAME_STATES.
+ */
 export const GAME_STATES = {
   WAITING: 'waiting',
   PLAYING: 'playing',
@@ -67,6 +82,11 @@ export const GAME_STATES = {
   ENDED: 'ended',
 } as const
 
+/**
+ * POWER_UP_TYPES utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of POWER_UP_TYPES.
+ */
 export const POWER_UP_TYPES = {
   SHIELD: 'shield',
   SPEED_BOOST: 'speed',
@@ -74,6 +94,11 @@ export const POWER_UP_TYPES = {
   MAGNET: 'magnet',
 } as const
 
+/**
+ * ACHIEVEMENT_IDS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ACHIEVEMENT_IDS.
+ */
 export const ACHIEVEMENT_IDS = {
   FIRST_GAME: 'first-game',
   SCORE_1000: 'score-1000',
@@ -87,6 +112,11 @@ export const ACHIEVEMENT_IDS = {
   COLLECTOR: 'collector',
 } as const
 
+/**
+ * ACHIEVEMENT_NAMES utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ACHIEVEMENT_NAMES.
+ */
 export const ACHIEVEMENT_NAMES: Record<string, string> = {
   [ACHIEVEMENT_IDS.FIRST_GAME]: 'First Steps',
   [ACHIEVEMENT_IDS.SCORE_1000]: 'Novice',
@@ -100,6 +130,11 @@ export const ACHIEVEMENT_NAMES: Record<string, string> = {
   [ACHIEVEMENT_IDS.COLLECTOR]: 'Token Collector',
 }
 
+/**
+ * KEYBINDINGS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of KEYBINDINGS.
+ */
 export const KEYBINDINGS = {
   JUMP: [' ', 'w', 'ArrowUp'],
   PAUSE: ['p', 'Escape'],
@@ -107,6 +142,11 @@ export const KEYBINDINGS = {
   MUTE: ['m'],
 } as const
 
+/**
+ * STORAGE_KEYS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of STORAGE_KEYS.
+ */
 export const STORAGE_KEYS = {
   HIGH_SCORES: 'high-scores',
   SETTINGS: 'game-settings',
@@ -265,5 +305,10 @@ class GameConfigManager {
   }
 }
 
+/**
+ * gameConfig utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of gameConfig.
+ */
 export const gameConfig = new GameConfigManager()
 export { defaultConfig as defaultGameConfig }

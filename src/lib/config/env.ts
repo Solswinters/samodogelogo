@@ -32,7 +32,7 @@ function validateEnv() {
   } catch (err: unknown) {
     console.error('❌ Invalid environment variables:')
     if (err instanceof z.ZodError) {
-      err.issues.forEach(issue => {
+      err.issues.forEach((issue) => {
         console.error(`  ${issue.path.join('.')}: ${issue.message}`)
       })
     }
