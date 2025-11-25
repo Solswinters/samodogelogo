@@ -132,4 +132,9 @@ export class Camera {
   }
 }
 
+/**
+ * gameCamera utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of gameCamera.
+ */
 export const gameCamera = new Camera(800, 600)
