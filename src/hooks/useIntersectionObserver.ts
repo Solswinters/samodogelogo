@@ -4,6 +4,11 @@ export interface UseIntersectionObserverOptions extends IntersectionObserverInit
   freezeOnceVisible?: boolean
 }
 
+/**
+ * useIntersectionObserver utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useIntersectionObserver.
+ */
 export function useIntersectionObserver(
   options: UseIntersectionObserverOptions = {}
 ): [React.RefObject<HTMLElement>, boolean] {

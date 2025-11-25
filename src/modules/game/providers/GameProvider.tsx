@@ -8,8 +8,13 @@ interface GameProviderProps {
   children: React.ReactNode
 }
 
+/**
+ * GameProvider utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GameProvider.
+ */
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
-  const resetGame = useGameStore(state => state.resetGame)
+  const resetGame = useGameStore((state) => state.resetGame)
 
   useEffect(() => {
     logger.info('Game provider initialized')
