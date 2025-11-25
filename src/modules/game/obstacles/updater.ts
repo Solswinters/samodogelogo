@@ -4,6 +4,11 @@
 
 import type { Obstacle, MovingObstacle, RotatingObstacle, LaserObstacle } from './types'
 
+/**
+ * updateObstacle utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of updateObstacle.
+ */
 export function updateObstacle(obstacle: Obstacle, deltaTime: number): void {
   // Move all obstacles left
   obstacle.x -= obstacle.speed
@@ -44,10 +49,20 @@ function updateLaserObstacle(obstacle: LaserObstacle, deltaTime: number): void {
   obstacle.active = obstacle.cycleTime < obstacle.activeDuration
 }
 
+/**
+ * isObstacleOffscreen utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of isObstacleOffscreen.
+ */
 export function isObstacleOffscreen(obstacle: Obstacle, canvasWidth: number): boolean {
   return obstacle.x + obstacle.width < 0
 }
 
+/**
+ * sortObstaclesByDistance utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of sortObstaclesByDistance.
+ */
 export function sortObstaclesByDistance(obstacles: Obstacle[]): Obstacle[] {
   return [...obstacles].sort((a, b) => a.x - b.x)
 }

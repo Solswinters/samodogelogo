@@ -1,5 +1,10 @@
 import { useState } from 'react'
 
+/**
+ * useCopyToClipboard utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useCopyToClipboard.
+ */
 export function useCopyToClipboard(): [string | null, (text: string) => Promise<void>] {
   const [copiedText, setCopiedText] = useState<string | null>(null)
 
