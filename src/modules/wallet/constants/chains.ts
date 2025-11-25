@@ -17,6 +17,11 @@ export interface ChainConfig {
   testnet: boolean
 }
 
+/**
+ * MAINNET_CHAINS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of MAINNET_CHAINS.
+ */
 export const MAINNET_CHAINS: ChainConfig[] = [
   {
     id: 1,
@@ -80,6 +85,11 @@ export const MAINNET_CHAINS: ChainConfig[] = [
   },
 ]
 
+/**
+ * TESTNET_CHAINS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of TESTNET_CHAINS.
+ */
 export const TESTNET_CHAINS: ChainConfig[] = [
   {
     id: 11155111,
@@ -107,13 +117,18 @@ export const TESTNET_CHAINS: ChainConfig[] = [
   },
 ]
 
+/**
+ * ALL_CHAINS utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ALL_CHAINS.
+ */
 export const ALL_CHAINS = [...MAINNET_CHAINS, ...TESTNET_CHAINS]
 
 /**
  * Get chain config by ID
  */
 export function getChainConfig(chainId: number): ChainConfig | undefined {
-  return ALL_CHAINS.find(chain => chain.id === chainId)
+  return ALL_CHAINS.find((chain) => chain.id === chainId)
 }
 
 /**
