@@ -14,6 +14,11 @@ export interface RewardsDisplayProps {
   decimals?: number
 }
 
+/**
+ * RewardsDisplay utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of RewardsDisplay.
+ */
 export function RewardsDisplay({
   rewardsAddress,
   tokenSymbol,
