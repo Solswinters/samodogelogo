@@ -58,8 +58,8 @@ export class RoomManager {
   // Get public rooms (for room list)
   getPublicRooms(): RoomInfo[] {
     return Array.from(this.rooms.values())
-      .filter(room => !room.isPrivate && room.status === 'waiting')
-      .map(room => ({
+      .filter((room) => !room.isPrivate && room.status === 'waiting')
+      .map((room) => ({
         roomId: room.roomId,
         roomName: room.roomName,
         currentPlayers: room.players.length,
@@ -90,7 +90,7 @@ export class RoomManager {
       return { success: false, error: 'Room is full' }
     }
 
-    if (room.players.some(p => p.playerId === playerId)) {
+    if (room.players.some((p) => p.playerId === playerId)) {
       return { success: false, error: 'Player already in room' }
     }
 
@@ -121,7 +121,7 @@ export class RoomManager {
       return { success: false, error: 'Room not found' }
     }
 
-    const playerIndex = room.players.findIndex(p => p.playerId === playerId)
+    const playerIndex = room.players.findIndex((p) => p.playerId === playerId)
 
     if (playerIndex === -1) {
       return { success: false, error: 'Player not in room' }
@@ -169,7 +169,7 @@ export class RoomManager {
       return { success: false, error: 'Room not found' }
     }
 
-    const player = room.players.find(p => p.playerId === playerId)
+    const player = room.players.find((p) => p.playerId === playerId)
 
     if (!player) {
       return { success: false, error: 'Player not in room' }
@@ -189,7 +189,7 @@ export class RoomManager {
       return false
     }
 
-    return room.players.every(p => p.isReady)
+    return room.players.every((p) => p.isReady)
   }
 
   // Start game
@@ -226,7 +226,7 @@ export class RoomManager {
     logger.info('Game ended', { roomId })
 
     // Reset players
-    room.players.forEach(player => {
+    room.players.forEach((player) => {
       player.isReady = false
       player.score = 0
     })
@@ -247,7 +247,7 @@ export class RoomManager {
       return { success: false, error: 'Room not found' }
     }
 
-    const player = room.players.find(p => p.playerId === playerId)
+    const player = room.players.find((p) => p.playerId === playerId)
 
     if (!player) {
       return { success: false, error: 'Player not in room' }
@@ -270,7 +270,7 @@ export class RoomManager {
       return { success: false, error: 'Room not found' }
     }
 
-    const player = room.players.find(p => p.playerId === playerId)
+    const player = room.players.find((p) => p.playerId === playerId)
 
     if (!player) {
       return { success: false, error: 'Player not in room' }
@@ -297,7 +297,7 @@ export class RoomManager {
     totalPlayers: number
   } {
     const totalRooms = this.rooms.size
-    const activeRooms = Array.from(this.rooms.values()).filter(r => r.status === 'playing').length
+    const activeRooms = Array.from(this.rooms.values()).filter((r) => r.status === 'playing').length
     const totalPlayers = Array.from(this.rooms.values()).reduce(
       (sum, r) => sum + r.players.length,
       0
@@ -312,4 +312,9 @@ export class RoomManager {
 }
 
 // Singleton instance
+/**
+ * roomManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of roomManager.
+ */
 export const roomManager = new RoomManager()

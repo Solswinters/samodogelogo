@@ -5,12 +5,22 @@ export * from './handlers'
 
 import { Server as SocketIOServer } from 'socket.io'
 import type { Server as HTTPServer } from 'http'
-import type { GameServer } from './handlers';
+import type { GameServer } from './handlers'
 import { handleConnection } from './handlers'
-import type { ServerToClientEvents, ClientToServerEvents, InterServerEvents, SocketData } from './types'
+import type {
+  ServerToClientEvents,
+  ClientToServerEvents,
+  InterServerEvents,
+  SocketData,
+} from './types'
 import { multiplayerLogger as logger } from '@/middleware/logging'
 
 // Initialize Socket.io server
+/**
+ * initializeSocketServer utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of initializeSocketServer.
+ */
 export function initializeSocketServer(httpServer: HTTPServer): GameServer {
   const io: GameServer = new SocketIOServer<
     ClientToServerEvents,
@@ -46,7 +56,7 @@ export function initializeSocketServer(httpServer: HTTPServer): GameServer {
   })
 
   // Handle connections
-  io.on('connection', socket => {
+  io.on('connection', (socket) => {
     handleConnection(io, socket)
   })
 
