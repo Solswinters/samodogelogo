@@ -1,5 +1,5 @@
-import { Player, Obstacle } from './types'
 import { GAME_CONFIG, PLAYER_COLORS } from './config'
+import { Player, Obstacle } from './types'
 
 /**
  * createPlayer utility function.

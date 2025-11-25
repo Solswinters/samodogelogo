@@ -1,6 +1,11 @@
 import { GAME_CONFIG } from './config'
 import { Player } from './types'
 
+/**
+ * updatePlayerPhysics utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of updatePlayerPhysics.
+ */
 export function updatePlayerPhysics(player: Player): Player {
   if (!player.isAlive) return player
 
@@ -26,10 +31,20 @@ export function updatePlayerPhysics(player: Player): Player {
   }
 }
 
+/**
+ * applyGravity utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of applyGravity.
+ */
 export function applyGravity(velocityY: number): number {
   return velocityY + GAME_CONFIG.GRAVITY
 }
 
+/**
+ * calculateJumpVelocity utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of calculateJumpVelocity.
+ */
 export function calculateJumpVelocity(): number {
   return GAME_CONFIG.JUMP_FORCE
 }
