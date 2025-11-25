@@ -6,6 +6,11 @@ export interface TokenPrice {
   change24h: number
 }
 
+/**
+ * useTokenPrice utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useTokenPrice.
+ */
 export function useTokenPrice(tokenAddress?: string) {
   const [price, setPrice] = useState<TokenPrice | null>(null)
   const [loading, setLoading] = useState(false)

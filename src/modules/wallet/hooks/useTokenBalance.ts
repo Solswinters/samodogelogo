@@ -12,6 +12,11 @@ export interface UseTokenBalanceParams {
   enabled?: boolean
 }
 
+/**
+ * useTokenBalance utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useTokenBalance.
+ */
 export function useTokenBalance({ tokenAddress, enabled = true }: UseTokenBalanceParams) {
   const { address } = useAccount()
 
@@ -35,8 +40,8 @@ export function useTokenBalance({ tokenAddress, enabled = true }: UseTokenBalanc
     address: tokenAddress,
     abi: GameTokenABI,
     eventName: 'Transfer',
-    onLogs: logs => {
-      const relevantTransfer = logs.some(log => {
+    onLogs: (logs) => {
+      const relevantTransfer = logs.some((log) => {
         const { from, to } = log.args
         return from === address || to === address
       })
