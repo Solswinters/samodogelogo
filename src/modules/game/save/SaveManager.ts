@@ -556,6 +556,11 @@ export class SaveManager {
 // Singleton instance
 let saveManagerInstance: SaveManager | null = null
 
+/**
+ * getSaveManager utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of getSaveManager.
+ */
 export const getSaveManager = (): SaveManager => {
   if (!saveManagerInstance) {
     saveManagerInstance = new SaveManager()

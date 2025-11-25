@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
 
+/**
+ * useKeyPress utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of useKeyPress.
+ */
 export function useKeyPress(targetKey: string): boolean {
   const [keyPressed, setKeyPressed] = useState(false)
 
