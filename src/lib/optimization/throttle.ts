@@ -5,6 +5,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-this-alias */
 
+/**
+ * throttle utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of throttle.
+ */
 export function throttle<T extends (...args: any[]) => any>(
   func: T,
   limit: number

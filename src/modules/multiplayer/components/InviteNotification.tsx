@@ -14,6 +14,11 @@ interface InviteNotificationProps {
   onDecline: () => void
 }
 
+/**
+ * InviteNotification utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of InviteNotification.
+ */
 export function InviteNotification({ invite, onAccept, onDecline }: InviteNotificationProps) {
   const timeRemaining = Math.max(0, Math.ceil((invite.expiresAt - Date.now()) / 1000))
 
