@@ -11,6 +11,11 @@ interface PlayerAvatarProps {
   online?: boolean
 }
 
+/**
+ * PlayerAvatar utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of PlayerAvatar.
+ */
 export function PlayerAvatar({ name, color, size = 'md', online = false }: PlayerAvatarProps) {
   const sizeClasses = {
     sm: 'h-8 w-8 text-xs',

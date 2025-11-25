@@ -13,16 +13,31 @@ export interface RateLimitConfig {
   keyGenerator?: (request: NextRequest) => string
 }
 
+/**
+ * DEFAULT_RATE_LIMIT utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of DEFAULT_RATE_LIMIT.
+ */
 export const DEFAULT_RATE_LIMIT: RateLimitConfig = {
   maxRequests: 100,
   windowMs: 15 * 60 * 1000,
 }
 
+/**
+ * STRICT_RATE_LIMIT utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of STRICT_RATE_LIMIT.
+ */
 export const STRICT_RATE_LIMIT: RateLimitConfig = {
   maxRequests: 10,
   windowMs: 60 * 1000,
 }
 
+/**
+ * GENEROUS_RATE_LIMIT utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of GENEROUS_RATE_LIMIT.
+ */
 export const GENEROUS_RATE_LIMIT: RateLimitConfig = {
   maxRequests: 1000,
   windowMs: 60 * 60 * 1000,
@@ -45,6 +60,11 @@ function getClientId(
   return `ip:${ip}`
 }
 
+/**
+ * checkRateLimit utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of checkRateLimit.
+ */
 export function checkRateLimit(
   identifier: string,
   config: RateLimitConfig = DEFAULT_RATE_LIMIT
@@ -83,6 +103,11 @@ export function checkRateLimit(
   }
 }
 
+/**
+ * rateLimit utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of rateLimit.
+ */
 export function rateLimit(config: RateLimitConfig = DEFAULT_RATE_LIMIT) {
   return async (request: NextRequest, handler: () => Promise<Response>): Promise<Response> => {
     const clientId = getClientId(request, config.keyGenerator)
@@ -116,6 +141,11 @@ export function rateLimit(config: RateLimitConfig = DEFAULT_RATE_LIMIT) {
   }
 }
 
+/**
+ * rateLimitByAddress utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of rateLimitByAddress.
+ */
 export function rateLimitByAddress(config: RateLimitConfig = DEFAULT_RATE_LIMIT) {
   return rateLimit({
     ...config,
@@ -127,10 +157,20 @@ export function rateLimitByAddress(config: RateLimitConfig = DEFAULT_RATE_LIMIT)
   })
 }
 
+/**
+ * resetRateLimit utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of resetRateLimit.
+ */
 export function resetRateLimit(identifier: string): void {
   rateLimitStore.delete(identifier)
 }
 
+/**
+ * cleanupExpiredEntries utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of cleanupExpiredEntries.
+ */
 export function cleanupExpiredEntries(): number {
   const now = Date.now()
   let cleaned = 0

@@ -36,7 +36,7 @@ export function PingDisplay() {
       <span className="text-gray-400">Ping:</span>
       <span className={`font-mono font-semibold ${getColorClass()}`}>{latency}ms</span>
       <div className="flex gap-1">
-        {[1, 2, 3, 4].map(level => (
+        {[1, 2, 3, 4].map((level) => (
           <div
             key={level}
             className={`h-3 w-1 ${
