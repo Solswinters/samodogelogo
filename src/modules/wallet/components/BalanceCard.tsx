@@ -11,6 +11,11 @@ export interface BalanceCardProps {
   showUSD?: boolean
 }
 
+/**
+ * BalanceCard utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of BalanceCard.
+ */
 export function BalanceCard({ showUSD = true }: BalanceCardProps) {
   const { balance, formatted, symbol, isLoading } = useBalance()
   const { price } = useTokenPrice(undefined) // Native token

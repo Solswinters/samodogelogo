@@ -10,6 +10,11 @@ interface ChainIconProps {
   className?: string
 }
 
+/**
+ * ChainIcon utility function.
+ * @param props - Component properties or function arguments.
+ * @returns The result of ChainIcon.
+ */
 export function ChainIcon({ chainId, size = 24, className = '' }: ChainIconProps) {
   const chainInfo = getChainInfo(chainId)
 
